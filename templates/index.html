@@ -1,0 +1,561 @@
+{% load static %}
+{% if message %}
+    <script>
+        alert('{{message}}')
+    </script>f
+{% endif %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Kata Kata African Cartoons</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="{% static 'assets/img/favicon.png' %}" rel="icon">
+    <link href="{% static 'assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+          rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="{% static 'assets/vendor/animate.css/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+
+    <!-- =======================================================
+    * Template Name: Sailor - v4.7.0
+    * Template URL: https://bootstrapmade.com/sailor-free-bootstrap-theme/
+    * Author: BootstrapMade.com
+    * License: https://bootstrapmade.com/license/
+    ======================================================== -->
+
+    <style>
+        .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ======= Header ======= -->
+<header id="header" class="fixed-top d-flex align-items-center">
+    <div class="container d-flex align-items-center">
+
+        <h1 class="logo me-auto"><img src="{% static 'assets/img/logo.png' %}"></h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="index.php" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+
+        <nav id="navbar" class="navbar">
+            <ul>
+                <li><a href="{% url 'homepage' %}" class="active">Home</a></li>
+
+                <li class="dropdown"><a href="#"><span>About</span> <i class="bi bi-chevron-down"></i></a>
+                    <ul>
+                        <li><a href="team.html">Team</a></li>
+<!--                        <li><a href="about.html">About</a></li>-->
+<!--                        <li><a href="testimonials.html">Testimonials</a></li>-->
+
+<!--                        <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>-->
+<!--                            <ul>-->
+<!--                                <li><a href="#">Deep Drop Down 1</a></li>-->
+<!--                                <li><a href="#">Deep Drop Down 2</a></li>-->
+<!--                                <li><a href="#">Deep Drop Down 3</a></li>-->
+<!--                                <li><a href="#">Deep Drop Down 4</a></li>-->
+<!--                                <li><a href="#">Deep Drop Down 5</a></li>-->
+<!--                            </ul>-->
+<!--                        </li>-->
+
+                    </ul>
+                </li>
+                <li><a href="news/index.php">News</a></li>
+                <li><a href="https://katakata.org/videos/">Videos</a></li>
+                <li><a href="">Magazines</a></li>
+                <li><a href="#cartoontarget">Cartoons</a></li>
+
+                <li><a href="">Contact</a></li>
+                <li><a href="https://play.google.com/store/apps/details?id=techkaita.katakata&hl=en&gl=US" class="getstarted">Download Kata Kata App</a></li>
+            </ul>
+            <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav><!-- .navbar -->
+
+    </div>
+</header><!-- End Header -->
+
+<!-- ======= Hero Section ======= -->
+<section id="hero">
+    <div id="heroCarousel" data-bs-interval="5000" class="carousel slide carousel-fade" data-bs-ride="carousel">
+
+        <ol class="carousel-indicators" id="hero-carousel-indicators"></ol>
+
+        <div class="carousel-inner" role="listbox">
+
+            <!-- Slide 1 -->
+            <div class="carousel-item active" style="background-image: url({% static 'assets/img/slide/sone.jpeg' %})">
+                <div class="carousel-container">
+                    <div class="container">
+                        <h2 class="animate__animated animate__fadeInDown"><span>Kata Kata African Cartoons</span></h2>
+
+                        <h2 class="animate__animated animate__fadeInDown"><span>Mission</span></h2>
+                        <p class="animate__animated animate__fadeInUp">We use our humorous but educational content to
+                            sensitize social problems and harmful practices that hinder development in the society; by
+                            so doing, we create attitudinal changes amongst the target group</p>
+                        <a href="https://play.google.com/store/apps/details?id=techkaita.katakata&hl=en&gl=US" class="btn-get-started animate__animated animate__fadeInUp scrollto">Download
+                            Android App</a>
+                        <a href="https://play.google.com/store/apps/details?id=techkaita.katakata&hl=en&gl=US" class="btn-get-started animate__animated animate__fadeInUp scrollto">Download
+                            IOS App</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="carousel-item" style="background-image: url({% static 'assets/img/slide/slide-2.jpg' %})">
+                <div class="carousel-container">
+                    <div class="container">
+                        <h2 class="animate__animated animate__fadeInDown">Don't Worry, Just Laugh</h2>
+                        <p class="animate__animated animate__fadeInUp">Simply sit down, grab a coffee with your friends and have a good laugh.</p>
+                        <a href="https://play.google.com/store/apps/details?id=techkaita.katakata&hl=en&gl=US" class="btn-get-started animate__animated animate__fadeInUp scrollto">Download
+                            Our App</a>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <a class="carousel-control-prev" href="#heroCarousel" role="button" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
+        </a>
+
+        <a class="carousel-control-next" href="#heroCarousel" role="button" data-bs-slide="next">
+            <span class="carousel-control-next-icon bi bi-chevron-right" aria-hidden="true"></span>
+        </a>
+
+    </div>
+</section><!-- End Hero -->
+
+<main id="main">
+
+    <!-- ======= About Section ======= -->
+    <section id="about" class="about">
+        <div class="container">
+
+            <div class="row content">
+                <div class="col-lg-6">
+                    <h3><b><strong>OBJECTIVES</strong></b></h3>
+                    <h3>Our entire team at Kata Kata is driven with the desire to achieve the following among others :</h3>
+                    <br><br>
+                    <br><br>
+                    <img src="{% static 'assets/img/logo.png' %}" class="img-fluid" alt="Kata Kata">
+                </div>
+                <div class="col-lg-6 pt-4 pt-lg-0">
+                    <ul>
+                        <li><i class="ri-check-double-line"></i> To discuss and disseminate typical African / global
+                            social problems.
+                        </li>
+                        <li><i class="ri-check-double-line"></i> Using our content (cartoons, illustrated stories,
+                            animated videos, magazine), we send important messages across in an educational, informative
+                            and yet, humorous manner.
+                        </li>
+                        <li><i class="ri-check-double-line"></i> We offer therapy for problems through comic content.
+                        </li>
+                        <li><i class="ri-check-double-line"></i> To carefully create our content in a way that it is
+                            understood by both educated and non-educated readers so that it can reach the grass-root
+                            level..
+                        </li>
+                        <li><i class="ri-check-double-line"></i> To send our core messages across to the grass-roots; we
+                            achieve this by adding local language, slang and phrases, aimed at behavioural changes.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </section><!-- End About Section -->
+
+    <!-- ======= Clients Section ======= -->
+    <section id="clients" class="clients section-bg">
+        <div class="container">
+
+            <div class="row">
+                <h1>Just sit back, relax and enjoy!</h1>
+            </div>
+
+        </div>
+    </section><!-- End Clients Section -->
+
+    <!-- ======= Services Section ======= -->
+    <!--    <section id="services" class="services">-->
+    <!--        <div class="container">-->
+
+    <!--            <div class="row">-->
+    <!--                <div class="col-md-6">-->
+    <!--                    <div class="icon-box">-->
+    <!--                        <h4><a href="#">News</a></h4>-->
+    <!--                        <img class="center" src="assets/img/southafrica.jpg" width="300" height="200" align="center">-->
+    <!--                        <p>Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati-->
+    <!--                            cupiditate non provident</p>-->
+    <!--                    </div>-->
+    <!--                </div>-->
+    <!--                <div class="col-md-6 mt-4 mt-md-0">-->
+    <!--                    <div class="icon-box">-->
+    <!--                        <i class="bi bi-card-checklist"></i>-->
+    <!--                        <h4><a href="#">Dolor Sitema</a></h4>-->
+    <!--                        <p>Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo-->
+    <!--                            consequat-->
+    <!--                            tarad limino ata</p>-->
+    <!--                    </div>-->
+    <!--                </div>-->
+    <!--                <div class="col-md-6 mt-4 mt-md-0">-->
+    <!--                    <div class="icon-box">-->
+    <!--                        <i class="bi bi-bar-chart"></i>-->
+    <!--                        <h4><a href="#">Sed ut perspiciatis</a></h4>-->
+    <!--                        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla-->
+    <!--                            pariatur</p>-->
+    <!--                    </div>-->
+    <!--                </div>-->
+    <!--                <div class="col-md-6 mt-4 mt-md-0">-->
+    <!--                    <div class="icon-box">-->
+    <!--                        <i class="bi bi-binoculars"></i>-->
+    <!--                        <h4><a href="#">Nemo Enim</a></h4>-->
+    <!--                        <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit-->
+    <!--                            anim-->
+    <!--                            id est laborum</p>-->
+    <!--                    </div>-->
+    <!--                </div>-->
+    <!--                <div class="col-md-6 mt-4 mt-md-0">-->
+    <!--                    <div class="icon-box">-->
+    <!--                        <i class="bi bi-brightness-high"></i>-->
+    <!--                        <h4><a href="#">Magni Dolore</a></h4>-->
+    <!--                        <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium-->
+    <!--                            voluptatum deleniti atque</p>-->
+    <!--                    </div>-->
+    <!--                </div>-->
+    <!--                <div class="col-md-6 mt-4 mt-md-0">-->
+    <!--                    <div class="icon-box">-->
+    <!--                        <i class="bi bi-calendar4-week"></i>-->
+    <!--                        <h4><a href="#">Eiusmod Tempor</a></h4>-->
+    <!--                        <p>Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta-->
+    <!--                            nobis-->
+    <!--                            est eligendi</p>-->
+    <!--                    </div>-->
+    <!--                </div>-->
+    <!--            </div>-->
+
+    <!--        </div>-->
+    <!--    </section>&lt;!&ndash; End Services Section &ndash;&gt;-->
+
+
+    <section id="pricing" class="pricing">
+        <div class="container">
+
+            <div class="row">
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="box">
+                        <h3 style=color:red;><b><strong>NEWS</strong></b></h3>
+                        <img src="{% static 'assets/img/southafrica.jpg' %}" height="200">
+                        <br>
+                        <br>
+                        <br>
+                        <ul>
+                            <li>Nelson Mandela Is Elected For Presidency In South Africa</li>
+                        </ul>
+                        <div class="btn-wrap">
+                            <a href="news/index.php" class="btn-buy">Read More</a>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="box">
+                        <h3 style="color:red;"><b><strong>VIDEOS</strong></b></h3>
+                        <img src="https://storage.googleapis.com/katakata-cb1db.appspot.com/images/videos/1641797997"
+                             height="200">
+                        <br>
+                        <br>
+                        <br>
+                        <ul>
+                            <li>PICCOLO CHOOSES A WIFE -TEASER</li>
+                        </ul>
+                        <div class="btn-wrap">
+                            <a href="https://katakata.org/videos/" class="btn-buy">Watch More</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="box">
+                        <h3><b style="color:red;"><strong>MAGAZINES</strong></b></h3>
+                        <img src="https://storage.googleapis.com/katakata-cb1db.appspot.com/images/magazines/1642876778"
+                             height="200">
+                        <br>
+                        <br>
+                        <br>
+                        <ul>
+                            <li>VOLUME 8 ISSUE 31</li>
+                            <br>
+                        </ul>
+                        <div class="btn-wrap">
+                            <a href="" class="btn-buy">View All</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="box">
+                        <h3 style="color:red;"><b><strong>CARTOONS</strong></b></h3>
+                        <img src="https://firebasestorage.googleapis.com/v0/b/katakata-cb1db.appspot.com/o/images%2Fjabs%2F2.png?alt=media&token=f734095a-adb3-4da3-8334-fc450777ba7a"
+                             height="200">
+                        <br>
+                        <br>
+                        <br>
+                        <ul>
+                            <li>Agama The Kidnapper</li>
+                            <br>
+                        </ul>
+                        <div class="btn-wrap">
+                            <a href="#cartoontarget" class="btn-buy">View More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section><!-- End Pricing Section -->
+
+
+    <!-- ======= Portfolio Section ======= -->
+    <section id="cartoontarget" class="portfolio">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-12 d-flex justify-content-center">
+                    <ul id="portfolio-flters">
+                        <li data-filter="*" class="filter-active">All Cartoons</li>
+                        <li data-filter=".filter-humour">Humour</li>
+                        <li data-filter=".filter-proverbs">Proverbs</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row portfolio-container">
+                <div class="col-lg-4 col-md-6 portfolio-item filter-humour">
+                    <div class="portfolio-wrap">
+                        <p style="color:white;" align="center" background="white">USENI AND HIS DOG</p>
+                        <img src="https://storage.googleapis.com/katakata-cb1db.appspot.com/images/humours/1643642907"
+                             class="img-fluid" alt="">
+                        <div class="portfolio-info">
+                            <p>App</p>
+                            <div class="portfolio-links">
+                                <a href="{% static 'assets/img/portfolio/portfolio-1.jpg' %}" data-gallery="portfolioGallery"
+                                   class="portfolio-lightbox" title="App 1"><i class="bx bx-plus"></i></a>
+                                <a href="portfolio-details.html" class="portfolio-details-lightbox"
+                                   data-glightbox="type: external" title="Portfolio Details"><i class="bx bx-link"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-lg-4 col-md-6 portfolio-item filter-humour">
+                    <div class="portfolio-wrap">
+                        <p style="color:white;" align="center" background="white">AFRICAN LEADER CALL PRESIDENT OBAMA
+                            HOME FOR ADVICE</p>
+                        <img src="https://storage.googleapis.com/katakata-cb1db.appspot.com/images/humours/1643643202"
+                             class="img-fluid" alt="">
+                        <div class="portfolio-info">
+                            <p>App</p>
+                            <div class="portfolio-links">
+                                <a href="{% static 'assets/img/portfolio/portfolio-1.jpg' %}" data-gallery="portfolioGallery"
+                                   class="portfolio-lightbox" title="App 1"><i class="bx bx-plus"></i></a>
+                                <a href="portfolio-details.html" class="portfolio-details-lightbox"
+                                   data-glightbox="type: external" title="Portfolio Details"><i class="bx bx-link"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-lg-4 col-md-6 portfolio-item filter-humour">
+                    <div class="portfolio-wrap">
+                        <p style="color:white;" align="center" background="white">NZA: WHERE IS THE CAT</p>
+                        <img src="https://storage.googleapis.com/katakata-cb1db.appspot.com/images/humours/1643758561"
+                             class="img-fluid" alt="">
+                        <div class="portfolio-info">
+                            <p>App</p>
+                            <div class="portfolio-links">
+                                <a href="{% static 'assets/img/portfolio/portfolio-1.jpg' %}" data-gallery="portfolioGallery"
+                                   class="portfolio-lightbox" title="App 1"><i class="bx bx-plus"></i></a>
+                                <a href="portfolio-details.html" class="portfolio-details-lightbox"
+                                   data-glightbox="type: external" title="Portfolio Details"><i class="bx bx-link"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-lg-4 col-md-6 portfolio-item filter-proverbs">
+                    <div class="portfolio-wrap">
+                        <p style="color:white;" align="center">Brothers who get along will always defeat the enemy</p>
+                        <img src="https://storage.googleapis.com/katakata-cb1db.appspot.com/images/quotes/1641700758"
+                             alt="">
+                        <div class="portfolio-info">
+                            <div class="portfolio-links">
+                                <!--                                <a href="assets/img/portfolio/portfolio-2.jpg" data-gallery="portfolioGallery"-->
+                                <!--                                   class="portfolio-lightbox" title="Web 3"><i class="bx bx-plus"></i></a>-->
+                                <!--                                <a href="portfolio-details.html" class="portfolio-details-lightbox"-->
+                                <!--                                   data-glightbox="type: external" title="Portfolio Details"><i class="bx bx-link"></i></a>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 portfolio-item filter-proverbs">
+                    <div class="portfolio-wrap">
+                        <p style="color:white; align=" center">A small house will hold a hundred friends</p>
+                        <img height="280" width="380"
+                             src="https://storage.googleapis.com/katakata-cb1db.appspot.com/images/proverbs/1641987850"
+                             alt="">
+                        <div class="portfolio-info">
+                            <div class="portfolio-links">
+                                <!--                                <a href="assets/img/portfolio/portfolio-2.jpg" data-gallery="portfolioGallery"-->
+                                <!--                                   class="portfolio-lightbox" title="Web 3"><i class="bx bx-plus"></i></a>-->
+                                <!--                                <a href="portfolio-details.html" class="portfolio-details-lightbox"-->
+                                <!--                                   data-glightbox="type: external" title="Portfolio Details"><i class="bx bx-link"></i></a>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 portfolio-item filter-proverbs">
+                    <div class="portfolio-wrap">
+                        <p style="color:white;" align="center">KIKULACHO KI NGUONI MWAKO</p>
+                        <img height="280" width="380"
+                             src="https://storage.googleapis.com/katakata-cb1db.appspot.com/images/proverbs/1641987700"
+                             alt="">
+                        <div class="portfolio-info">
+                            <div class="portfolio-links">
+                                <!--                                <a href="assets/img/portfolio/portfolio-2.jpg" data-gallery="portfolioGallery"-->
+                                <!--                                   class="portfolio-lightbox" title="Web 3"><i class="bx bx-plus"></i></a>-->
+                                <!--                                <a href="portfolio-details.html" class="portfolio-details-lightbox"-->
+                                <!--                                   data-glightbox="type: external" title="Portfolio Details"><i class="bx bx-link"></i></a>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section><!-- End Portfolio Section -->
+
+</main><!-- End #main -->
+
+<!-- ======= Footer ======= -->
+<footer id="footer">
+    <div class="footer-top">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-info">
+                        <h3>Kata Kata African Cartoons</h3>
+                        <p>
+                            A108 Nairobi Street <br>
+                            365, Kenya<br><br>
+                            <strong>Phone:</strong> +254722107660<br>
+                            <strong>Email:</strong> info@katakata.org<br>
+                        </p>
+                        <div class="social-links mt-3">
+                            <a href="https://twitter.com/Katakatacartoon" class="twitter"><i class="bx bxl-twitter"></i></a>
+                            <a href="https://web.facebook.com/katak.kata.98" class="facebook"><i class="bx bxl-facebook"></i></a>
+                            <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+                            <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+                            <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-6 footer-links">
+                    <h4>Useful Links</h4>
+                    <ul>
+                        <li><i class="bx bx-chevron-right"></i> <a href="{% url 'homepage' %}">Home</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-6 footer-links">
+                    <h4>Our Services</h4>
+                    <ul>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">Animations</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">Cartoons</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-4 col-md-6 footer-newsletter">
+                    <h4>NewsLetter Updates</h4>
+                    <p>Enter your email adress to sign up for our newsletter below</p>
+                    <form action="" method="post">
+                        <input type="email" name="email"><input type="submit" value="Subscribe">
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="copyright">
+            &copy; <strong><span>Kata Kata African Cartoons</span></strong>. All Rights Reserved
+        </div>
+        <div class="credits">
+            <!-- All the links in the footer should remain intact. -->
+            <!-- You can delete the links only if you purchased the pro version. -->
+            <!-- Licensing information: https://bootstrapmade.com/license/ -->
+            <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/sailor-free-bootstrap-theme/ -->
+            Designed by <a href="https://bootstrapmade.com/">@ Tech Kaita</a>
+        </div>
+    </div>
+</footer><!-- End Footer -->
+
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+        class="bi bi-arrow-up-short"></i></a>
+
+<!-- Vendor JS Files -->
+<script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+<script src="{% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+<script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+<script src="{% static 'assets/vendor/waypoints/noframework.waypoints.js' %}"></script>
+<script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
+
+<!-- Template Main JS File -->
+<script src="{% static 'assets/js/main.js' %}"></script>
+
+</body>
+
