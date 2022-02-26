@@ -3,7 +3,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>{{ summary.pdf }}</title>
+        <!-- Favicon -->
+    <link href="{% static 'assets/img/small.png' %}" rel="icon">
+    <link href="{% static 'assets/img/small.png' %}" rel="apple-touch-icon">
 </head>
 <body>
 
@@ -20,7 +23,8 @@
         {#                </iframe>#}
 
         <embed
-                src="{{ summary.thepdf }}#toolbar=0"
+{#                src="{{ summary.thepdf }}#toolbar=0"#}
+                src="{{ summary.thepdf }}"
                 type="application/pdf"
                 frameBorder="0"
                 scrolling="auto"
