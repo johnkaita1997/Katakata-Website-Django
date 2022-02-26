@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<p>{{ thepdf }}</p>
+
+
+{% if summary.thepdf %}
+
+    <br>
+    <div align="center">
+
+        {#                <iframe src="https://docs.google.com/gview?url={{ summary.thepdf }}.pdf&embedded=true"#}
+        {#                        style="width:600px; height:500px;" frameborder="0">#}
+        {#                </iframe>#}
+
+        <embed
+                src="{{ summary.thepdf }}#toolbar=0"
+                type="application/pdf"
+                frameBorder="0"
+                scrolling="auto"
+                height="600px"
+                width="100%"
+        ></embed>
+
+        <br>
+        <br>
+        <button onclick="history.back()">Go Back</button>
+    </div>
+{% endif %}
+
+</body>
+</html>

@@ -1,0 +1,102 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cartoons</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xtra Blog</title>
+    <link rel="stylesheet" href="{% static 'assets/two/fontawesome/css/all.min.css' %}">
+    <!-- https://fontawesome.com/ -->
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+    <!-- https://fonts.google.com/ -->
+    <link href="{% static 'assets/two/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/two/css/templatemo-xtra-blog.css' %}" rel="stylesheet">
+
+    <link href="{% static 'assets/img/small.png' %}" rel="icon">
+    <link href="{% static 'assets/img/small.png' %}" rel="apple-touch-icon">
+
+</head>
+</head>
+<body>
+
+<header class="tm-header" id="tm-header">
+    <div class="tm-header-wrapper">
+        <button class="navbar-toggler" type="button" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="">
+{#            <img width="280px" src="{% static 'assets/img/kata_logo.png' %}">#}
+{#            <br><br>#}
+            <h3 class="">Kata Kata Cartoons</h3>
+            <br>
+        </div>
+
+        <nav class="tm-nav" id="tm-nav">
+            <ul>
+
+                <li class=""><a href="{% url 'homepage' %}" class="tm-nav-link"><i
+                        class="fas fa-home"></i>Home</a></li>
+
+                <li class=""><a href="{% url 'cartoonspage' %}" class="tm-nav-link"><i
+                        class="fas fa-home"></i>Humour</a></li>
+
+                <li class="tm-nav-item"><a href="{% url 'jabspage' %}" class="tm-nav-link">
+                    <i class="fas fa-pen"></i>
+                    Jabs
+                </a></li>
+
+                <li class="tm-nav-item"><a href="{% url 'quotespage' %}" class="tm-nav-link"><i
+                        class="fas fa-users"></i>Quotes</a></li>
+
+                <li class="tm-nav-item"><a href="{% url 'socialproblemspage' %}" class="tm-nav-link"><i
+                        class="fas fa-users"></i>Social Problems</a></li>
+
+
+                <li class="tm-nav-item"><a href="{% url 'proverbspage' %}" class="tm-nav-link"><i
+                        class="fas fa-users"></i>Proverbs</a></li>
+
+
+                <li class="tm-nav-item"><a href="{% url 'longcomicspage' %}" class="tm-nav-link"><i
+                        class="fas fa-users"></i>Long Comics</a></li>
+
+
+                <li class="tm-nav-item"><a href="{% url 'illustrationnamespage' %}" class="tm-nav-link"><i
+                        class="fas fa-users"></i>Illustrations</a></li>
+
+
+                <li class="tm-nav-item"><a href="{% url 'conthumournamespage' %}" class="tm-nav-link"><i
+                        class="fas fa-users"></i>Cont Humour</a></li>
+
+            </ul>
+        </nav>
+
+
+        {#        <div class="tm-mb-65">#}
+        {#            <a rel="nofollow" href="https://fb.com/templatemo" class="tm-social-link">#}
+        {#                <i class="fab fa-facebook tm-social-icon"></i>#}
+        {#            </a>#}
+        {#            <a href="https://twitter.com" class="tm-social-link">#}
+        {#                <i class="fab fa-twitter tm-social-icon"></i>#}
+        {#            </a>#}
+        {#            <a href="https://instagram.com" class="tm-social-link">#}
+        {#                <i class="fab fa-instagram tm-social-icon"></i>#}
+        {#            </a>#}
+        {#            <a href="https://linkedin.com" class="tm-social-link">#}
+        {#                <i class="fab fa-linkedin tm-social-icon"></i>#}
+        {#            </a>#}
+        {#        </div>#}
+        <p class="tm-mb-80 pr-5 text-white">
+            Don't worry, just sit down relax and have a good laugh.
+        </p>
+    </div>
+</header>
+
+{% block cartooncontent %}{% endblock cartooncontent %}
+
+<script src="{% static 'assets/two/js/jquery.min.js' %}"></script>
+<script src="{% static 'assets/two/js/templatemo-script.js' %}"></script>
+</body>
+</html>

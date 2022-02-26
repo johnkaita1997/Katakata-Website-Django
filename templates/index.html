@@ -17,8 +17,8 @@
     <meta content="" name="keywords">
 
     <!-- Favicons -->
-    <link href="{% static 'assets/img/favicon.png' %}" rel="icon">
-    <link href="{% static 'assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+    <link href="{% static 'assets/img/small.png' %}" rel="icon">
+    <link href="{% static 'assets/img/small.png' %}" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
@@ -59,7 +59,7 @@
 <header id="header" class="fixed-top d-flex align-items-center">
     <div class="container d-flex align-items-center">
 
-        <h1 class="logo me-auto"><img src="{% static 'assets/img/logo.png' %}"></h1>
+        <h1 class="logo me-auto"><img src="{% static 'assets/img/kata_logo.png' %}"></h1>
         <!-- Uncomment below if you prefer to use an image logo -->
         <!-- <a href="index.php" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
@@ -69,29 +69,31 @@
 
                 <li class="dropdown"><a href="#"><span>About</span> <i class="bi bi-chevron-down"></i></a>
                     <ul>
-                        <li><a href="team.html">Team</a></li>
-<!--                        <li><a href="about.html">About</a></li>-->
-<!--                        <li><a href="testimonials.html">Testimonials</a></li>-->
+                        <li><a href="{% url 'teampage' %}">Team</a></li>
+                        <!--                        <li><a href="about.html">About</a></li>-->
+                        <!--                        <li><a href="testimonials.html">Testimonials</a></li>-->
 
-<!--                        <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>-->
-<!--                            <ul>-->
-<!--                                <li><a href="#">Deep Drop Down 1</a></li>-->
-<!--                                <li><a href="#">Deep Drop Down 2</a></li>-->
-<!--                                <li><a href="#">Deep Drop Down 3</a></li>-->
-<!--                                <li><a href="#">Deep Drop Down 4</a></li>-->
-<!--                                <li><a href="#">Deep Drop Down 5</a></li>-->
-<!--                            </ul>-->
-<!--                        </li>-->
+                        <!--                        <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>-->
+                        <!--                            <ul>-->
+                        <!--                                <li><a href="#">Deep Drop Down 1</a></li>-->
+                        <!--                                <li><a href="#">Deep Drop Down 2</a></li>-->
+                        <!--                                <li><a href="#">Deep Drop Down 3</a></li>-->
+                        <!--                                <li><a href="#">Deep Drop Down 4</a></li>-->
+                        <!--                                <li><a href="#">Deep Drop Down 5</a></li>-->
+                        <!--                            </ul>-->
+                        <!--                        </li>-->
 
                     </ul>
                 </li>
-                <li><a href="news/index.php">News</a></li>
+                <li><a href={% url "newspage" %}>News</a></li>
                 <li><a href="https://katakata.org/videos/">Videos</a></li>
-                <li><a href="">Magazines</a></li>
-                <li><a href="#cartoontarget">Cartoons</a></li>
+                <li><a href="#cartoontarget">Magazines</a></li>
+                {#                <li><a href="#cartoontarget">Cartoons</a></li>#}
+                <li><a href="{% url 'cartoonspage' %}">Cartoons</a></li>
 
-                <li><a href="">Contact</a></li>
-                <li><a href="https://play.google.com/store/apps/details?id=techkaita.katakata&hl=en&gl=US" class="getstarted">Download Kata Kata App</a></li>
+                <li><a href="{% url 'teampage' %}">Contact</a></li>
+                <li><a href="https://play.google.com/store/apps/details?id=techkaita.katakata&hl=en&gl=US"
+                       class="getstarted">Download Kata Kata App</a></li>
             </ul>
             <i class="bi bi-list mobile-nav-toggle"></i>
         </nav><!-- .navbar -->
@@ -117,9 +119,11 @@
                         <p class="animate__animated animate__fadeInUp">We use our humorous but educational content to
                             sensitize social problems and harmful practices that hinder development in the society; by
                             so doing, we create attitudinal changes amongst the target group</p>
-                        <a href="https://play.google.com/store/apps/details?id=techkaita.katakata&hl=en&gl=US" class="btn-get-started animate__animated animate__fadeInUp scrollto">Download
+                        <a href="https://play.google.com/store/apps/details?id=techkaita.katakata&hl=en&gl=US"
+                           class="btn-get-started animate__animated animate__fadeInUp scrollto">Download
                             Android App</a>
-                        <a href="https://play.google.com/store/apps/details?id=techkaita.katakata&hl=en&gl=US" class="btn-get-started animate__animated animate__fadeInUp scrollto">Download
+                        <a href="https://play.google.com/store/apps/details?id=techkaita.katakata&hl=en&gl=US"
+                           class="btn-get-started animate__animated animate__fadeInUp scrollto">Download
                             IOS App</a>
                     </div>
                 </div>
@@ -130,13 +134,14 @@
                 <div class="carousel-container">
                     <div class="container">
                         <h2 class="animate__animated animate__fadeInDown">Don't Worry, Just Laugh</h2>
-                        <p class="animate__animated animate__fadeInUp">Simply sit down, grab a coffee with your friends and have a good laugh.</p>
-                        <a href="https://play.google.com/store/apps/details?id=techkaita.katakata&hl=en&gl=US" class="btn-get-started animate__animated animate__fadeInUp scrollto">Download
+                        <p class="animate__animated animate__fadeInUp">Simply sit down, grab a coffee with your friends
+                            and have a good laugh.</p>
+                        <a href="https://play.google.com/store/apps/details?id=techkaita.katakata&hl=en&gl=US"
+                           class="btn-get-started animate__animated animate__fadeInUp scrollto">Download
                             Our App</a>
                     </div>
                 </div>
             </div>
-
 
         </div>
 
@@ -160,10 +165,11 @@
             <div class="row content">
                 <div class="col-lg-6">
                     <h3><b><strong>OBJECTIVES</strong></b></h3>
-                    <h3>Our entire team at Kata Kata is driven with the desire to achieve the following among others :</h3>
+                    <h3>Our entire team at Kata Kata is driven with the desire to achieve the following among others
+                        :</h3>
                     <br><br>
                     <br><br>
-                    <img src="{% static 'assets/img/logo.png' %}" class="img-fluid" alt="Kata Kata">
+                    <img src="{% static 'assets/img/kata_logo.png' %}" class="img-fluid" alt="Kata Kata">
                 </div>
                 <div class="col-lg-6 pt-4 pt-lg-0">
                     <ul>
@@ -279,7 +285,7 @@
                             <li>Nelson Mandela Is Elected For Presidency In South Africa</li>
                         </ul>
                         <div class="btn-wrap">
-                            <a href="news/index.php" class="btn-buy">Read More</a>
+                            <a href={% url "newspage" %} class="btn-buy">Read More</a>
                         </div>
                     </div>
                 </div>
@@ -315,7 +321,7 @@
                             <br>
                         </ul>
                         <div class="btn-wrap">
-                            <a href="" class="btn-buy">View All</a>
+                            <a href="#cartoontarget" class="btn-buy">View All</a>
                         </div>
                     </div>
                 </div>
@@ -333,7 +339,7 @@
                             <br>
                         </ul>
                         <div class="btn-wrap">
-                            <a href="#cartoontarget" class="btn-buy">View More</a>
+                            <a href="{% url 'cartoonspage' %}" class="btn-buy">View More</a>
                         </div>
                     </div>
                 </div>
@@ -349,122 +355,45 @@
             <div class="row">
                 <div class="col-lg-12 d-flex justify-content-center">
                     <ul id="portfolio-flters">
-                        <li data-filter="*" class="filter-active">All Cartoons</li>
-                        <li data-filter=".filter-humour">Humour</li>
-                        <li data-filter=".filter-proverbs">Proverbs</li>
+                        <li data-filter="*" class="filter-active">Magazines</li>
                     </ul>
                 </div>
             </div>
 
-            <div class="row portfolio-container">
-                <div class="col-lg-4 col-md-6 portfolio-item filter-humour">
-                    <div class="portfolio-wrap">
-                        <p style="color:white;" align="center" background="white">USENI AND HIS DOG</p>
-                        <img src="https://storage.googleapis.com/katakata-cb1db.appspot.com/images/humours/1643642907"
-                             class="img-fluid" alt="">
-                        <div class="portfolio-info">
-                            <p>App</p>
-                            <div class="portfolio-links">
-                                <a href="{% static 'assets/img/portfolio/portfolio-1.jpg' %}" data-gallery="portfolioGallery"
-                                   class="portfolio-lightbox" title="App 1"><i class="bx bx-plus"></i></a>
-                                <a href="portfolio-details.html" class="portfolio-details-lightbox"
-                                   data-glightbox="type: external" title="Portfolio Details"><i class="bx bx-link"></i></a>
+            {#Magazines Section#}
+            <section id="pricing" class="pricing">
+                <div class="container">
+
+                    <div class="row">
+
+                        {% for value in summary.loadmagazines.values %}
+
+                            <div class="col-lg-3 col-md-6">
+                                <div class="box">
+                                    <h3 style="color:red;"><b><strong>{{ value.name }}</strong></b></h3>
+                                    <img src="{{ value.image }}"
+                                         height="200">
+                                    <br>
+                                    <br>
+                                    <br>
+{#                                    <ul>#}
+{#                                        <li>{{ value.name }}</li>#}
+{#                                    </ul>#}
+                                    <div class="btn-wrap">
+                                        <a href="{% url 'pdfviewerpage' thepdf=value.url %}" class="btn-buy">Read</a>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        {% endfor %}
+
                     </div>
                 </div>
+            </section><!-- End Magazine Section -->
 
-
-                <div class="col-lg-4 col-md-6 portfolio-item filter-humour">
-                    <div class="portfolio-wrap">
-                        <p style="color:white;" align="center" background="white">AFRICAN LEADER CALL PRESIDENT OBAMA
-                            HOME FOR ADVICE</p>
-                        <img src="https://storage.googleapis.com/katakata-cb1db.appspot.com/images/humours/1643643202"
-                             class="img-fluid" alt="">
-                        <div class="portfolio-info">
-                            <p>App</p>
-                            <div class="portfolio-links">
-                                <a href="{% static 'assets/img/portfolio/portfolio-1.jpg' %}" data-gallery="portfolioGallery"
-                                   class="portfolio-lightbox" title="App 1"><i class="bx bx-plus"></i></a>
-                                <a href="portfolio-details.html" class="portfolio-details-lightbox"
-                                   data-glightbox="type: external" title="Portfolio Details"><i class="bx bx-link"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="col-lg-4 col-md-6 portfolio-item filter-humour">
-                    <div class="portfolio-wrap">
-                        <p style="color:white;" align="center" background="white">NZA: WHERE IS THE CAT</p>
-                        <img src="https://storage.googleapis.com/katakata-cb1db.appspot.com/images/humours/1643758561"
-                             class="img-fluid" alt="">
-                        <div class="portfolio-info">
-                            <p>App</p>
-                            <div class="portfolio-links">
-                                <a href="{% static 'assets/img/portfolio/portfolio-1.jpg' %}" data-gallery="portfolioGallery"
-                                   class="portfolio-lightbox" title="App 1"><i class="bx bx-plus"></i></a>
-                                <a href="portfolio-details.html" class="portfolio-details-lightbox"
-                                   data-glightbox="type: external" title="Portfolio Details"><i class="bx bx-link"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="col-lg-4 col-md-6 portfolio-item filter-proverbs">
-                    <div class="portfolio-wrap">
-                        <p style="color:white;" align="center">Brothers who get along will always defeat the enemy</p>
-                        <img src="https://storage.googleapis.com/katakata-cb1db.appspot.com/images/quotes/1641700758"
-                             alt="">
-                        <div class="portfolio-info">
-                            <div class="portfolio-links">
-                                <!--                                <a href="assets/img/portfolio/portfolio-2.jpg" data-gallery="portfolioGallery"-->
-                                <!--                                   class="portfolio-lightbox" title="Web 3"><i class="bx bx-plus"></i></a>-->
-                                <!--                                <a href="portfolio-details.html" class="portfolio-details-lightbox"-->
-                                <!--                                   data-glightbox="type: external" title="Portfolio Details"><i class="bx bx-link"></i></a>-->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6 portfolio-item filter-proverbs">
-                    <div class="portfolio-wrap">
-                        <p style="color:white; align=" center">A small house will hold a hundred friends</p>
-                        <img height="280" width="380"
-                             src="https://storage.googleapis.com/katakata-cb1db.appspot.com/images/proverbs/1641987850"
-                             alt="">
-                        <div class="portfolio-info">
-                            <div class="portfolio-links">
-                                <!--                                <a href="assets/img/portfolio/portfolio-2.jpg" data-gallery="portfolioGallery"-->
-                                <!--                                   class="portfolio-lightbox" title="Web 3"><i class="bx bx-plus"></i></a>-->
-                                <!--                                <a href="portfolio-details.html" class="portfolio-details-lightbox"-->
-                                <!--                                   data-glightbox="type: external" title="Portfolio Details"><i class="bx bx-link"></i></a>-->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6 portfolio-item filter-proverbs">
-                    <div class="portfolio-wrap">
-                        <p style="color:white;" align="center">KIKULACHO KI NGUONI MWAKO</p>
-                        <img height="280" width="380"
-                             src="https://storage.googleapis.com/katakata-cb1db.appspot.com/images/proverbs/1641987700"
-                             alt="">
-                        <div class="portfolio-info">
-                            <div class="portfolio-links">
-                                <!--                                <a href="assets/img/portfolio/portfolio-2.jpg" data-gallery="portfolioGallery"-->
-                                <!--                                   class="portfolio-lightbox" title="Web 3"><i class="bx bx-plus"></i></a>-->
-                                <!--                                <a href="portfolio-details.html" class="portfolio-details-lightbox"-->
-                                <!--                                   data-glightbox="type: external" title="Portfolio Details"><i class="bx bx-link"></i></a>-->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
 
         </div>
+
+
     </section><!-- End Portfolio Section -->
 
 </main><!-- End #main -->
@@ -486,7 +415,8 @@
                         </p>
                         <div class="social-links mt-3">
                             <a href="https://twitter.com/Katakatacartoon" class="twitter"><i class="bx bxl-twitter"></i></a>
-                            <a href="https://web.facebook.com/katak.kata.98" class="facebook"><i class="bx bxl-facebook"></i></a>
+                            <a href="https://web.facebook.com/katak.kata.98" class="facebook"><i
+                                    class="bx bxl-facebook"></i></a>
                             <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
                             <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
                             <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
@@ -519,7 +449,8 @@
                 <div class="col-lg-4 col-md-6 footer-newsletter">
                     <h4>NewsLetter Updates</h4>
                     <p>Enter your email adress to sign up for our newsletter below</p>
-                    <form action="" method="post">
+                    <form action="#" method="post">
+                        {% csrf_token %}
                         <input type="email" name="email"><input type="submit" value="Subscribe">
                     </form>
 
