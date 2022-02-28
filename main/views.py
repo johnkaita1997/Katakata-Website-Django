@@ -24,7 +24,7 @@ def homepage(request):
 
 
 def cartoonspage(request):
-    response = render(request, "cartoonspage.html", {"summary": monthsummaryDict})
+    response = render(request, "longcomicspage.html", {"summary": monthsummaryDict})
     return response
 
 

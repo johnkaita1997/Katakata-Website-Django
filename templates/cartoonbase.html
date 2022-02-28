@@ -28,8 +28,8 @@
             <i class="fas fa-bars"></i>
         </button>
         <div class="">
-{#            <img width="280px" src="{% static 'assets/img/kata_logo.png' %}">#}
-{#            <br><br>#}
+            {#            <img width="280px" src="{% static 'assets/img/kata_logo.png' %}">#}
+            {#            <br><br>#}
             <h3 class="">Kata Kata Cartoons</h3>
             <br>
         </div>
@@ -39,6 +39,10 @@
 
                 <li class=""><a href="{% url 'homepage' %}" class="tm-nav-link"><i
                         class="fas fa-home"></i>Home</a></li>
+
+                <li class="tm-nav-item"><a href="{% url 'longcomicspage' %}" class="tm-nav-link"><i
+                        class="fas fa-users"></i>Long Comics</a></li>
+
 
                 <li class=""><a href="{% url 'cartoonspage' %}" class="tm-nav-link"><i
                         class="fas fa-home"></i>Humour</a></li>
@@ -57,10 +61,6 @@
 
                 <li class="tm-nav-item"><a href="{% url 'proverbspage' %}" class="tm-nav-link"><i
                         class="fas fa-users"></i>Proverbs</a></li>
-
-
-                <li class="tm-nav-item"><a href="{% url 'longcomicspage' %}" class="tm-nav-link"><i
-                        class="fas fa-users"></i>Long Comics</a></li>
 
 
                 <li class="tm-nav-item"><a href="{% url 'illustrationnamespage' %}" class="tm-nav-link"><i
@@ -89,7 +89,7 @@
         {#            </a>#}
         {#        </div>#}
         <p class="tm-mb-80 pr-5 text-white">
-            Don't worry, just sit down relax and have a good laugh.
+            Don’t Worry, Just Laugh.
         </p>
     </div>
 </header>
