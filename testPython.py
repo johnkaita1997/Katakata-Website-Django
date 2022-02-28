@@ -65,7 +65,7 @@ auth = firebase.auth()
 def loadhumour():
     big_dict = {}
     ref = dbs.reference('cartoons')
-    snapshot = ref.child("humour").order_by_child("timestamp").limit_to_last(3).get()
+    snapshot = ref.child("humour").order_by_child("timestamp").limit_to_last(2).get()
     if snapshot:
         for value in snapshot.values():
             smalldict = {}
@@ -79,7 +79,7 @@ def loadhumour():
 def loadjabs():
     big_dict = {}
     ref = dbs.reference('cartoons')
-    snapshot = ref.child("jabs").order_by_child("timestamp").limit_to_last(100).get()
+    snapshot = ref.child("jabs").order_by_child("timestamp").limit_to_last(2).get()
     if snapshot:
         for value in snapshot.values():
             smalldict = {}
@@ -93,7 +93,7 @@ def loadjabs():
 def loadquotes():
     big_dict = {}
     ref = dbs.reference('cartoons')
-    snapshot = ref.child("quotes").order_by_child("timestamp").limit_to_last(100).get()
+    snapshot = ref.child("quotes").order_by_child("timestamp").limit_to_last(2).get()
     if snapshot:
         for value in snapshot.values():
             smalldict = {}
@@ -107,7 +107,7 @@ def loadquotes():
 def loadsocialproblems():
     big_dict = {}
     ref = dbs.reference('cartoons')
-    snapshot = ref.child("socialproblems").order_by_child("timestamp").limit_to_last(100).get()
+    snapshot = ref.child("socialproblems").order_by_child("timestamp").limit_to_last(2).get()
     if snapshot:
         for value in snapshot.values():
             smalldict = {}
@@ -121,7 +121,7 @@ def loadsocialproblems():
 def loadproverbs():
     big_dict = {}
     ref = dbs.reference('cartoons')
-    snapshot = ref.child("proverbs").order_by_child("timestamp").limit_to_last(100).get()
+    snapshot = ref.child("proverbs").order_by_child("timestamp").limit_to_last(2).get()
     if snapshot:
         for value in snapshot.values():
             smalldict = {}
@@ -135,7 +135,7 @@ def loadproverbs():
 def loadlongcomics():
     big_dict = {}
     ref = dbs.reference('cartoons')
-    snapshot = ref.child("longcomics").order_by_child("timestamp").limit_to_last(100).get()
+    snapshot = ref.child("longcomics").order_by_child("timestamp").limit_to_last(2).get()
     if snapshot:
         for value in snapshot.values():
             smalldict = {}
@@ -149,7 +149,7 @@ def loadlongcomics():
 def loadillustrationnames():
     big_dict = {}
     ref = dbs.reference('cartoons')
-    snapshot = ref.child("illustrationnames").order_by_child("timestamp").limit_to_last(100).get()
+    snapshot = ref.child("illustrationnames").order_by_child("timestamp").limit_to_last(2).get()
     if snapshot:
         for value in snapshot.values():
             smalldict = {}
@@ -177,7 +177,7 @@ def loadillustrationcontent(illustrationname):
 def loadconthumournames():
     big_dict = {}
     ref = dbs.reference('cartoons')
-    snapshot = ref.child("conthumournames").order_by_child("timestamp").limit_to_last(100).get()
+    snapshot = ref.child("conthumournames").order_by_child("timestamp").limit_to_last(2).get()
     if snapshot:
         for value in snapshot.values():
             smalldict = {}
@@ -221,7 +221,7 @@ def loadvideos():
 def loadmagazines():
     big_dict = {}
     ref = dbs.reference('magazines')
-    snapshot = ref.order_by_child("timestamp").limit_to_last(4).get()
+    snapshot = ref.order_by_child("timestamp").limit_to_last(2).get()
     if snapshot:
         for value in snapshot.values():
             smalldict = {}

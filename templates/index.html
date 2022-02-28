@@ -201,7 +201,7 @@
         <div class="container">
 
             <div class="row">
-                <h1>Just sit back, relax and enjoy!</h1>
+                <h4 style="color: white; background-color: black">Just sit back, relax and enjoy!</h4>
             </div>
 
         </div>
@@ -355,7 +355,7 @@
             <div class="row">
                 <div class="col-lg-12 d-flex justify-content-center">
                     <ul id="portfolio-flters">
-                        <li data-filter="*" class="filter-active">Magazines</li>
+                        <h5 style="background: black; color: white; padding: 5px" data-filter="*" class="filter-active">Download Our App Now For Unlimited Magazines</h5>
                     </ul>
                 </div>
             </div>
@@ -365,6 +365,9 @@
                 <div class="container">
 
                     <div class="row">
+
+                        <div class="col-lg-3 col-md-6">
+                        </div>
 
                         {% for value in summary.loadmagazines.values %}
 
@@ -376,9 +379,9 @@
                                     <br>
                                     <br>
                                     <br>
-{#                                    <ul>#}
-{#                                        <li>{{ value.name }}</li>#}
-{#                                    </ul>#}
+                                    {#                                    <ul>#}
+                                    {#                                        <li>{{ value.name }}</li>#}
+                                    {#                                    </ul>#}
                                     <div class="btn-wrap">
                                         <a href="{% url 'pdfviewerpage' thepdf=value.url %}" class="btn-buy">Read</a>
                                     </div>
@@ -386,7 +389,11 @@
                             </div>
                         {% endfor %}
 
+                        <div class="col-lg-3 col-md-6">
+                        </div>
+
                     </div>
+
                 </div>
             </section><!-- End Magazine Section -->
 
