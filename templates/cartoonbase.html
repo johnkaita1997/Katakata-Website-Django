@@ -44,35 +44,32 @@
                         class="fas fa-users"></i>Long Comics</a></li>
 
 
+                <li class="tm-nav-item"><a href="{% url 'conthumournamespage' %}" class="tm-nav-link"><i
+                        class="fas fa-users"></i>Short comics</a></li>
+
                 <li class=""><a href="{% url 'cartoonspage' %}" class="tm-nav-link"><i
-                        class="fas fa-home"></i>Humour</a></li>
+                        class="fas fa-home"></i>Single Comics</a></li>
+
+                <li class="tm-nav-item"><a href="{% url 'illustrationnamespage' %}" class="tm-nav-link"><i
+                        class="fas fa-users"></i>Illustrations</a></li>
+
+                <li class="tm-nav-item"><a href="{% url 'socialproblemspage' %}" class="tm-nav-link"><i
+                        class="fas fa-users"></i>Social Problems</a></li>
+
+                <li class="tm-nav-item"><a href="{% url 'quotespage' %}" class="tm-nav-link"><i
+                        class="fas fa-users"></i>Quotes</a></li>
 
                 <li class="tm-nav-item"><a href="{% url 'jabspage' %}" class="tm-nav-link">
                     <i class="fas fa-pen"></i>
                     Jabs
                 </a></li>
 
-                <li class="tm-nav-item"><a href="{% url 'quotespage' %}" class="tm-nav-link"><i
-                        class="fas fa-users"></i>Quotes</a></li>
-
-                <li class="tm-nav-item"><a href="{% url 'socialproblemspage' %}" class="tm-nav-link"><i
-                        class="fas fa-users"></i>Social Problems</a></li>
-
-
                 <li class="tm-nav-item"><a href="{% url 'proverbspage' %}" class="tm-nav-link"><i
                         class="fas fa-users"></i>Proverbs</a></li>
 
 
-                <li class="tm-nav-item"><a href="{% url 'illustrationnamespage' %}" class="tm-nav-link"><i
-                        class="fas fa-users"></i>Illustrations</a></li>
-
-
-                <li class="tm-nav-item"><a href="{% url 'conthumournamespage' %}" class="tm-nav-link"><i
-                        class="fas fa-users"></i>Cont Humour</a></li>
-
             </ul>
         </nav>
-
 
         {#        <div class="tm-mb-65">#}
         {#            <a rel="nofollow" href="https://fb.com/templatemo" class="tm-social-link">#}
@@ -94,6 +91,9 @@
     </div>
 </header>
 
+<br>
+<h2 align="center" style="margin-left: 240px; color: black">Preview! For More Content, <a href="{% url 'homepage' %}">Download</a>
+    Our App Now!</h2>
 {% block cartooncontent %}{% endblock cartooncontent %}
 
 <script src="{% static 'assets/two/js/jquery.min.js' %}"></script>

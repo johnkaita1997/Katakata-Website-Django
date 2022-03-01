@@ -307,3 +307,55 @@ def loadnewslocations():
                     big_dict[timestamp]['videos'][value['timestamp']] = smallviddict
 
     return big_dict
+
+
+def latestvideo():
+    big_dict = {}
+    ref = dbs.reference('videos/combined')
+    snapshot = ref.order_by_child("timestamp").limit_to_first(1).get()
+    if snapshot:
+        for value in snapshot.values():
+            smalldict = {}
+            smalldict['name'] = value['name']
+            smalldict['image'] = value['image']
+            big_dict[value['timestamp']] = smalldict
+    return big_dict
+
+
+def latestnews():
+    big_dict = {}
+    ref = dbs.reference('news/news')
+    snapshot = ref.order_by_child("timestamp").limit_to_first(1).get()
+    if snapshot:
+        for value in snapshot.values():
+            smalldict = {}
+            smalldict['name'] = value['name']
+            smalldict['image'] = value['image']
+            big_dict[value['timestamp']] = smalldict
+    return big_dict
+
+
+def latestmagazine():
+    big_dict = {}
+    ref = dbs.reference('magazines')
+    snapshot = ref.order_by_child("timestamp").limit_to_first(1).get()
+    if snapshot:
+        for value in snapshot.values():
+            smalldict = {}
+            smalldict['name'] = value['name']
+            smalldict['image'] = value['image']
+            smalldict['url'] = value['url']
+            big_dict[value['timestamp']] = smalldict
+    return big_dict
+
+def latestcartoon():
+    big_dict = {}
+    ref = dbs.reference('cartoons')
+    snapshot = ref.child("latestcartoon").order_by_child("timestamp").limit_to_first(1).get()
+    if snapshot:
+        for value in snapshot.values():
+            smalldict = {}
+            smalldict['name'] = value['name']
+            smalldict['image'] = value['image']
+            big_dict[value['timestamp']] = smalldict
+    return big_dict

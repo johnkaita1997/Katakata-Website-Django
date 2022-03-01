@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 from testPython import loadhumour, loadjabs, loadquotes, loadsocialproblems, loadproverbs, loadlongcomics, \
     loadillustrationnames, loadillustrationcontent, loadconthumournames, loadconthumourcontent, loadvideos, \
-    loadmagazines, loadnewscategories, dbs, loadnewslocations
+    loadmagazines, loadnewscategories, dbs, loadnewslocations, latestcartoon, latestmagazine, latestnews, latestvideo
 
 monthsummaryDict = {}
 monthsummaryDict['loadhumour'] = loadhumour()
@@ -17,6 +17,10 @@ monthsummaryDict['loadvideos'] = loadvideos()
 monthsummaryDict['loadmagazines'] = loadmagazines()
 monthsummaryDict['loadnewscategories'] = loadnewscategories()
 monthsummaryDict['loadnewslocations'] = loadnewslocations()
+monthsummaryDict['latestnews'] = latestnews()
+monthsummaryDict['latestcartoon'] = latestcartoon()
+monthsummaryDict['latestmagazine'] = latestmagazine()
+monthsummaryDict['latestvideo'] = latestvideo()
 
 def homepage(request):
     response = render(request, "index.html", {"summary": monthsummaryDict})
@@ -24,7 +28,7 @@ def homepage(request):
 
 
 def cartoonspage(request):
-    response = render(request, "longcomicspage.html", {"summary": monthsummaryDict})
+    response = render(request, "humourpage.html", {"summary": monthsummaryDict})
     return response
 
 

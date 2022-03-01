@@ -4,7 +4,7 @@
 {% block cartooncontent %}
     <div class="container-fluid">
         <main class="tm-main">
-<br>
+            <br>
             <p style="font-size: 20px; color: black">PROVERBS</p>
 
             <div class="row tm-row">
@@ -12,13 +12,15 @@
                 {% for value in summary.loadproverbs.values %}
 
                     <article class="col-12 col-md-6 tm-post">
+
+                        <h2 style="background: black; color: white; padding: 10px"   class="tm-pt-30 tm-color-primaryb tm-post-title">{{ value.name }}</h2>
+
                         {#                    <hr class="tm-hr-primary">#}
                         <a href="{% url 'imageviewer' theimage=value.image %}"
                            class="effect-lily tm-post-link tm-pt-60">
                             <div class="tm-post-link-inner">
                                 <img src="{{ value.image }}" alt="Image" class="350" width="400" height="350">
                             </div>
-                            <h2 class="tm-pt-30 tm-color-primaryb tm-post-title">{{ value.name }}</h2>
                         </a>
                         <p style="font-size: 15px; color: black" class="tm-pt-30">
                             {{ value.description }}

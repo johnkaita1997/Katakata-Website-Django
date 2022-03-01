@@ -13,7 +13,7 @@ body {
 body::-webkit-scrollbar {
     width: 8px;
     height: 8px;
-    background-color: rgba(0, 0, 0, 0.9);
+    background-color: #515d6a;
 }
 
 /* Add a thumb */
@@ -149,7 +149,7 @@ nav {
 /* Menu */
 
 .overlay-menu {
-    background: rgba(0, 0, 0, 0.95);
+    background: #515d6a;
     color: #ffffff;
     position: fixed;
     z-index: 100;
@@ -404,7 +404,7 @@ nav {
 
 /* Modal */
 .modal {
-    background-color: rgba(0, 0, 0, .95);
+    background-color: #515d6a;
     display: none;
     overflow: auto;
     position: fixed;
@@ -563,7 +563,7 @@ nav {
 footer {
     width: 100%;
     height: 80px;
-    background-color: #313131;
+    background-color: #515d6a;
 }
 
 footer p {
@@ -683,7 +683,7 @@ footer a:hover {
 
 .grid-portfolio {
     padding: 65px 0px;
-    background-color: #232323;
+    background-color: #515d6a;
 }
 
 .grid-portfolio .portfolio-item {
@@ -753,7 +753,7 @@ footer a:hover {
     text-decoration: none;
     letter-spacing: 1px;
     color: #fff;
-    background-color: #313131;
+    background-color: #515d6a;
     transition: all 0.5s;
 }
 
@@ -763,7 +763,7 @@ footer a:hover {
 
 
 .services {
-    background-color: #232323;
+    background-color: #515d6a;
     padding: 65px 0px;
 }
 
@@ -775,7 +775,7 @@ footer a:hover {
 }
 
 .services .service-item:hover {
-    background-color: #313131;
+    background-color: #515d6a;
 }
 
 .services .service-item .icon {
@@ -818,7 +818,7 @@ footer a:hover {
 }
 
 .more-about-us .content {
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: #515d6a;
     text-align: left;
     padding: 150px 60px;
     color: #fff;
@@ -871,14 +871,14 @@ footer a:hover {
 
 .pricing-tables {
     padding: 65px 0px;
-    background-color: #232323;
+    background-color: #515d6a;
 }
 
 .pricing-tables .table-item {
     padding: 60px 0px;
     margin: 15px 0px;
     text-align: center;
-    background-color: #313131;
+    background-color: #515d6a;
 }
 
 .pricing-tables .table-item h4 {
@@ -895,7 +895,7 @@ footer a:hover {
     color: #aaa;
     letter-spacing: 0.5px;
     text-transform: capitalize;
-    border-bottom: 1px solid #414141;
+    border-bottom: 1px solid #515d6a;
     width: 100%;
     padding-bottom: 40px;
 }
@@ -941,14 +941,14 @@ footer a:hover {
 }
 
 .pricing-tables .premium-item h4, .pricing-tables .premium-item span, .pricing-tables .premium-item ul li, .pricing-tables .premium-item .simple-btn a {
-    color: #232323;
-    border-color: #232323;
+    color: #515d6a;
+    border-color: #515d6a;
 }
 
 
 .blog-entries {
     padding: 80px 0px;
-    background-color: #232323;
+    background-color: #515d6a;
 }
 
 
@@ -958,7 +958,7 @@ footer a:hover {
 
 
 .blog-post {
-    border-bottom: 1px solid #414141;
+    border-bottom: 1px solid #515d6a;
     padding-bottom: 65px;
     margin-bottom: 60px;
 }
@@ -1038,7 +1038,7 @@ footer a:hover {
 }
 
 .blog-entries .page-number li.active a {
-    color: #232323;
+    color: #515d6a;
     background-color: #fff;
 }
 
@@ -1055,7 +1055,7 @@ footer a:hover {
     display: inline-block;
     line-height: 50px;
     text-align: center;
-    background-color: #414141;
+    background-color: #515d6a;
     transition: all 0.5s;
 }
 
@@ -1081,7 +1081,7 @@ footer a:hover {
     font-weight: 200;
     color: #fff;
     letter-spacing: 0.5px;
-    border-bottom: 1px solid #414141;
+    border-bottom: 1px solid #515d6a;
     padding-bottom: 25px;
     display: inline-block;
     width: 100%;
@@ -1112,8 +1112,8 @@ footer a:hover {
 }
 
 .single-blog-post .tags-share {
-    border-top: 1px solid #414141;
-    border-bottom: 1px solid #414141;
+    border-top: 1px solid #515d6a;
+    border-bottom: 1px solid #515d6a;
     padding: 8px 0px 10px 0px;
 }
 
@@ -1173,7 +1173,7 @@ footer a:hover {
     margin-top: 40px;
     letter-spacing: 0.5px;
     padding-bottom: 10px;
-    border-bottom: 1px solid #414141;
+    border-bottom: 1px solid #515d6a;
     margin-bottom: 20px;
 }
 

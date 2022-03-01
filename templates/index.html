@@ -59,7 +59,7 @@
 <header id="header" class="fixed-top d-flex align-items-center">
     <div class="container d-flex align-items-center">
 
-        <h1 class="logo me-auto"><img src="{% static 'assets/img/kata_logo.png' %}"></h1>
+        <h1 class="logo me-auto"><img src="{% static 'assets/img/logolast.png' %}"></h1>
         <!-- Uncomment below if you prefer to use an image logo -->
         <!-- <a href="index.php" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
@@ -130,11 +130,11 @@
             </div>
 
             <!-- Slide 2 -->
-            <div class="carousel-item" style="background-image: url({% static 'assets/img/slide/slide-2.jpg' %})">
+            <div class="carousel-item" style="background-image: url({% static 'assets/img/torchtwo.jpg' %})">
                 <div class="carousel-container">
                     <div class="container">
                         <h2 class="animate__animated animate__fadeInDown">Don't Worry, Just Laugh</h2>
-                        <p class="animate__animated animate__fadeInUp">Simply sit down, grab a coffee with your friends
+                        <p class="animate__animated animate__fadeInUp">Grab a coffee with your friends
                             and have a good laugh.</p>
                         <a href="https://play.google.com/store/apps/details?id=techkaita.katakata&hl=en&gl=US"
                            class="btn-get-started animate__animated animate__fadeInUp scrollto">Download
@@ -202,7 +202,7 @@
         <div class="container">
 
             <div class="row">
-                <h4 style="color: white; background-color: black">Just sit back, relax and enjoy!</h4>
+                <h4 style="color: white; background-color: #515d6a">Don't worry, just Laugh!</h4>
             </div>
 
         </div>
@@ -275,75 +275,79 @@
 
             <div class="row">
 
-                <div class="col-lg-3 col-md-6">
-                    <div class="box">
-                        <h3 style=color:red;><b><strong>NEWS</strong></b></h3>
-                        <img src="{% static 'assets/img/southafrica.jpg' %}" height="200">
-                        <br>
-                        <br>
-                        <br>
-                        <ul>
-                            <li>Nelson Mandela Is Elected For Presidency In South Africa</li>
-                        </ul>
-                        <div class="btn-wrap">
-                            <a href={% url "newspage" %} class="btn-buy">Read More</a>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="col-lg-3 col-md-6">
-                    <div class="box">
-                        <h3 style="color:red;"><b><strong>VIDEOS</strong></b></h3>
-                        <img src="https://storage.googleapis.com/katakata-cb1db.appspot.com/images/videos/1641797997"
-                             height="200">
-                        <br>
-                        <br>
-                        <br>
-                        <ul>
-                            <li>PICCOLO CHOOSES A WIFE -TEASER</li>
-                        </ul>
-                        <div class="btn-wrap">
-                            <a href="https://katakata.org/videos/" class="btn-buy">Watch More</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6">
-                    <div class="box">
-                        <h3><b style="color:red;"><strong>MAGAZINES</strong></b></h3>
-                        <img src="https://storage.googleapis.com/katakata-cb1db.appspot.com/images/magazines/1642876778"
-                             height="200">
-                        <br>
-                        <br>
-                        <br>
-                        <ul>
-                            <li>VOLUME 8 ISSUE 31</li>
+                {% for value in summary.latestnews.values %}
+                    <div class="col-lg-3 col-md-6">
+                        <div class="box">
+                            <h3 style=color:red;><b><strong>NEWS</strong></b></h3>
+                            <img src="{{ value.image }}" height="200">
                             <br>
-                        </ul>
-                        <div class="btn-wrap">
-                            <a href="#cartoontarget" class="btn-buy">View More</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6">
-                    <div class="box">
-                        <h3 style="color:red;"><b><strong>CARTOONS</strong></b></h3>
-                        <img src="https://firebasestorage.googleapis.com/v0/b/katakata-cb1db.appspot.com/o/images%2Fjabs%2F2.png?alt=media&token=f734095a-adb3-4da3-8334-fc450777ba7a"
-                             height="200">
-                        <br>
-                        <br>
-                        <br>
-                        <ul>
-                            <li>Agama The Kidnapper</li>
                             <br>
-                        </ul>
-                        <div class="btn-wrap">
-                            <a href="{% url 'cartoonspage' %}" class="btn-buy">View More</a>
+                            <br>
+                            <ul>
+                                <li>{{ value.name }}</li>
+                            </ul>
+                            <div class="btn-wrap">
+                                <a href={% url "newspage" %} class="btn-buy">Read More</a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                {% endfor %}
+
+
+                {% for value in summary.latestvideo.values %}
+                    <div class="col-lg-3 col-md-6">
+                        <div class="box">
+                            <h3 style=color:red;><b><strong>VIDEOS</strong></b></h3>
+                            <img src="{{ value.image }}" height="200">
+                            <br>
+                            <br>
+                            <br>
+                            <ul>
+                                <li>{{ value.name }}</li>
+                            </ul>
+                            <div class="btn-wrap">
+                                <a href="https://katakata.org/videos" class="btn-buy">Read More</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+                {% for value in summary.latestmagazine.values %}
+                    <div class="col-lg-3 col-md-6">
+                        <div class="box">
+                            <h3 style=color:red;><b><strong>MAGAZINES</strong></b></h3>
+                            <img src="{{ value.image }}" height="200">
+                            <br>
+                            <br>
+                            <br>
+                            <ul>
+                                <li>{{ value.name }}</li>
+                            </ul>
+                            <div class="btn-wrap">
+                                <a href="#cartoontarget" class="btn-buy">Read More</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+                {% for value in summary.latestcartoon.values %}
+                    <div class="col-lg-3 col-md-6">
+                        <div class="box">
+                            <h3 style=color:red;><b><strong>CARTOONS</strong></b></h3>
+                            <img src="{{ value.image }}" height="200">
+                            <br>
+                            <br>
+                            <br>
+                            <ul>
+                                <li>{{ value.name }}</li>
+                            </ul>
+                            <div class="btn-wrap">
+                                <a href={% url "cartoonspage" %} class="btn-buy">Read More</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
             </div>
         </div>
     </section><!-- End Pricing Section -->
@@ -356,8 +360,9 @@
             <div class="row">
                 <div class="col-lg-12 d-flex justify-content-center">
                     <ul id="portfolio-flters">
-                        <h5 style="background: black; color: white; padding: 5px" data-filter="*" class="filter-active">
-                            Download Our App Now For Unlimited Magazines</h5>
+                        <h5 style="background: #515d6a; color: white; padding: 5px" data-filter="*"
+                            class="filter-active">
+                            For more content, download our App Now</h5>
                     </ul>
                 </div>
             </div>
@@ -428,21 +433,17 @@
                             <a href="https://twitter.com/Katakatacartoon" class="twitter"><i class="bx bxl-twitter"></i></a>
                             <a href="https://web.facebook.com/katak.kata.98" class="facebook"><i
                                     class="bx bxl-facebook"></i></a>
-                            <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-                            <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
-                            <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+                            <a href="https://www.instagram.com/katakatacartoon/?hl=en" class="instagram"><i class="bx bxl-instagram"></i></a>
+                            <a href="https://www.linkedin.com/in/ogoubabukoh/" class="linkedin"><i class="bx bxl-linkedin"></i></a>
                         </div>
                     </div>
                 </div>
 
                 <div class="col-lg-2 col-md-6 footer-links">
-                    <h4>Useful Links</h4>
+                    <h4>Quick Links</h4>
                     <ul>
                         <li><i class="bx bx-chevron-right"></i> <a href="{% url 'homepage' %}">Home</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="{% url 'teampage' %}">Our Team</a></li>
                     </ul>
                 </div>
 
