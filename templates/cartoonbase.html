@@ -92,8 +92,14 @@
 </header>
 
 <br>
-<h2 align="center" style="margin-left: 240px; color: black">Preview! For More Content, <a href="{% url 'homepage' %}">Download</a>
-    Our App Now!</h2>
+
+<div class="container-fluid">
+    <main class="tm-main">
+        <h2 align="center" style="color: black">Preview! For More Content, <a
+                href="{% url 'homepage' %}">Download</a>
+            Our App Now!</h2>
+    </main>
+</div>
 {% block cartooncontent %}{% endblock cartooncontent %}
 
 <script src="{% static 'assets/two/js/jquery.min.js' %}"></script>
