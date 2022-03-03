@@ -110,6 +110,7 @@ def newsviewer(request, newsid):
     newsdict['name'] = dbs.reference(f'news/news/{identity}/name').get()
 
     response = render(request, "newsviewer.html", {"summary": newsdict})
+    # comment
     return response
 
 def teampage(request):
