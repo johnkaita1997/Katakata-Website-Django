@@ -1,6 +1,8 @@
 import os
 
 # url = static('files/kaita.json')
+import random
+
 import firebase_admin
 import pyrebase
 from firebase_admin import credentials
@@ -141,6 +143,7 @@ def loadlongcomics():
             smalldict = {}
             smalldict['name'] = value['name']
             smalldict['image'] = value['image']
+            smalldict['url'] = value['url']
             smalldict['description'] = ""
             big_dict[value['timestamp']] = smalldict
     return big_dict
@@ -312,7 +315,7 @@ def loadnewslocations():
 def latestvideo():
     big_dict = {}
     ref = dbs.reference('videos/combined')
-    snapshot = ref.order_by_child("timestamp").limit_to_first(1).get()
+    snapshot = ref.order_by_child("timestamp").limit_to_last(1).get()
     if snapshot:
         for value in snapshot.values():
             smalldict = {}
@@ -359,3 +362,20 @@ def latestcartoon():
             smalldict['image'] = value['image']
             big_dict[value['timestamp']] = smalldict
     return big_dict
+
+
+def data():
+    data = {}
+    data['rice'] = ["rice", 5, 100]
+    data['milk'] = ["milk", 2, 100]
+
+def fetchsliderimages():
+    big_dict = []
+    ref = dbs.reference('cartoons/sliderimages')
+    snapshot = ref.order_by_child("timestamp").limit_to_last(100).get()
+    if snapshot:
+        for value in snapshot.values():
+            big_dict.append(value['image'])
+
+    image = random.choice(big_dict)
+    return image

@@ -47,11 +47,8 @@
                 <li class="tm-nav-item"><a href="{% url 'conthumournamespage' %}" class="tm-nav-link"><i
                         class="fas fa-users"></i>Short comics</a></li>
 
-                <li class=""><a href="{% url 'cartoonspage' %}" class="tm-nav-link"><i
+                <li class=""><a href="{% url 'humourpage' %}" class="tm-nav-link"><i
                         class="fas fa-home"></i>Single Comics</a></li>
-
-                <li class="tm-nav-item"><a href="{% url 'illustrationnamespage' %}" class="tm-nav-link"><i
-                        class="fas fa-users"></i>Illustrations</a></li>
 
                 <li class="tm-nav-item"><a href="{% url 'socialproblemspage' %}" class="tm-nav-link"><i
                         class="fas fa-users"></i>Social Problems</a></li>
@@ -91,13 +88,14 @@
     </div>
 </header>
 
-<br>
-
 <div class="container-fluid">
     <main class="tm-main">
-        <h2 align="center" style="color: black">Preview! For More Content, <a
-                href="{% url 'homepage' %}">Download</a>
-            Our App Now!</h2>
+        <a href="https://play.google.com/store/apps/details?id=techkaita.katakata&hl=en&gl=US"><img width="300px"
+                                                                                                    height="80px"
+                                                                                                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Google_Play_Store_badge_EN.svg/1200px-Google_Play_Store_badge_EN.svg.png"></a>
+            <a style="float: right" href="https://play.google.com/store/apps/details?id=techkaita.katakata&hl=en&gl=US"><img width="300px"
+                                                                                                        height="80px"
+                                                                                                        src="https://i2.wp.com/mofc.unic.ac.cy/wp-content/uploads/revslider/decentralized-2020-home-slider1-12/get-it-on-app-store.png?fit=1024%2C355&ssl=1"></a>
     </main>
 </div>
 {% block cartooncontent %}{% endblock cartooncontent %}

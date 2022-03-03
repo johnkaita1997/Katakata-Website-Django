@@ -2,7 +2,8 @@ from django.shortcuts import render
 
 from testPython import loadhumour, loadjabs, loadquotes, loadsocialproblems, loadproverbs, loadlongcomics, \
     loadillustrationnames, loadillustrationcontent, loadconthumournames, loadconthumourcontent, loadvideos, \
-    loadmagazines, loadnewscategories, dbs, loadnewslocations, latestcartoon, latestmagazine, latestnews, latestvideo
+    loadmagazines, loadnewscategories, dbs, loadnewslocations, latestcartoon, latestmagazine, latestnews, \
+    latestvideo, data, fetchsliderimages
 
 monthsummaryDict = {}
 monthsummaryDict['loadhumour'] = loadhumour()
@@ -21,6 +22,8 @@ monthsummaryDict['latestnews'] = latestnews()
 monthsummaryDict['latestcartoon'] = latestcartoon()
 monthsummaryDict['latestmagazine'] = latestmagazine()
 monthsummaryDict['latestvideo'] = latestvideo()
+monthsummaryDict['data'] = latestvideo()
+monthsummaryDict['sliderimages'] = fetchsliderimages()
 
 def homepage(request):
     response = render(request, "index.html", {"summary": monthsummaryDict})
@@ -109,7 +112,22 @@ def newsviewer(request, newsid):
     response = render(request, "newsviewer.html", {"summary": newsdict})
     return response
 
-
 def teampage(request):
     response = render(request, "team.html", {"summary": monthsummaryDict})
+    return response
+
+def shoppage(request):
+    response = render(request, "shoppage.html", {"summary": monthsummaryDict})
+    return response
+
+def productdetails(request):
+    response = render(request, "productdetails.html", {"summary": monthsummaryDict})
+    return response
+
+def cartpage(request):
+    response = render(request, "cartpage.html", {"summary": monthsummaryDict})
+    return response
+
+def humourpage(request):
+    response = render(request, "humourpage.html", {"summary": monthsummaryDict})
     return response

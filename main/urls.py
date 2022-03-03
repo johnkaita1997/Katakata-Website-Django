@@ -5,6 +5,10 @@ from main import views as mainviews
 urlpatterns = [
     path('', mainviews.homepage, name="homepage"),
     path('newspage', mainviews.newspage, name="newspage"),
+    path('shoppage', mainviews.shoppage, name="shoppage"),
+    path('humourpage', mainviews.humourpage, name="humourpage"),
+    path('cartpage', mainviews.cartpage, name="cartpage"),
+    path('productdetails', mainviews.productdetails, name="productdetails"),
     path('cartoonspage', mainviews.cartoonspage, name="cartoonspage"),
     path('jabspage', mainviews.jabspage, name="jabspage"),
     path('teampage', mainviews.teampage, name="teampage"),
