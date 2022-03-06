@@ -66,15 +66,22 @@ auth = firebase.auth()
 
 def loadhumour():
     big_dict = {}
-    ref = dbs.reference('cartoons')
-    snapshot = ref.child("humour").order_by_child("timestamp").limit_to_first(2).get()
-    if snapshot:
-        for value in snapshot.values():
-            smalldict = {}
-            smalldict['name'] = value['name']
-            smalldict['image'] = value['image']
-            smalldict['description'] = value['description']
-            big_dict[value['timestamp']] = smalldict
+    ref = dbs.reference('names')
+    snapshot = ref.get()
+    for value in snapshot.values():
+        name = value['name']
+        ref = dbs.reference(f'names/{name}/cartoons/humour')
+        snapshot = ref.order_by_child("timestamp").limit_to_first(1).get()
+        if snapshot:
+            for value in snapshot.values():
+                smalldict = {}
+                smalldict['name'] = value['name']
+                smalldict['image'] = value['image']
+                # smalldict['url'] = value['url']
+                # smalldict['orientation'] = value['orientation']
+                smalldict['description'] = value['description']
+                smalldict['timestamp'] = value['timestamp']
+                big_dict[name] = smalldict
     return big_dict
 
 
@@ -136,16 +143,20 @@ def loadproverbs():
 
 def loadlongcomics():
     big_dict = {}
-    ref = dbs.reference('cartoons')
-    snapshot = ref.child("longcomics").order_by_child("timestamp").limit_to_first(2).get()
-    if snapshot:
-        for value in snapshot.values():
-            smalldict = {}
-            smalldict['name'] = value['name']
-            smalldict['image'] = value['image']
-            smalldict['url'] = value['url']
-            smalldict['description'] = ""
-            big_dict[value['timestamp']] = smalldict
+    ref = dbs.reference('names')
+    snapshot = ref.get()
+    for value in snapshot.values():
+        name = value['name']
+        ref = dbs.reference(f'names/{name}/cartoons/longcomics')
+        snapshot = ref.order_by_child("timestamp").limit_to_first(1).get()
+        if snapshot:
+            for value in snapshot.values():
+                smalldict = {}
+                smalldict['name'] = value['name']
+                smalldict['image'] = value['image']
+                smalldict['url'] = value['url']
+                smalldict['description'] = ""
+                big_dict[name] = smalldict
     return big_dict
 
 
@@ -179,15 +190,21 @@ def loadillustrationcontent(illustrationname):
 
 def loadconthumournames():
     big_dict = {}
-    ref = dbs.reference('cartoons')
-    snapshot = ref.child("conthumournames").order_by_child("timestamp").limit_to_first(2).get()
-    if snapshot:
-        for value in snapshot.values():
-            smalldict = {}
-            smalldict['name'] = value['name']
-            smalldict['image'] = value['image']
-            smalldict['description'] = ""
-            big_dict[value['timestamp']] = smalldict
+    ref = dbs.reference('names')
+    snapshot = ref.get()
+    for value in snapshot.values():
+        name = value['name']
+        ref = dbs.reference(f'names/{name}/cartoons/conthumour')
+        snapshot = ref.order_by_child("timestamp").limit_to_first(1).get()
+        if snapshot:
+            for value in snapshot.values():
+                smalldict = {}
+                smalldict['name'] = value['name']
+                print(value['name'])
+                smalldict['image'] = value['image']
+                # smalldict['url'] = value['url']
+                # smalldict['description'] = ""
+                big_dict[name] = smalldict
     return big_dict
 
 
@@ -354,7 +371,7 @@ def latestmagazine():
 def latestcartoon():
     big_dict = {}
     ref = dbs.reference('cartoons')
-    snapshot = ref.child("latestcartoon").order_by_child("timestamp").limit_to_first(1).get()
+    snapshot = ref.child("latestcartoon").order_by_child("timestamp").limit_to_last(1).get()
     if snapshot:
         for value in snapshot.values():
             smalldict = {}
@@ -379,3 +396,27 @@ def fetchsliderimages():
 
     image = random.choice(big_dict)
     return image
+
+
+def humour():
+    big_dict = {}
+    ref = dbs.reference('names')
+    snapshot = ref.get()
+    for value in snapshot.values():
+        name = value['name']
+        ref = dbs.reference(f'names/{name}/cartoons/conthumour')
+        snapshot = ref.order_by_child("timestamp").limit_to_first(1).get()
+        if snapshot:
+            for value in snapshot.values():
+                smalldict = {}
+                smalldict['name'] = value['name']
+                smalldict['image'] = value['image']
+                # smalldict['url'] = value['url']
+                # smalldict['orientation'] = value['orientation']
+                # smalldict['description'] = value['description']
+                smalldict['timestamp'] = value['timestamp']
+                big_dict[name] = smalldict
+    return big_dict
+
+
+# humour()

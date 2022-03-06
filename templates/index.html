@@ -50,6 +50,40 @@
             margin-right: auto;
             width: 50%;
         }
+
+        .blink {
+            animation: blinker 2.6s linear infinite;
+            color: #1c87c9;
+            font-size: 30px;
+            font-weight: bold;
+            font-family: sans-serif;
+        }
+
+        @keyframes blinker {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        .blink-one {
+            animation: blinker-one 1s linear infinite;
+        }
+
+        @keyframes blinker-one {
+            0% {
+                opacity: 0;
+            }
+        }
+
+        .blink-two {
+            animation: blinker-two 15.4s linear infinite;
+        }
+
+        @keyframes blinker-two {
+            100% {
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 
@@ -78,7 +112,7 @@
                 <li><a href="{% url 'cartoonspage' %}">Cartoons</a></li>
 
                 <li><a href="{% url 'teampage' %}">Contact</a></li>
-                {#                <li><a href="{% url 'shoppage' %}">Shop</a></li>#}
+{#                <li><a href="{% url 'shoppage' %}">Shop</a></li>#}
                 <li class="dropdown"><a
                         class="getstarted">Download Kata Kata App</a>
                     <ul style="margin-left: 20px">
@@ -98,13 +132,128 @@
 </header><!-- End Header -->
 
 <!-- ======= Hero Section ======= -->
+
+
+<!-- ======= Hero Section ======= -->
+<br>
+<br>
+<br>
 <section id="hero">
+    <div id="heroCarousel" data-bs-interval="5000" class="carousel slide carousel-fade" data-bs-ride="carousel">
 
-        <!-- Slide 1 -->
-    <br>
-        <img  width="100%"  height="550px"  src="{{ summary.sliderimages }}">
+        <ol class="carousel-indicators" id="hero-carousel-indicators"></ol>
 
+        <div class="carousel-inner" role="listbox">
+
+            <!-- Slide 1 -->
+            <div class="carousel-item active"
+                 style=" background-image: url('https://firebasestorage.googleapis.com/v0/b/katakata-cb1db.appspot.com/o/images%2Fsliderimages%2F1646211731?alt=media&token=99b559cb-2518-4aee-bfeb-acd448d5edbb')">
+                <div class="carousel-container">
+                    <div class="container">
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <a href="https://play.google.com/store/apps/details?id=techkaita.katakata&hl=en&gl=US"><p
+                                class="blink"
+                                style="background-color: red; width: 490px; font-size: 20px; border-radius: 20px; color: white">
+                            Download Android App</p></a>
+                        <a href="https://play.google.com/store/apps/details?id=techkaita.katakata&hl=en&gl=US"><p
+                                class="blink"
+                                style="background-color: red; width: 210px; font-size: 20px; border-radius: 20px; color: white">
+                            Download Ios App</p></a>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Slide 2 -->
+            <div class="carousel-item"
+                 style="background-image: url('https://firebasestorage.googleapis.com/v0/b/katakata-cb1db.appspot.com/o/images%2Fsliderimages%2F1646276532?alt=media&token=ba9771ba-d47b-40d4-9ca5-cf21157cb6f1')">
+                <div class="carousel-container">
+                    <div class="container">
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <a href="https://play.google.com/store/apps/details?id=techkaita.katakata&hl=en&gl=US"><p
+                                class="blink"
+                                style="background-color: red; width: 490px; font-size: 20px; border-radius: 20px; color: white">
+                            Download Android App</p></a>
+                        <a href="https://play.google.com/store/apps/details?id=techkaita.katakata&hl=en&gl=US"><p
+                                class="blink"
+                                style="background-color: red; width: 210px; font-size: 20px; border-radius: 20px; color: white">
+                            Download Ios App</p></a>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Slide 2 -->
+            <div class="carousel-item"
+                 style="background-image: url('https://firebasestorage.googleapis.com/v0/b/katakata-cb1db.appspot.com/o/images%2Fsliderimages%2F1646276516?alt=media&token=63e4469c-bfe0-49e1-a610-3351952510b9')">
+                <div class="carousel-container">
+                    <div class="container">
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <a href="https://play.google.com/store/apps/details?id=techkaita.katakata&hl=en&gl=US"><p
+                                class="blink"
+                                style="background-color: red; width: 490px; font-size: 20px; border-radius: 20px; color: white">
+                            Download Android App</p></a>
+                        <a href="https://play.google.com/store/apps/details?id=techkaita.katakata&hl=en&gl=US"><p
+                                class="blink"
+                                style="background-color: red; width: 210px; font-size: 20px; border-radius: 20px; color: white">
+                            Download Ios App</p></a>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Slide 2 -->
+            <div class="carousel-item"
+                 style="background-image: url('https://firebasestorage.googleapis.com/v0/b/katakata-cb1db.appspot.com/o/images%2Fsliderimages%2F1646276499?alt=media&token=3e0cc4bd-4791-4666-9e01-c015bff1ab20')">
+                <div class="carousel-container">
+                    <div class="container">
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <a href="https://play.google.com/store/apps/details?id=techkaita.katakata&hl=en&gl=US"><p
+                                class="blink"
+                                style="background-color: red; width: 490px; font-size: 20px; border-radius: 20px; color: white">
+                            Download Android App</p></a>
+                        <a href="https://play.google.com/store/apps/details?id=techkaita.katakata&hl=en&gl=US"><p
+                                class="blink"
+                                style="background-color: red; width: 210px; font-size: 20px; border-radius: 20px; color: white">
+                            Download Ios App</p></a>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div>
+            <a class="carousel-control-prev" href="#heroCarousel" role="button" data-bs-slide="prev">
+                <span style="background-color: black" class="carousel-control-prev-icon bi bi-chevron-left"
+                      aria-hidden="true"></span>
+            </a>
+
+            <a class="carousel-control-next" href="#heroCarousel" role="button" data-bs-slide="next">
+                <span style="background-color: black" class="carousel-control-next-icon bi bi-chevron-right"
+                      aria-hidden="true"></span>
+            </a>
+        </div>
+
+    </div>
 </section><!-- End Hero -->
+
 
 <main id="main">
 
