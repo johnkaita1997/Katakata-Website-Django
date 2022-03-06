@@ -301,7 +301,8 @@ h1, h2, h3, h4, h5, h6 {
   bottom: 0;
 }
 #hero .carousel-item {
-  background-size: cover;
+  /*background-size: cover;*/
+  background-size: 100% 600px;
   background-position: center;
   background-repeat: no-repeat;
 }
