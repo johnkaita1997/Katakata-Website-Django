@@ -2,7 +2,7 @@
 {% if message %}
     <script>
         alert('{{message}}')
-    </script>f
+    </script>
 {% endif %}
 
 <!DOCTYPE html>
@@ -52,7 +52,7 @@
         }
 
         .blink {
-            animation: blinker 2.6s linear infinite;
+            animation: blinker 12.6s linear infinite;
             color: #1c87c9;
             font-size: 30px;
             font-weight: bold;
@@ -320,7 +320,7 @@
                     <div class="col-lg-3 col-md-6">
                         <div class="box">
                             <h3 style=color:red;><b><strong>NEWS</strong></b></h3>
-                            <img width="230px" src="{{ value.image }}" height="200">
+                            <img src="{{ value.image }}" height="200">
                             <br>
                             <br>
                             <br>
@@ -339,7 +339,7 @@
                     <div class="col-lg-3 col-md-6">
                         <div class="box">
                             <h3 style=color:red;><b><strong>VIDEOS</strong></b></h3>
-                            <img width="230px" src="{{ value.image }}" height="200">
+                            <img src="{{ value.image }}" height="200px">
                             <br>
                             <br>
                             <br>
@@ -357,7 +357,7 @@
                     <div class="col-lg-3 col-md-6">
                         <div class="box">
                             <h3 style=color:red;><b><strong>MAGAZINES</strong></b></h3>
-                            <img width="230px" src="{{ value.image }}" height="200">
+                            <img src="{{ value.image }}" height="200px">
                             <br>
                             <br>
                             <br>
@@ -373,9 +373,9 @@
 
                 {% for value in summary.latestcartoon.values %}
                     <div class="col-lg-3 col-md-6">
-                        <div align="center" class="box">
+                        <div class="box">
                             <h3 style=color:red;><b><strong>CARTOONS</strong></b></h3>
-                            <img width="230px" src="{{ value.image }}" height="200">
+                            <img src="{{ value.image }}" height="200">
                             <br>
                             <br>
                             <br>
@@ -422,8 +422,7 @@
                             <div class="col-lg-3 col-md-6">
                                 <div class="box">
                                     <h3 style="color:red;"><b><strong>{{ value.name }}</strong></b></h3>
-                                    <img src="{{ value.image }}"
-                                         height="200">
+                                    <img src="{{ value.image }}" height="200px">
                                     <br>
                                     <br>
                                     <br>
@@ -541,3 +540,4 @@
 
 </body>
 
+            
