@@ -303,7 +303,7 @@ h1, h2, h3, h4, h5, h6 {
 #hero .carousel-item {
   background-image: url("https://firebasestorage.googleapis.com/v0/b/katakata-cb1db.appspot.com/o/images%2Fsliderimages%2F1646276532?alt=media&token=ba9771ba-d47b-40d4-9ca5-cf21157cb6f1");
   /*background-size: cover;*/
-  background-size: 100% 950px;
+  background-size: 100% 150px;
   background-position: center;
   background-repeat: no-repeat;
 }
