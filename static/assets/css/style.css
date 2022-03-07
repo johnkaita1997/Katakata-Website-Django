@@ -294,18 +294,20 @@ h1, h2, h3, h4, h5, h6 {
   position: relative;
 }
 #hero .carousel, #hero .carousel-inner, #hero .carousel-item, #hero .carousel-item::before {
-  position: relative;
+  position: absolute;
   top: 0;
   right: 0;
   left: 0;
   bottom: 0;
 }
 #hero .carousel-item {
-  background-image: url("https://firebasestorage.googleapis.com/v0/b/katakata-cb1db.appspot.com/o/images%2Fsliderimages%2F1646276532?alt=media&token=ba9771ba-d47b-40d4-9ca5-cf21157cb6f1");
+  /*background-image: url("https://firebasestorage.googleapis.com/v0/b/katakata-cb1db.appspot.com/o/images%2Fsliderimages%2F1646276532?alt=media&token=ba9771ba-d47b-40d4-9ca5-cf21157cb6f1");*/
   /*background-size: cover;*/
-  background-size: 100% 150px;
+  background-size: 100% auto;
   background-position: center;
   background-repeat: no-repeat;
+  max-height: 550px;
+  /*object-fit: cover;*/
 }
 #hero .carousel-item::before {
   content: "";
