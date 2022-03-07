@@ -51,6 +51,11 @@
             width: 50%;
         }
 
+        .responsive{
+            width: 100%;
+            height: auto;
+        }
+
         .blink {
             animation: blinker 12.6s linear infinite;
             color: #1c87c9;
@@ -210,8 +215,8 @@
 
 
                  <!-- Slide 2 -->
-            <div class="carousel-item active"
-                 style="background-image: url('{% static 'assets/img/five.jpeg' %}')">
+            <div class="carousel-item active">
+                <img class="responsive" src="{% static 'assets/img/five.jpeg' %}">
                 <div class="carousel-container">
                     <div class="container">
                         <br>
@@ -231,68 +236,68 @@
                 </div>
             </div>
             <!-- Slide 2 -->
-            <div class="carousel-item"
-                 style="background-image: url({% static 'assets/img/six.jpeg' %})">
-                <div class="carousel-container">
-                    <div class="container">
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <a href="https://play.google.com/store/apps/details?id=techkaita.katakata&hl=en&gl=US"><p
-                                class="blink"
-                                style="background-color: red; width: 260px; font-size: 20px; border-radius: 20px; color: white">
-                            Download Android App</p></a>
-                        <a href="https://play.google.com/store/apps/details?id=techkaita.katakata&hl=en&gl=US"><p
-                                class="blink"
-                                style="background-color: red; width: 260px; font-size: 20px; border-radius: 20px; color: white">
-                            Download Ios App</p></a>
-                    </div>
-                </div>
-            </div>
-            <!-- Slide 2 -->
-            <div class="carousel-item"
-                 style="background-image: url('{% static 'assets/img/seven.jpeg' %}')">
-                <div class="carousel-container">
-                    <div class="container">
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <a href="https://play.google.com/store/apps/details?id=techkaita.katakata&hl=en&gl=US"><p
-                                class="blink"
-                                style="background-color: red; width: 260px; font-size: 20px; border-radius: 20px; color: white">
-                            Download Android App</p></a>
-                        <a href="https://play.google.com/store/apps/details?id=techkaita.katakata&hl=en&gl=US"><p
-                                class="blink"
-                                style="background-color: red; width: 260px; font-size: 20px; border-radius: 20px; color: white">
-                            Download Ios App</p></a>
-                    </div>
-                </div>
-            </div>
-                        <!-- Slide 2 -->
-            <div class="carousel-item"
-                 style="background-image: url('{% static 'assets/img/eight.jpeg' %}')">
-                <div class="carousel-container">
-                    <div class="container">
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <a href="https://play.google.com/store/apps/details?id=techkaita.katakata&hl=en&gl=US"><p
-                                class="blink"
-                                style="background-color: red; width: 260px; font-size: 20px; border-radius: 20px; color: white">
-                            Download Android App</p></a>
-                        <a href="https://play.google.com/store/apps/details?id=techkaita.katakata&hl=en&gl=US"><p
-                                class="blink"
-                                style="background-color: red; width: 260px; font-size: 20px; border-radius: 20px; color: white">
-                            Download Ios App</p></a>
-                    </div>
-                </div>
-            </div>
+{#            <div class="carousel-item"#}
+{#                 style="background-image: url({% static 'assets/img/six.jpeg' %})">#}
+{#                <div class="carousel-container">#}
+{#                    <div class="container">#}
+{#                        <br>#}
+{#                        <br>#}
+{#                        <br>#}
+{#                        <br>#}
+{#                        <br>#}
+{#                        <a href="https://play.google.com/store/apps/details?id=techkaita.katakata&hl=en&gl=US"><p#}
+{#                                class="blink"#}
+{#                                style="background-color: red; width: 260px; font-size: 20px; border-radius: 20px; color: white">#}
+{#                            Download Android App</p></a>#}
+{#                        <a href="https://play.google.com/store/apps/details?id=techkaita.katakata&hl=en&gl=US"><p#}
+{#                                class="blink"#}
+{#                                style="background-color: red; width: 260px; font-size: 20px; border-radius: 20px; color: white">#}
+{#                            Download Ios App</p></a>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#            <!-- Slide 2 -->#}
+{#            <div class="carousel-item"#}
+{#                 style="background-image: url('{% static 'assets/img/seven.jpeg' %}')">#}
+{#                <div class="carousel-container">#}
+{#                    <div class="container">#}
+{#                        <br>#}
+{#                        <br>#}
+{#                        <br>#}
+{#                        <br>#}
+{#                        <br>#}
+{#                        <a href="https://play.google.com/store/apps/details?id=techkaita.katakata&hl=en&gl=US"><p#}
+{#                                class="blink"#}
+{#                                style="background-color: red; width: 260px; font-size: 20px; border-radius: 20px; color: white">#}
+{#                            Download Android App</p></a>#}
+{#                        <a href="https://play.google.com/store/apps/details?id=techkaita.katakata&hl=en&gl=US"><p#}
+{#                                class="blink"#}
+{#                                style="background-color: red; width: 260px; font-size: 20px; border-radius: 20px; color: white">#}
+{#                            Download Ios App</p></a>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#                        <!-- Slide 2 -->#}
+{#            <div class="carousel-item"#}
+{#                 style="background-image: url('{% static 'assets/img/eight.jpeg' %}')">#}
+{#                <div class="carousel-container">#}
+{#                    <div class="container">#}
+{#                        <br>#}
+{#                        <br>#}
+{#                        <br>#}
+{#                        <br>#}
+{#                        <br>#}
+{#                        <a href="https://play.google.com/store/apps/details?id=techkaita.katakata&hl=en&gl=US"><p#}
+{#                                class="blink"#}
+{#                                style="background-color: red; width: 260px; font-size: 20px; border-radius: 20px; color: white">#}
+{#                            Download Android App</p></a>#}
+{#                        <a href="https://play.google.com/store/apps/details?id=techkaita.katakata&hl=en&gl=US"><p#}
+{#                                class="blink"#}
+{#                                style="background-color: red; width: 260px; font-size: 20px; border-radius: 20px; color: white">#}
+{#                            Download Ios App</p></a>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
 
 
 
