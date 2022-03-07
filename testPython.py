@@ -420,3 +420,5 @@ def humour():
 
 
 # humour()
+# Collect Static Heroku
+# Heroku Error that keeps happening https://stackoverflow.com/questions/36665889/collectstatic-error-while-deploying-django-app-to-heroku
