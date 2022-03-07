@@ -421,4 +421,5 @@ def humour():
 
 # humour()
 # Collect Static Heroku
-# Heroku Error that keeps happening https://stackoverflow.com/questions/36665889/collectstatic-error-while-deploying-django-app-to-heroku
+# Collect Static Heroku
+# Heroku Error that keeps happening heroku config:unset DISABLE_COLLECTSTATIChttps://stackoverflow.com/questions/36665889/collectstatic-error-while-deploying-django-app-to-heroku
