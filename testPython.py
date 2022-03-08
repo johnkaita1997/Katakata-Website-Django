@@ -102,7 +102,7 @@ def loadjabs():
 def loadquotes():
     big_dict = {}
     ref = dbs.reference('cartoons')
-    snapshot = ref.child("quotes").order_by_child("timestamp").limit_to_first(2).get()
+    snapshot = ref.child("quotes").order_by_child("timestamp").limit_to_first(100).get()
     if snapshot:
         for value in snapshot.values():
             smalldict = {}
