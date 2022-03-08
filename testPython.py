@@ -116,7 +116,7 @@ def loadquotes():
 def loadsocialproblems():
     big_dict = {}
     ref = dbs.reference('cartoons')
-    snapshot = ref.child("socialproblems").order_by_child("timestamp").limit_to_first(2).get()
+    snapshot = ref.child("socialproblems").order_by_child("timestamp").limit_to_first(1000).get()
     if snapshot:
         for value in snapshot.values():
             smalldict = {}
@@ -444,3 +444,16 @@ def latestnewsone():
 # Collect Static Heroku
 # Collect Static Heroku
 # Heroku Error that keeps happening heroku config:unset DISABLE_COLLECTSTATIChttps://stackoverflow.com/questions/36665889/collectstatic-error-while-deploying-django-app-to-heroku
+
+
+def loadmoresinglecomics():
+    big_dict = {}
+    ref = dbs.reference('cartoons/humour')
+    snapshot = ref.order_by_child("timestamp").limit_to_last(1000).get()
+    if snapshot:
+        for value in snapshot.values():
+            smalldict = {}
+            smalldict['name'] = value['name']
+            smalldict['image'] = value['image']
+            big_dict[value['timestamp']] = smalldict
+    return big_dict

@@ -4,7 +4,7 @@
 {% block cartooncontent %}
     <div class="container-fluid">
         <main class="tm-main">
-<br>
+            <br>
             <p style="font-size: 20px; color: black">SOCIAL PROBLEMS</p>
 
             <div class="row tm-row">
@@ -12,14 +12,18 @@
                 {% for value in summary.loadsocialproblems.values %}
 
                     <article class="col-12 col-md-6 tm-post">
+
+                        <h2 style="color: white; padding: 20px; background-color: black" class="tm-pt-30 tm-color-primaryb tm-post-title">{{ value.name }}</h2>
+                        <br>
+
                         {#                        <hr class="tm-hr-primary">#}
                         <a href="{% url 'imageviewer' theimage=value.image %}"
                            class="effect-lily tm-post-link tm-pt-60">
                             <div class="tm-post-link-inner">
                                 <img src="{{ value.image }}" alt="Image" class="" width="400" height="350">
                             </div>
-                            <h2 class="tm-pt-30 tm-color-primaryb tm-post-title">{{ value.name }}</h2>
                         </a>
+                        <br>
                         <p style="font-size: 15px; color: black" class="tm-pt-30">
                             {{ value.description }}
                         </p>
