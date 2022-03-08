@@ -3,7 +3,7 @@ from django.shortcuts import render
 from testPython import loadhumour, loadjabs, loadquotes, loadsocialproblems, loadproverbs, loadlongcomics, \
     loadillustrationnames, loadillustrationcontent, loadconthumournames, loadconthumourcontent, loadvideos, \
     loadmagazines, loadnewscategories, dbs, loadnewslocations, latestcartoon, latestmagazine, latestnews, \
-    latestvideo, data, fetchsliderimages
+    latestvideo, data, fetchsliderimages, latestnewsone
 
 monthsummaryDict = {}
 monthsummaryDict['loadhumour'] = loadhumour()
@@ -24,6 +24,7 @@ monthsummaryDict['latestmagazine'] = latestmagazine()
 monthsummaryDict['latestvideo'] = latestvideo()
 monthsummaryDict['data'] = latestvideo()
 monthsummaryDict['sliderimages'] = fetchsliderimages()
+monthsummaryDict['latestnewsone'] = latestnewsone()
 
 def homepage(request):
     response = render(request, "index.html", {"summary": monthsummaryDict})
