@@ -342,19 +342,6 @@ def latestvideo():
     return big_dict
 
 
-def latestnews():
-    big_dict = {}
-    ref = dbs.reference('news/news')
-    snapshot = ref.order_by_child("timestamp").limit_to_first(1).get()
-    if snapshot:
-        for value in snapshot.values():
-            smalldict = {}
-            smalldict['name'] = value['name']
-            smalldict['image'] = value['image']
-            big_dict[value['timestamp']] = smalldict
-    return big_dict
-
-
 def latestmagazine():
     big_dict = {}
     ref = dbs.reference('magazines')
@@ -411,13 +398,29 @@ def humour():
                 smalldict = {}
                 smalldict['name'] = value['name']
                 smalldict['image'] = value['image']
-                # smalldict['url'] = value['url']
-                # smalldict['orientation'] = value['orientation']
-                # smalldict['description'] = value['description']
                 smalldict['timestamp'] = value['timestamp']
                 big_dict[name] = smalldict
     return big_dict
 
+
+
+def latestnews():
+    big_dict = {}
+    ref = dbs.reference('news/news')
+    snapshot = ref.order_by_child("timestamp").limit_to_first(100).get()
+    if snapshot:
+        for value in snapshot.values():
+            smalldict = {}
+            smalldict['category'] = value['category']
+            smalldict['description'] = value['description']
+            smalldict['fulldate'] = value['fulldate']
+            smalldict['image'] = value['image']
+            smalldict['location'] = value['location']
+            smalldict['name'] = value['name']
+            smalldict['year'] = value['year']
+            smalldict['timestamp'] = value['timestamp']
+            big_dict[value['timestamp']] = smalldict
+    return big_dict
 
 # humour()
 # Collect Static Heroku

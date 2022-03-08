@@ -30,10 +30,10 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-{#                <div class="tb-contact">#}
-{#                    <p><i class="fas fa-envelope"></i>info@katakata.org</p>#}
-{#                    <p><i class="fas fa-phone-alt"></i>+254722107660</p>#}
-{#                </div>#}
+                {#                <div class="tb-contact">#}
+                {#                    <p><i class="fas fa-envelope"></i>info@katakata.org</p>#}
+                {#                    <p><i class="fas fa-phone-alt"></i>+254722107660</p>#}
+                {#                </div>#}
             </div>
             <div class="col-md-6">
                 <div class="tb-menu">
@@ -51,10 +51,48 @@
 <!-- Category News Start-->
 <div class="cat-news">
     <div class="container">
+
+
+        <div class="">
+            <h2>Latest News</h2>
+            <div class="row cn-slider">
+
+                {#                #}
+                {#                    {% for value in value.videos.values %}#}
+                {#                        <div class="col-md-6">#}
+                {#                            <div class="cn-img">#}
+                {#                                <img height="250" src="{{ value.image }}"/>#}
+                {#                                <div class="cn-title">#}
+                {#                                    <a href="{% url 'newsviewer' newsid=value.timestamp %}">{{ value.name }}</a>#}
+                {#                                </div>#}
+                {#                            </div>#}
+                {#                        </div>#}
+                {#                    {% endfor %}#}
+                {#                #}
+
+                {% for value in summary.latestnews.values %}
+                    <div class="col-md-6">
+                        <div class="cn-img">
+                            <img height="250" src="{{ value.image }}"/>
+                            <div class="cn-title">
+                                <a href="{% url 'newsviewer' newsid=value.timestamp %}">{{ value.name }}</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+
+            </div>
+        </div>
+
         <div class="row">
+
 
             {% for value in summary.loadnewscategories.values %}
                 <div class="col-md-6">
+                    <br>
+                    <br>
+
                     <h2>{{ value.category }}</h2>
                     <div class="row cn-slider">
                         {% for value in value.videos.values %}
@@ -86,7 +124,9 @@
             <div class="col-md-6">
                 <ul class="nav nav-pills nav-justified">
                     <li class="nav-item">
-                        <a class="nav-link active" href="https://play.google.com/store/apps/details?id=techkaita.katakata&hl=en&gl=US">Enjoy more on our Android App</a>
+                        <a class="nav-link active"
+                           href="https://play.google.com/store/apps/details?id=techkaita.katakata&hl=en&gl=US">Enjoy
+                            more on our Android App</a>
                     </li>
                 </ul>
             </div>
@@ -94,7 +134,9 @@
             <div class="col-md-6">
                 <ul class="nav nav-pills nav-justified">
                     <li class="nav-item">
-                        <a class="nav-link active" href="https://play.google.com/store/apps/details?id=techkaita.katakata&hl=en&gl=US">Enjoy more on our IOS app</a>
+                        <a class="nav-link active"
+                           href="https://play.google.com/store/apps/details?id=techkaita.katakata&hl=en&gl=US">Enjoy
+                            more on our IOS app</a>
                     </li>
                 </ul>
 
