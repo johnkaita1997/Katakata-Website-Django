@@ -42,15 +42,23 @@
         {#                width="100%"#}
         {#        ></iframe>#}
 
-        <object data='{{ summary.thepdf }}#toolbar=1'
-                type='application/pdf'
-                width='100%'
-                height='700px'>
+
+        {##}
+        {#        <object data='{{ summary.thepdf }}#toolbar=1'#}
+        {#                type='application/pdf'#}
+        {#                width='100%'#}
+        {#                height='700px'>#}
+        {##}
 
 
-            <br>
-            <br>
-            <button onclick="history.back()">Go Back</button>
+{#        <iframe src="{{ summary.thepdf }}"#}
+{#                style="width:600px; height:500px;" frameborder="0"></iframe>#}
+
+        <a href="{{ summary.thepdf }}">View PDF</a>
+
+        <br>
+        <br>
+        <button onclick="history.back()">Go Back</button>
     </div>
 {% endif %}
 
