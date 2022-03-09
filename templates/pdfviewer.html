@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>{{ summary.pdf }}</title>
-        <!-- Favicon -->
+    <!-- Favicon -->
     <link href="{% static 'assets/img/small.png' %}" rel="icon">
     <link href="{% static 'assets/img/small.png' %}" rel="apple-touch-icon">
 </head>
@@ -22,19 +22,35 @@
         {#                        style="width:600px; height:500px;" frameborder="0">#}
         {#                </iframe>#}
 
-        <embed
-{#                src="{{ summary.thepdf }}#toolbar=0"#}
-                src="{{ summary.thepdf }}"
-                type="application/pdf"
-                frameBorder="0"
-                scrolling="auto"
-                height="600px"
-                width="100%"
-        ></embed>
 
-        <br>
-        <br>
-        <button onclick="history.back()">Go Back</button>
+        {#                src="{{ summary.thepdf }}#toolbar=0"#}
+        {#        <embed#}
+        {#                src="{{ summary.thepdf }}"#}
+        {#                type="application/pdf"#}
+        {#                frameBorder="0"#}
+        {#                scrolling="auto"#}
+        {#                height="600px"#}
+        {#                width="100%"#}
+        {#        >#}
+
+
+        {#        <iframe#}
+        {#                src="{{ summary.thepdf }}"#}
+        {#                frameBorder="0"#}
+        {#                scrolling="auto"#}
+        {#                height="100%"#}
+        {#                width="100%"#}
+        {#        ></iframe>#}
+
+        <object data='{{ summary.thepdf }}#toolbar=1'
+                type='application/pdf'
+                width='100%'
+                height='700px'>
+
+
+            <br>
+            <br>
+            <button onclick="history.back()">Go Back</button>
     </div>
 {% endif %}
 
