@@ -16,7 +16,7 @@
 {% if summary.thepdf %}
 
     <br>
-    <div align="center">
+    <div style="height: 100%" align="center">
 
         {#                <iframe src="https://docs.google.com/gview?url={{ summary.thepdf }}.pdf&embedded=true"#}
         {#                        style="width:600px; height:500px;" frameborder="0">#}
@@ -51,10 +51,16 @@
         {##}
 
 
-{#        <iframe src="{{ summary.thepdf }}"#}
-{#                style="width:600px; height:500px;" frameborder="0"></iframe>#}
+        {#        <iframe src="{{ summary.thepdf }}"#}
+        {#                style="width:600px; height:500px;" frameborder="0"></iframe>#}
 
-        <a href="{{ summary.thepdf }}" target="_blank">View PDF</a>
+        {#        <a href="{{ summary.thepdf }}" target="_blank">View PDF</a>#}
+
+
+{#        <div style="height: 700px" id="example1"></div>#}
+{#        <script src="/js/pdfobject.js"></script>#}
+{#        <script>PDFObject.embed("{{ summary.thepdf }}", "#example1");</script>#}
+
 
         <br>
         <br>

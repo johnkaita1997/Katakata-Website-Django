@@ -586,7 +586,8 @@
                                     {#                                        <li>{{ value.name }}</li>#}
                                     {#                                    </ul>#}
                                     <div class="btn-wrap">
-                                        <a href="{% url 'pdfviewerpage' thepdf=value.url %}" class="btn-buy">Read</a>
+{#                                        <a href="{% url 'pdfviewerpage' thepdf=value.url %}" class="btn-buy">Read</a>#}
+                                        <a href="{{ value.url }}" class="btn-buy">Read</a>
                                     </div>
                                 </div>
                             </div>
