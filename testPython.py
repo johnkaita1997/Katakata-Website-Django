@@ -79,7 +79,7 @@ def loadhumour():
                 smalldict['image'] = value['image']
                 # smalldict['url'] = value['url']
                 # smalldict['orientation'] = value['orientation']
-                smalldict['description'] = value['description']
+                smalldict['description'] = value['description'].replace('\n', '<br />')
                 smalldict['timestamp'] = value['timestamp']
                 big_dict[name] = smalldict
     return big_dict
@@ -122,7 +122,7 @@ def loadsocialproblems():
             smalldict = {}
             smalldict['name'] = value['name']
             smalldict['image'] = value['image']
-            smalldict['description'] = value['description']
+            smalldict['description'] = value['description'].replace('\n', '<br />')
             big_dict[value['timestamp']] = smalldict
     return big_dict
 
@@ -130,13 +130,13 @@ def loadsocialproblems():
 def loadproverbs():
     big_dict = {}
     ref = dbs.reference('cartoons')
-    snapshot = ref.child("proverbs").order_by_child("timestamp").limit_to_first(100).get()
+    snapshot = ref.child("proverbs").order_by_child("timestamp").limit_to_last(100).get()
     if snapshot:
         for value in snapshot.values():
             smalldict = {}
             smalldict['name'] = value['name']
             smalldict['image'] = value['image']
-            smalldict['description'] = value['description']
+            smalldict['description'] = value['description'].replace('\n', '<br />')
             big_dict[value['timestamp']] = smalldict
     return big_dict
 
@@ -278,7 +278,7 @@ def loadnewscategories():
                 smallviddict = {}
                 if value['category'] == category:
                     smallviddict['category'] = value['category']
-                    smallviddict['description']  = value['description']
+                    smallviddict['description']  = value['description'].replace('\n', '<br />')
                     smallviddict['fulldate'] = value['fulldate']
                     smallviddict['image'] = value['image']
                     smallviddict['location'] = value['location']
@@ -317,7 +317,7 @@ def loadnewslocations():
                 smallviddict = {}
                 if value['location'] == location:
                     smallviddict['category'] = value['category']
-                    smallviddict['description']  = value['description']
+                    smallviddict['description']  = value['description'].replace('\n', '<br />')
                     smallviddict['fulldate'] = value['fulldate']
                     smallviddict['image'] = value['image']
                     smallviddict['location'] = value['location']
@@ -412,7 +412,7 @@ def latestnews():
         for value in snapshot.values():
             smalldict = {}
             smalldict['category'] = value['category']
-            smalldict['description'] = value['description']
+            smalldict['description'] = value['description'].replace('\n', '<br />')
             smalldict['fulldate'] = value['fulldate']
             smalldict['image'] = value['image']
             smalldict['location'] = value['location']
@@ -430,7 +430,7 @@ def latestnewsone():
         for value in snapshot.values():
             smalldict = {}
             smalldict['category'] = value['category']
-            smalldict['description'] = value['description']
+            smalldict['description'] = value['description'].replace('\n', '<br />')
             smalldict['fulldate'] = value['fulldate']
             smalldict['image'] = value['image']
             smalldict['location'] = value['location']

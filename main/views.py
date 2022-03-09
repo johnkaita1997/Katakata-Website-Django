@@ -103,7 +103,7 @@ def newsviewer(request, newsid):
 
     newsdict = {}
     newsdict['category'] = dbs.reference(f'news/news/{identity}/category').get()
-    newsdict['description'] = dbs.reference(f'news/news/{identity}/description').get()
+    newsdict['description'] = dbs.reference(f'news/news/{identity}/description').get().replace('\n', '<br />')
     newsdict['date'] = dbs.reference(f'news/news/{identity}/fulldate').get()
     newsdict['image'] = dbs.reference(f'news/news/{identity}/image').get()
     newsdict['location'] = dbs.reference(f'news/news/{identity}/location').get()

@@ -41,7 +41,7 @@
                                 <h2>{{ summary.name }}</h2>
                                 <span><a href="#">Admin</a> / <a href="#">{{ summary.date }}</a> / <a
                                         href="#">Branding</a></span>
-                                <p>{{ summary.description }}</p>
+                                <p>{{ summary.description | safe }}</p>
                                 {#                                <div class="tags-share">#}
                                 {#                                    <div class="row">#}
                                 {#                                        <div class="col-md-6">#}
