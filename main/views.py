@@ -1,32 +1,134 @@
+import smtplib
+from email.message import EmailMessage
+
 from django.shortcuts import render
 from django.views.decorators.cache import never_cache, cache_control
 
-from testPython import loadhumour, loadjabs, loadquotes, loadsocialproblems, loadproverbs, loadlongcomics, \
-    loadillustrationnames, loadillustrationcontent, loadconthumournames, loadconthumourcontent, \
-    loadmagazines, loadnewscategories, dbs, loadnewslocations, latestcartoon, latestmagazine, latestnews, \
-    latestvideo, fetchsliderimages, latestnewsone, loadmoresinglecomics
+from testPython import *
 
 monthsummaryDict = {}
-monthsummaryDict['sliderimages'] = fetchsliderimages()
-monthsummaryDict['longcomics'] = loadlongcomics()
+# if not 'sliderimages' in monthsummaryDict.keys():
+#     monthsummaryDict['sliderimages'] = fetchsliderimages()
+# if not 'longcomics' in monthsummaryDict.keys():
+#     monthsummaryDict['longcomics'] = loadlongcomics(long)
+
+
+def num_Videos():
+    snapshot = dbs.reference('numbers/videos').get()
+    return snapshot
+
+def num_Magazines():
+    snapshot = dbs.reference('numbers/magazines').get()
+    return snapshot
+
+def num_LongComics():
+    snapshot = dbs.reference('numbers/longcomics').get()
+    return snapshot
+
+def num_LongShortcomics():
+    snapshot = dbs.reference('numbers/shortcomics').get()
+    return snapshot
+
+def num_LongSinglecomics():
+    snapshot = dbs.reference('numbers/singlecomics').get()
+    return snapshot
+
+
+
+def callMainData():
+    if not 'androidvideos' in monthsummaryDict.keys():
+        monthsummaryDict['androidvideos'] = androidvideos(num_Videos())
+    if not 'loadhumour' in monthsummaryDict.keys():
+        monthsummaryDict['loadhumour'] = loadhumour()
+    if not 'loadmoresinglecomics' in monthsummaryDict.keys():
+        monthsummaryDict['loadmoresinglecomics'] = loadmoresinglecomics()
+    if not 'loadlongcomics' in monthsummaryDict.keys():
+        monthsummaryDict['loadlongcomics'] = longcomicsall(num_LongComics())
+    if not 'allmagazines' in monthsummaryDict.keys():
+        monthsummaryDict['allmagazines'] = androidloadmagazines(num_Magazines())
+    if not 'latestnews' in monthsummaryDict.keys():
+        monthsummaryDict['latestnews'] = latestnews()
+    if not 'conthumournames' in monthsummaryDict.keys():
+        monthsummaryDict['conthumournames'] = loadconthumournames_all()
+    if not 'longcomicsnumber' in monthsummaryDict.keys():
+        monthsummaryDict['longcomicsnumber'] = num_LongComics()
+    if not 'shortcomicsnumber' in monthsummaryDict.keys():
+        monthsummaryDict['shortcomicsnumber'] = loadconthumournamesnumber()
+    if not 'singlecomicsnumber' in monthsummaryDict.keys():
+        monthsummaryDict['singlecomicsnumber'] = loadmoresinglecomicsnumber()
 
 @never_cache
 @cache_control(must_revalidate=True)
 def homepage(request):
-    monthsummaryDict['loadmagazines'] = loadmagazines()
-    monthsummaryDict['latestcartoon'] = latestcartoon()
-    monthsummaryDict['latestmagazine'] = latestmagazine()
-    monthsummaryDict['latestvideo'] = latestvideo()
-    monthsummaryDict['latestnewsone'] = latestnewsone()
+
+    callMainData()
+
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+
+        emaillist = []
+        snapshot = dbs.reference('newsletter').get()
+        for value in  snapshot.values():
+            themail = value['email']
+            emaillist.append(themail)
+        if email in emaillist:
+            response = render(request, 'index.html', {"message": "You are already subscribed.", "summary": monthsummaryDict})
+            return response
+        else:
+            monthsummaryDict['sirname'] = name
+            monthsummaryDict['siremail'] = email
+
+            import random
+            code = '{:05}'.format(random.randrange(100, 10 ** 3))
+
+            message = EmailMessage()
+            message['Subject'] = f'KATAKATA NEWSLETTERS'
+            message['From'] = "ngugi@katakata.org"
+            message['To'] = email
+            message.set_content('This email is sent using python.')
+            unformated_message = """\
+            <!DOCTYPE html>
+                <html>
+                <body>
+
+                <h1 style="color:black;text-align:center;font-family:verdana">Thank you for Joining Katakata</h1>
+                <p style="color:black;text-align:center;font-family:courier;font-size:120%">Your confirmation code is : <br> <h2 align="center">{0}</h2></p>
+
+                </body>
+                </html>
+            """
+            unformated_message = unformated_message.format(code)
+            message.add_alternative(unformated_message, subtype='html')
+
+
+
+            unformated_message = unformated_message.format(code)
+            message.add_alternative(unformated_message, subtype='html')
+
+            server = smtplib.SMTP('mail.privateemail.com', 587)
+            server.starttls()
+            server.login('ngugi@katakata.org', 'Kenya@Uganda@2022')
+            server.send_message(message)
+
+            dbs.reference(f'codes/{code}/name').set(code)
+
+            response = render(request, 'newsletter.html', {'summary': monthsummaryDict})
+            return response
+
+
     response = render(request, "index.html", {"summary": monthsummaryDict})
     return response
+
 
 @never_cache
 @cache_control(must_revalidate=True)
 def cartoonspage(request):
-    monthsummaryDict['latestcartoon'] = latestcartoon()
+    if not 'latestcartoon' in monthsummaryDict.keys():
+        monthsummaryDict['latestcartoon'] = latestcartoon()
     response = render(request, "longcomicspage.html", {"summary": monthsummaryDict})
     return response
+
 
 @never_cache
 @cache_control(must_revalidate=True)
@@ -34,84 +136,113 @@ def imageviewer(request, theimage):
     response = render(request, "imageviewer.html", {"theimage": theimage})
     return response
 
+
 @never_cache
 @cache_control(must_revalidate=True)
 def jabspage(request):
-    monthsummaryDict['loadjabs'] = loadjabs()
+    if not 'loadjabs' in monthsummaryDict.keys():
+        monthsummaryDict['loadjabs'] = loadjabs()
     response = render(request, "jabspage.html", {"summary": monthsummaryDict})
     return response
+
 
 @never_cache
 @cache_control(must_revalidate=True)
 def quotespage(request):
-    monthsummaryDict['loadquotes'] = loadquotes()
-    response = render(request, "quotespage.html", {"summary": monthsummaryDict})
-    return response
+    if not 'loadquotes' in monthsummaryDict.keys():
+        monthsummaryDict['loadquotes'] = loadquotes()
+        response = render(request, "quotespage.html", {"summary": monthsummaryDict})
+        return response
+
 
 @never_cache
 @cache_control(must_revalidate=True)
 def socialproblemspage(request):
-    monthsummaryDict['loadsocialproblems'] = loadsocialproblems()
-    response = render(request, "socialproblemspage.html", {"summary": monthsummaryDict})
-    return response
+    if not 'loadsocialproblems' in monthsummaryDict.keys():
+        monthsummaryDict['loadsocialproblems'] = loadsocialproblems()
+        response = render(request, "socialproblemspage.html", {"summary": monthsummaryDict})
+        return response
+
 
 @never_cache
 @cache_control(must_revalidate=True)
 def proverbspage(request):
-    monthsummaryDict['loadproverbs'] = loadproverbs()
+    if not 'loadproverbs' in monthsummaryDict.keys():
+        monthsummaryDict['loadproverbs'] = loadproverbs()
     response = render(request, "proverbspage.html", {"summary": monthsummaryDict})
     return response
+
 
 @never_cache
 @cache_control(must_revalidate=True)
 def longcomicspage(request):
-    monthsummaryDict['longcomics'] = loadlongcomics()
+    if not 'longcomics' in monthsummaryDict.keys():
+        monthsummaryDict['longcomics'] = loadlongcomics()
     response = render(request, "longcomicspage.html", {"summary": monthsummaryDict})
     return response
+
 
 @never_cache
 @cache_control(must_revalidate=True)
 def illustrationnamespage(request):
-    monthsummaryDict['illustrationnames'] = loadillustrationnames()
+    if not 'illustrationnames' in monthsummaryDict.keys():
+        monthsummaryDict['illustrationnames'] = loadillustrationnames()
     response = render(request, "illustrationnamespage.html", {"summary": monthsummaryDict})
     return response
+
 
 @never_cache
 @cache_control(must_revalidate=True)
 def illustrationcontentpage(request, illustrationname):
-    monthsummaryDict['illustrationcontent'] = loadillustrationcontent(illustrationname)
+    if not 'illustrationcontent' in monthsummaryDict.keys():
+        monthsummaryDict['illustrationcontent'] = loadillustrationcontent(illustrationname)
     response = render(request, "illustrationcontentpage.html", {"summary": monthsummaryDict})
     return response
+
 
 @never_cache
 @cache_control(must_revalidate=True)
 def conthumournamespage(request):
-    monthsummaryDict['conthumournames'] = loadconthumournames()
+    if not 'conthumournames' in monthsummaryDict.keys():
+        monthsummaryDict['conthumournames'] = loadconthumournames()
     response = render(request, "conthumournamespage.html", {"summary": monthsummaryDict})
     return response
+
 
 @never_cache
 @cache_control(must_revalidate=True)
 def conthumourcontentpage(request, conthumourname):
-    monthsummaryDict['conthumourcontent'] = loadconthumourcontent(conthumourname)
+    if not 'conthumourcontent' in monthsummaryDict.keys():
+        monthsummaryDict['conthumourcontent'] = loadconthumourcontent(conthumourname)
     response = render(request, "conthumourcontentpage.html", {"summary": monthsummaryDict})
     return response
+
 
 @never_cache
 @cache_control(must_revalidate=True)
 def pdfviewerpage(request, thepdf):
-    monthsummaryDict['thepdf'] = thepdf
+    if not 'thepdf' in monthsummaryDict.keys():
+        monthsummaryDict['thepdf'] = thepdf
     response = render(request, "pdfviewer.html", {"summary": monthsummaryDict})
     return response
+
+
 @never_cache
 @cache_control(must_revalidate=True)
 def newspage(request):
-    monthsummaryDict['latestnews'] = latestnews()
-    monthsummaryDict['loadnewslocations'] = loadnewslocations()
-    monthsummaryDict['loadnewscategories'] = loadnewscategories()
+    if not 'latestnews' in monthsummaryDict.keys():
+        monthsummaryDict['latestnews'] = latestnews()
 
-    response = render(request, "newspage.html", {"summary": monthsummaryDict})
-    return response
+    if not 'loadnewslocations' in monthsummaryDict.keys():
+        monthsummaryDict['loadnewslocations'] = loadnewslocations()
+
+    if not 'loadnewscategories' in monthsummaryDict.keys():
+        monthsummaryDict['loadnewscategories'] = loadnewscategories()
+
+        response = render(request, "newspage.html", {"summary": monthsummaryDict})
+        return response
+
+
 @never_cache
 @cache_control(must_revalidate=True)
 def newsviewer(request, newsid):
@@ -130,30 +261,212 @@ def newsviewer(request, newsid):
     response = render(request, "newsviewer.html", {"summary": newsdict})
     # comment
     return response
+
+
 @never_cache
 @cache_control(must_revalidate=True)
 def teampage(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        usermessage = request.POST.get('message')
+
+        if not name or not email or not usermessage:
+            response = render(request, 'team.html', {"message": "Ensure all fields are filled"})
+            return response
+        else:
+            # formattedmessage = "From "
+            # message = """From: From Person <from@fromdomain.com>
+            # To: To Person <to@todomain.com>
+            # MIME-Version: 1.0
+            # Content-type: text/html
+            # Subject: SMTP HTML e-mail test
+            #
+            # This is an e-mail message to be sent in HTML format
+            #
+            # <b>This is HTML message.</b>
+            # <h1>This is headline.</h1>
+            # """
+
+            subject = f'{email} - {name}'
+            sender_email = 'ngugi@katakata.org'
+            sender_password = 'Kenya@Uganda@2022'
+            receiver_email = ["info@katakata.org"]
+
+            try:
+                message = 'Subject: {}\n\n{}'.format(subject, usermessage)
+
+                server = smtplib.SMTP('mail.privateemail.com', 587)
+                server.starttls()
+                server.login(sender_email, sender_password)
+                server.sendmail(sender_email, receiver_email, message)
+                print('Email has been sent')
+                monthsummaryDict['usermessage'] = usermessage
+                response = render(request, 'thankyou.html', {'summary': monthsummaryDict })
+                return response
+
+            except Exception as ex:
+                response = render(request, 'index.html', {"message": str(ex), 'summary': monthsummaryDict})
+                return response
+
     response = render(request, "team.html", {"summary": monthsummaryDict})
     return response
+
+
 @never_cache
 @cache_control(must_revalidate=True)
 def shoppage(request):
     response = render(request, "shoppage.html", {"summary": monthsummaryDict})
     return response
+
+
 @never_cache
 @cache_control(must_revalidate=True)
 def productdetails(request):
     response = render(request, "productdetails.html", {"summary": monthsummaryDict})
     return response
+
+
 @never_cache
 @cache_control(must_revalidate=True)
 def cartpage(request):
     response = render(request, "cartpage.html", {"summary": monthsummaryDict})
     return response
+
+
 @never_cache
 @cache_control(must_revalidate=True)
 def humourpage(request):
-    monthsummaryDict['loadhumour'] = loadhumour()
-    monthsummaryDict['loadmoresinglecomics'] = loadmoresinglecomics()
+    if not 'loadhumour' in monthsummaryDict.keys():
+        monthsummaryDict['loadhumour'] = loadhumour()
+
+    if not 'loadmoresinglecomics' in monthsummaryDict.keys():
+        monthsummaryDict['loadmoresinglecomics'] = loadmoresinglecomics()
     response = render(request, "humourpage.html", {"summary": monthsummaryDict})
     return response
+
+
+@never_cache
+@cache_control(must_revalidate=True)
+def videoviewer(request, video):
+    if not 'videos' in monthsummaryDict.keys():
+        monthsummaryDict['videos'] = androidloadspecificvideo(video)
+
+    if not 'name' in monthsummaryDict.keys():
+        monthsummaryDict['name'] = video
+    response = render(request, "videoviewer.html", {"summary": monthsummaryDict})
+    return response
+
+
+@never_cache
+@cache_control(must_revalidate=True)
+def shortcomicsviewer(request, shortcomic):
+    if not 'shortcomics' in monthsummaryDict.keys():
+        monthsummaryDict['shortcomics'] = androidloadspecificshortcomic(shortcomic)
+
+    if not 'name' in monthsummaryDict.keys():
+        monthsummaryDict['name'] = shortcomic
+    response = render(request, "shortcomicsviewer.html", {"summary": monthsummaryDict})
+    return response
+
+
+@never_cache
+@cache_control(must_revalidate=True)
+def missionpage(request):
+    response = render(request, "mission.html", {"summary": monthsummaryDict})
+    return response
+
+
+
+@never_cache
+@cache_control(must_revalidate=True)
+def satvideos(request):
+    monthsummaryDict['satvideos'] = androidvideos(100000000)
+    response = render(request, "satvideos.html", {"summary": monthsummaryDict})
+    return response
+
+
+
+@never_cache
+@cache_control(must_revalidate=True)
+def satmagazines(request):
+    monthsummaryDict['allmaCgazines'] = androidloadmagazines(10000000)
+    response = render(request, "satmagazines.html", {"summary": monthsummaryDict})
+    return response
+
+
+
+@never_cache
+@cache_control(must_revalidate=True)
+def satlongcomics(request):
+    monthsummaryDict['longcomics'] = longcomicsall(100000)
+    response = render(request, "satlongcomics.html", {"summary": monthsummaryDict})
+    return response
+
+
+
+@never_cache
+@cache_control(must_revalidate=True)
+def newsletter(request, namer, emailer):
+    if not 'namer' in monthsummaryDict.keys():
+        monthsummaryDict['namer'] = namer
+    if not 'emailer' in monthsummaryDict.keys():
+        monthsummaryDict['emailer'] = emailer
+
+    if request.method == 'POST':
+        code = request.POST.get('code')
+        snapshot = dbs.reference(f'codes/{code}').get()
+        if snapshot:
+
+            print("Snapshot is available")
+
+            dbs.reference(f'codes/{code}').delete()
+
+            name =  monthsummaryDict['namer']
+            email = monthsummaryDict['emailer']
+            data = {
+                "name": name,
+                "email": email,
+                "removelink" : f'katakata.org/unsubscribe/{email}'
+            }
+            dbs.reference(f'newsletter').push().set(data)
+
+            response = render(request, "subscribed.html", {"summary": monthsummaryDict})
+            return response
+        else:
+            response = render(request, "newsletter.html", {"message": 'Code is invalid or has expired'})
+            return response
+
+    response = render(request, "newsletter.html", {"summary": monthsummaryDict})
+    return response
+
+
+
+@never_cache
+@cache_control(must_revalidate=True)
+def unsubscribe(request, email):
+
+    snapshot = dbs.reference(f'newsletter').get()
+    for value in snapshot.keys():
+        theemail = dbs.reference(f'newsletter/{value}/email').get()
+        if theemail == email:
+
+            try:
+                dbs.reference(f'newsletter/{value}').delete()
+                response = render(request, "unsubscribed.html")
+                return response
+            except:
+                response = render(request, 'index.html', {"message": "Unsubscription failed. An error occured.", "summary": monthsummaryDict})
+                return response
+
+    response = render(request, "index.html", {"summary": monthsummaryDict})
+    return response
+
+
+
+@never_cache
+@cache_control(must_revalidate=True)
+def contactus(request):
+    response = render(request, "contactus.html", {"summary": monthsummaryDict})
+    return response
+

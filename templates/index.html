@@ -33,6 +33,7 @@
     <link href="{% static 'assets/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
     <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
 
+
     <!-- Template Main CSS File -->
     <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
 
@@ -127,7 +128,227 @@
         }
 
 
+        .tab {
+            padding-left: 20px;
+            padding-right: 20px;
+            margin-left: 10px;
+            margin-right: 10px;
+            display: flex;
+            justify-content: space-between;
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #f8f9fa;
+        }
+
+        /* Style the buttons that are used to open the tab content */
+        .tab button {
+            font-weight: bold;
+            background-color: inherit;
+            float: right;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+        }
+
+
+        /* Change background color of buttons on hover */
+        .tab button:hover {
+            background-color: #ddd;
+        }
+
+        /* Create an active/current tablink class */
+        .tab button.active {
+            background-color: inherit;
+        }
+
+        /* Style the tab content */
+        .tabcontent {
+            display: none;
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            border-top: none;
+        }
+
+        .tabcontentvideos {
+            display: block;
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            border-top: none;
+        }
+
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        {# Long comics wrapper #}
+        .longcomicswraper {
+        {#background-color: #0E1318;#} width: 100%;
+            overflow-x: scroll;
+            overflow-y: hidden;
+            margin: 0 auto;
+        }
+
+        .item {
+        {#background-color: #00D9E1;#} padding: 10px 10px;
+            border-radius: 5px;
+        }
+
+        .longcomicswraper {
+            /* add this at the end */
+            display: grid;
+        {#grid-template-columns: repeat(6, auto);#} grid-template-columns: repeat({{ summary.longcomicsnumber }}, auto);
+            grid-gap: 0 20px;
+
+            padding: 3px 0px;
+            padding-right: 0;
+        }
+
+        .empty {
+            width: 10px;
+        }
+
+        {#.longcomicswraper {#}
+        {#    /* Add this at the end */#}
+        {##}
+        {#    -ms-overflow-style: none; /* IE and Edge */#}
+        {#    scrollbar-width: none; /* Firefox */#}
+        {#    border-radius: 10px;#}
+        {
+        #}#}
+        {##}
+        {#.longcomicswraper::-webkit-scrollbar {#}
+        {#    display: none; /* Chrome, Safari and Opera */#}
+        {
+        #}#}
+
+        .longcomicswraper {
+            grid-auto-flow: column;
+            grid-template-columns: auto;
+        }
+
+
+        {# short comics wrapper #}
+        .shortcomicswraper {
+        {#background-color: #0E1318;#} width: 100%;
+            overflow-x: scroll;
+            overflow-y: hidden;
+            margin: 0 auto;
+        }
+
+        .item {
+        {#background-color: #00D9E1;#} padding: 10px 10px;
+            border-radius: 5px;
+        }
+
+        .shortcomicswraper {
+            /* add this at the end */
+            display: grid;
+        {#grid-template-columns: repeat(6, auto);#} grid-template-columns: repeat({{ summary.shortcomicsnumber }}, auto);
+            grid-gap: 0 20px;
+
+            padding: 3px 0px;
+            padding-right: 0;
+        }
+
+        .empty {
+            width: 10px;
+        }
+
+        {#.shortcomicswraper {#}
+        {#    /* Add this at the end */#}
+        {##}
+        {#    -ms-overflow-style: none; /* IE and Edge */#}
+        {#    scrollbar-width: none; /* Firefox */#}
+        {#    border-radius: 10px;#}
+        {
+        #}#}
+        {##}
+        {#.shortcomicswraper::-webkit-scrollbar {#}
+        {#    display: none; /* Chrome, Safari and Opera */#}
+        {
+        #}#}
+
+        .shortcomicswraper {
+            grid-auto-flow: column;
+            grid-template-columns: auto;
+        }
+
+
+        {# single comics wrapper #}
+        .singlecomicswraper {
+        {#background-color: #0E1318;#} width: 100%;
+            overflow-x: scroll;
+            overflow-y: hidden;
+            margin: 0 auto;
+        }
+
+        .item {
+        {#background-color: #00D9E1;#} padding: 10px 10px;
+            border-radius: 5px;
+        }
+
+        .singlecomicswraper {
+            /* add this at the end */
+            display: grid;
+        {#grid-template-columns: repeat(6, auto);#} grid-template-columns: repeat({{ summary.singlecomicsnumber }}, auto);
+            grid-gap: 0 20px;
+
+            padding: 3px 0px;
+            padding-right: 0;
+        }
+
+        .empty {
+            width: 10px;
+        }
+
+        {#.singlecomicswraper {#}
+        {#    /* Add this at the end */#}
+        {##}
+        {#    -ms-overflow-style: none; /* IE and Edge */#}
+        {#    scrollbar-width: none; /* Firefox */#}
+        {#    border-radius: 10px;#}
+        {
+        #}#}
+        {##}
+        {#.singlecomicswraper::-webkit-scrollbar {#}
+        {#    display: none; /* Chrome, Safari and Opera */#}
+        {
+        #}#}
+
+        .singlecomicswraper {
+            grid-auto-flow: column;
+            grid-template-columns: auto;
+        }
+
+
     </style>
+
+    <script>
+        function openCity(evt, cityName) {
+            // Declare all variables
+            var i, tabcontent, tablinks;
+
+            // Get all elements with class="tabcontent" and hide them
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+
+            // Get all elements with class="tablinks" and remove the class "active"
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+
+            // Show the current tab, and add an "active" class to the button that opened the tab
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+    </script>
 </head>
 
 <body>
@@ -146,11 +367,12 @@
                 <li class="dropdown"><a href="#"><span>About</span> <i class="bi bi-chevron-down"></i></a>
                     <ul>
                         <li><a href="{% url 'teampage' %}">Team</a></li>
+                        <li><a href="{% url 'missionpage' %}">Mission</a></li>
                     </ul>
                 </li>
                 <li><a href={% url "newspage" %}>News</a></li>
-                <li><a href="https://katakata.org/videos/">Videos</a></li>
-                <li><a href="#cartoontarget">Magazines</a></li>
+                {#                <li><a href="https://katakata.org/videos/">Videos</a></li>#}
+                {#                <li><a href="#cartoontarget">Magazines</a></li>#}
                 {#                <li><a href="#cartoontarget">Cartoons</a></li>#}
                 <li><a href="{% url 'cartoonspage' %}">Cartoons</a></li>
 
@@ -162,9 +384,9 @@
                         <li><a style="color: red" target="_blank"
                                href="https://play.google.com/store/apps/details?id=techkaita.katakata&hl=en&gl=US">Android
                             App</a></li>
-                        <li><a style="color: red" target="_blank"
-                               href="https://play.google.com/store/apps/details?id=techkaita.katakata&hl=en&gl=US">IOS
-                            App</a></li>
+                        {#                        <li><a style="color: red" target="_blank"#}
+                        {#                               href="https://play.google.com/store/apps/details?id=techkaita.katakata&hl=en&gl=US">IOS#}
+                        {#                            App</a></li>#}
                     </ul>
                 </li>
             </ul>
@@ -184,15 +406,15 @@
 
     <div class="mycontainer">
 
-            <div class="btn">
-                <a target="_blank" href="https://play.google.com/store/apps/details?id=techkaita.katakata&hl=en&gl=US"><p
-                class="blink"
-                style="background-color: red; width: 260px; font-size: 20px; border-radius: 20px; color: white">
-            Download Android App</p></a>
-        <a target="_blank" href="https://play.google.com/store/apps/details?id=techkaita.katakata&hl=en&gl=US"><p
-                class="blink"
-                style="background-color: red; width: 260px; font-size: 20px; border-radius: 20px; color: white">
-            Download Ios App</p></a>
+        <div class="btn">
+            <a target="_blank" href="https://play.google.com/store/apps/details?id=techkaita.katakata&hl=en&gl=US"><p
+                    class="blink"
+                    style="background-color: red; width: 260px; font-size: 20px; border-radius: 20px; color: white">
+                Download Android App</p></a>
+            {#            <a target="_blank" href="https://play.google.com/store/apps/details?id=techkaita.katakata&hl=en&gl=US"><p#}
+            {#                    class="blink"#}
+            {#                    style="background-color: red; width: 260px; font-size: 20px; border-radius: 20px; color: white">#}
+            {#                Download Ios App</p></a>#}
         </div>
 
         <img class="mySlides" src="{% static 'assets/img/nama.jpeg' %}"
@@ -203,12 +425,12 @@
         <img class="mySlides" src="{% static 'assets/img/nam.jpeg' %}"
              style="width:100% ; height: auto; max-height: 550px">
     </div>
-{##}
-{#    <div class="mycontainer">#}
-{#        <img class="mySlides" src="{% static 'assets/img/seven.jpeg' %}"#}
-{#             style="width:100%;  height: auto; max-height: 550px">#}
-{#    </div>#}
-{##}
+    {##}
+    {#    <div class="mycontainer">#}
+    {#        <img class="mySlides" src="{% static 'assets/img/seven.jpeg' %}"#}
+    {#             style="width:100%;  height: auto; max-height: 550px">#}
+    {#    </div>#}
+    {##}
 
 
 </div>
@@ -413,64 +635,318 @@
 
 <main id="main">
 
-    <!-- ======= About Section ======= -->
-    <section id="about" class="about">
-        <div class="container">
+    <br>
+    <br>
+    <br>
 
-            <div class="row content">
-                <div class="col-lg-6">
-                    <h3><b><strong>OBJECTIVES</strong></b></h3>
-                    <h4>Our team at Kata Kata is driven with the desire to achieve the following among others
-                        :</h4><br>
-                    <img width="370px" height="120px" src="{% static 'assets/img/logolast.png' %}" class="img-fluid"
-                         alt="Kata Kata">
+    <!-- Tab links -->
+    <div class="tab" style="padding: 15px">
+        <button style="color: red; font-size: 20px" onclick="openCity(event, 'tabvideos')">VIEW VIDEOS</button>
+        <button style="color: red; font-size: 20px" onclick="openCity(event, 'tabcomics')">READ COMICS</button>
+        <button style="color: red; font-size: 20px" onclick="openCity(event, 'tabmagazines')">READ MAGAZINES
+        </button>
+    </div>
+
+
+    <!-- Tab content -->
+    <div id="tabvideos" class="tabcontent">
+
+        <div class="row tm-row">
+
+            {#        https://vimeo.com/692118423#}
+
+            {% for value in summary.androidvideos.values %}
+
+                <article style="padding: 40px" class="col-12 col-md-6 tm-post">
+                    <div style="" class="card">
+                        <a href="{% url 'videoviewer' video=value.name %}">
+                            <div align="center">
+                                <img height="200" src="{{ value.image }}" alt="Avatar"
+                                     style="width:100%; max-width: 350px; margin-top: 20px">
+                                <div class="container">
+                                    <br>
+                                    <h6 style="color: red"><b>{{ value.name }}</b></h6>
+                                    {#                            <p>Architect & Engineer</p>#}
+                                    {#                            <p>Architect & Engineer</p>#}
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </article>
+
+            {% endfor %}
+
+
+
+            <article style="padding: 40px" class="col-12 col-md-6 tm-post">
+                <div style="" class="card">
+                    <a href="{% url 'satvideos' %}">
+                        <div align="center">
+                            <img height="200"
+                                 src="https://storage.googleapis.com/katakata-cb1db.appspot.com/images/videos/1648288194"
+                                 alt="Avatar"
+                                 style="width:100%; max-width: 350px; margin-top: 20px">
+                            <div class="container">
+                                <br>
+                                <h6 style="color: red"><b>VIEW ALL VIDEOS</b></h6>
+                                {#                            <p>Architect & Engineer</p>#}
+                                {#                            <p>Architect & Engineer</p>#}
+                            </div>
+                        </div>
+                    </a>
                 </div>
-                <div class="col-lg-6 pt-4 pt-lg-0">
-                    <ul>
-                        <br>
-                        <li><i class="ri-check-double-line"></i> To discuss and disseminate typical African / global
-                            social problems.
-                        </li>
-                        <li><i class="ri-check-double-line"></i> Using our content (cartoons, illustrated stories,
-                            animated videos, magazine), we send important messages across in an educational, informative
-                            and yet, humorous manner.
-                        </li>
-                        <li><i class="ri-check-double-line"></i> We offer therapy for problems through comic content.
-                        </li>
-                        <br>
-                        <li><i class="ri-check-double-line"></i> To carefully create our content in a way that it is
-                            understood by both educated and non-educated readers so that it can reach the grass-root
-                            level..
-                        </li>
-                        <li><i class="ri-check-double-line"></i> To send our core messages across to the grass-roots; we
-                            achieve this by adding local language, slang and phrases, aimed at behavioural changes.
-                        </li>
-                    </ul>
-                </div>
-            </div>
+            </article>
+
 
         </div>
-    </section><!-- End About Section -->
+
+    </div>
+
+    <script>
+        document.getElementById('tabvideos').style.display = "block";
+    </script>
+
+    <div id="tabcomics" class="tabcontent">
+
+
+        <br>
+        <br>
+        <h4 style="color: black; font-weight: bold" align="center">Long Comics</h4>
+
+        <u><a style="width: 100%; margin-right: 10px" href="{% url 'satlongcomics' %}">
+            <div align="right">
+                <h6 style="color: red; width: 100%"><b>VIEW ALL LONG COMICS</b></h6>
+            </div>
+        </a></u>
+
+        <div class="longcomicswraper">
+
+            {% for value in summary.loadlongcomics.values %}
+
+                <div class="item">
+
+                    <article style="padding: 40px; width: 100%" class="col-12 col-md-6 tm-post">
+                        <div style="padding: 20px" class="card">
+                            <a href="{{ value.url }}">
+                                <div align="center">
+                                    <img height="450" src="{{ value.image }}" alt="Avatar"
+                                         style="width:400px; max-width: 350px; margin-top: 20px">
+                                    <div class="container">
+                                        <br>
+                                        <h6 style="color: red"><b>{{ value.name }}</b></h6>
+                                        {#                            <p>Architect & Engineer</p>#}
+                                        {#                            <p>Architect & Engineer</p>#}
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </article>
+
+                </div>
+            {% endfor %}
+
+
+            <div class="empty"></div>
+        </div>
+
+
+        <br>
+        <br>
+        <h4 style="color: black; font-weight: bold" align="center">Short Comics</h4>
+
+        <div class="shortcomicswraper">
+
+            {% for value in summary.conthumournames.values %}
+
+                <div class="item">
+
+                    <article style="padding: 40px; width: 100%" class="col-12 col-md-6 tm-post">
+                        <div style="padding: 20px" class="card">
+                            <a href="{% url 'shortcomicsviewer' shortcomic=value.name %}">
+                                <div align="center">
+                                    <img height="200" src="{{ value.image }}" alt="Avatar"
+                                         style="width:400px; height: 250px; max-width: 350px; margin-top: 20px">
+                                    <div class="container">
+                                        <br>
+                                        <h6 style="color: red"><b>{{ value.name }}</b></h6>
+                                        {#                            <p>Architect & Engineer</p>#}
+                                        {#                            <p>Architect & Engineer</p>#}
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </article>
+
+                </div>
+            {% endfor %}
+
+            <div class="empty"></div>
+
+        </div>
+
+
+        <br>
+        <br>
+        <h4 style="color: black; font-weight: bold" align="center">Single Comics</h4>
+
+        <div class="singlecomicswraper">
+
+            {% for value in summary.loadmoresinglecomics.values %}
+
+                <div class="item">
+
+                    <article style="padding: 40px; width: 100%" class="col-12 col-md-6 tm-post">
+                        <div style="padding: 20px" class="card">
+                            <a href="{% url 'imageviewer' theimage=value.image %}">
+                                <div align="center">
+                                    <img height="200" src="{{ value.image }}" alt="Avatar"
+                                         style="width:400px; height: 250px; max-width: 350px; margin-top: 20px">
+                                    <div class="container">
+                                        <br>
+                                        <h6 style="color: red"><b>{{ value.name }}</b></h6>
+                                        {#                            <p>Architect & Engineer</p>#}
+                                        {#                            <p>Architect & Engineer</p>#}
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </article>
+
+                </div>
+            {% endfor %}
+
+            <div class="empty"></div>
+
+        </div>
+
+    </div>
+
+    <div id="tabmagazines" class="tabcontent">
+
+        <div class="row tm-row">
+
+            {% for value in summary.allmagazines.values %}
+
+                <article style="padding: 40px" class="col-12 col-md-6 tm-post">
+                    <div style="" class="card">
+                        <a href="{{ value.url }}">
+                            <div align="center">
+                                <img height="200" src="{{ value.image }}" alt="Avatar"
+                                     style="width:100%; height: 350px; max-width: 250px; margin-top: 20px">
+                                <div class="container">
+                                    <br>
+                                    <h6 style="color: red"><b>{{ value.name }}</b></h6>
+                                    {#                            <p>Architect & Engineer</p>#}
+                                    {#                            <p>Architect & Engineer</p>#}
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </article>
+
+
+            {% endfor %}
+
+
+            <article style="padding: 40px" class="col-12 col-md-6 tm-post">
+                <div style="" class="card">
+                    <a href="{% url 'satmagazines' %}">
+                        <div align="center">
+                            <img height="200"
+                                 src="https://firebasestorage.googleapis.com/v0/b/katakata-cb1db.appspot.com/o/images%2Fmagazines%2F1642876778?alt=media&token=b68c9a5c-2a9a-4d25-9111-052535e32e4d"
+                                 alt="Avatar"
+                                 style="width:100%; max-width: 350px; margin-top: 20px">
+                            <div class="container">
+                                <br>
+                                <h6 style="color: red"><b>VIEW ALL MAGAZINES</b></h6>
+                                {#                            <p>Architect & Engineer</p>#}
+                                {#                            <p>Architect & Engineer</p>#}
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </article>
+
+        </div>
+    </div>
+
+    <!-- ======= About Section ======= -->
+    {#    <section id="about" class="about">#}
+    {#        <div class="container">#}
+    {##}
+    {#            <div class="row content">#}
+    {#                <div class="col-lg-6">#}
+    {#                    <h3><b><strong>OBJECTIVES</strong></b></h3>#}
+    {#                    <h4>Our team at Kata Kata is driven with the desire to achieve the following among others#}
+    {#                        :</h4><br>#}
+    {#                    <img width="370px" height="120px" src="{% static 'assets/img/logolast.png' %}" class="img-fluid"#}
+    {#                         alt="Kata Kata">#}
+    {#                </div>#}
+    {#                <div class="col-lg-6 pt-4 pt-lg-0">#}
+    {#                    <ul>#}
+    {#                        <br>#}
+    {#                        <li><i class="ri-check-double-line"></i> To discuss and disseminate typical African / global#}
+    {#                            social problems.#}
+    {#                        </li>#}
+    {#                        <li><i class="ri-check-double-line"></i> Using our content (cartoons, illustrated stories,#}
+    {#                            animated videos, magazine), we send important messages across in an educational, informative#}
+    {#                            and yet, humorous manner.#}
+    {#                        </li>#}
+    {#                        <li><i class="ri-check-double-line"></i> We offer therapy for problems through comic content.#}
+    {#                        </li>#}
+    {#                        <br>#}
+    {#                        <li><i class="ri-check-double-line"></i> To carefully create our content in a way that it is#}
+    {#                            understood by both educated and non-educated readers so that it can reach the grass-root#}
+    {#                            level..#}
+    {#                        </li>#}
+    {#                        <li><i class="ri-check-double-line"></i> To send our core messages across to the grass-roots; we#}
+    {#                            achieve this by adding local language, slang and phrases, aimed at behavioural changes.#}
+    {#                        </li>#}
+    {#                    </ul>#}
+    {#                </div>#}
+    {#            </div>#}
+    {##}
+    {#        </div>#}
+    {#    </section><!-- End About Section -->#}
+
 
     <!-- ======= Clients Section ======= -->
-    <section id="clients" class="clients section-bg">
-        <div class="container">
-
-            <div class="row">
-                <h1 style="color: black">Mission!</h1>
-                <p class="animate__animated animate__fadeInUp">We use our humorous but educational content to
-                    sensitize social problems and harmful practices that hinder development in the society; by
-                    so doing, we create attitudinal changes amongst the target groups</p>
-            </div>
-
-        </div>
-    </section><!-- End Clients Section -->
+    {#    <section id="clients" class="clients section-bg">#}
+    {#        <div class="container">#}
+    {##}
+    {#            <div class="row">#}
+    {#                <h1 style="color: black">Mission!</h1>#}
+    {#                <p class="animate__animated animate__fadeInUp">We use our humorous but educational content to#}
+    {#                    sensitize social problems and harmful practices that hinder development in the society; by#}
+    {#                    so doing, we create attitudinal changes amongst the target groups</p>#}
+    {#            </div>#}
+    {##}
+    {#        </div>#}
+    {#    </section><!-- End Clients Section -->#}
 
 
     <section id="pricing" class="pricing">
         <div class="container">
 
             <div class="row">
+
+                {#                {% for value in summary.latestvideo.values %}#}
+                <div class="col-lg-3 col-md-6">
+                    {#                        <div class="box">#}
+                    {#                            <h3 style=color:red;><b><strong>VIDEOS</strong></b></h3>#}
+                    {#                            <img src="{{ value.image }}" height="200px">#}
+                    {#                            <br>#}
+                    {#                            <br>#}
+                    {#                            <br>#}
+                    {#                            <ul>#}
+                    {#                                <li>{{ value.name }}</li>#}
+                    {#                            </ul>#}
+                    {#                            <div class="btn-wrap">#}
+                    {#                                <a href="https://katakata.org/videos" class="btn-buy">Watch More</a>#}
+                    {#                            </div>#}
+                    {#                        </div>#}
+                </div>
+                {#                {% endfor %}#}
 
                 {% for value in summary.latestnewsone.values %}
                     <div class="col-lg-3 col-md-6">
@@ -490,60 +966,42 @@
                     </div>
                 {% endfor %}
 
+                {#                {% for value in summary.latestcartoon.values %}#}
+                {#                    <div class="col-lg-3 col-md-6">#}
+                {#                        <div class="box">#}
+                {#                            <h3 style=color:red;><b><strong>CARTOONS</strong></b></h3>#}
+                {#                            <img src="{{ value.image }}" height="200">#}
+                {#                            <br>#}
+                {#                            <br>#}
+                {#                            <br>#}
+                {#                            <ul>#}
+                {#                                <li>{{ value.name }}</li>#}
+                {#                            </ul>#}
+                {#                            <div class="btn-wrap">#}
+                {#                                <a href={% url "cartoonspage" %} class="btn-buy">Read More</a>#}
+                {#                            </div>#}
+                {#                        </div>#}
+                {#                    </div>#}
+                {#                {% endfor %}#}
 
-                {% for value in summary.latestvideo.values %}
-                    <div class="col-lg-3 col-md-6">
-                        <div class="box">
-                            <h3 style=color:red;><b><strong>VIDEOS</strong></b></h3>
-                            <img src="{{ value.image }}" height="200px">
-                            <br>
-                            <br>
-                            <br>
-                            <ul>
-                                <li>{{ value.name }}</li>
-                            </ul>
-                            <div class="btn-wrap">
-                                <a href="https://katakata.org/videos" class="btn-buy">Watch More</a>
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
+                {#                {% for value in summary.latestmagazine.values %}#}
+                <div class="col-lg-3 col-md-6">
+                    {#                        <div class="box">#}
+                    {#                            <h3 style=color:red;><b><strong>MAGAZINES</strong></b></h3>#}
+                    {#                            <img src="{{ value.image }}" height="200px">#}
+                    {#                            <br>#}
+                    {#                            <br>#}
+                    {#                            <br>#}
+                    {#                            <ul>#}
+                    {#                                <li>{{ value.name }}</li>#}
+                    {#                            </ul>#}
+                    {#                            <div class="btn-wrap">#}
+                    {#                                <a href="#tabmagazines" class="btn-buy">Read More</a>#}
+                    {#                            </div>#}
+                    {#                        </div>#}
+                </div>
+                {#                {% endfor %}#}
 
-                {% for value in summary.latestmagazine.values %}
-                    <div class="col-lg-3 col-md-6">
-                        <div class="box">
-                            <h3 style=color:red;><b><strong>MAGAZINES</strong></b></h3>
-                            <img src="{{ value.image }}" height="200px">
-                            <br>
-                            <br>
-                            <br>
-                            <ul>
-                                <li>{{ value.name }}</li>
-                            </ul>
-                            <div class="btn-wrap">
-                                <a href="#cartoontarget" class="btn-buy">Read More</a>
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
-
-                {% for value in summary.latestcartoon.values %}
-                    <div class="col-lg-3 col-md-6">
-                        <div class="box">
-                            <h3 style=color:red;><b><strong>CARTOONS</strong></b></h3>
-                            <img src="{{ value.image }}" height="200">
-                            <br>
-                            <br>
-                            <br>
-                            <ul>
-                                <li>{{ value.name }}</li>
-                            </ul>
-                            <div class="btn-wrap">
-                                <a href={% url "cartoonspage" %} class="btn-buy">Read More</a>
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
 
             </div>
         </div>
@@ -554,52 +1012,54 @@
     <section id="cartoontarget" class="portfolio">
         <div class="container">
 
-            <div class="row">
-                <div class="col-lg-12 d-flex justify-content-center">
-                    <ul id="portfolio-flters">
-                        <h5 style="background: #515d6a; color: white; padding: 5px" data-filter="*"
-                            class="filter-active">
-                            For more content, download our App Now</h5>
-                    </ul>
+            <a target="_blank" href="https://play.google.com/store/apps/details?id=techkaita.katakata&hl=en&gl=US">
+                <div class="row">
+                    <div class="col-lg-12 d-flex justify-content-center">
+                        <ul id="portfolio-flters">
+                            <h5 style="background: #515d6a; color: white; padding: 5px" data-filter="*"
+                                class="filter-active">Download Kata Kata Android App Now
+                            </h5>
+                        </ul>
+                    </div>
                 </div>
-            </div>
+            </a>
 
             {#Magazines Section#}
-            <section id="pricing" class="pricing">
-                <div class="container">
-
-                    <div class="row">
-
-                        <div class="col-lg-3 col-md-6">
-                        </div>
-
-                        {% for value in summary.loadmagazines.values %}
-
-                            <div class="col-lg-3 col-md-6">
-                                <div class="box">
-                                    <h3 style="color:red;"><b><strong>{{ value.name }}</strong></b></h3>
-                                    <img src="{{ value.image }}" height="200px">
-                                    <br>
-                                    <br>
-                                    <br>
-                                    {#                                    <ul>#}
-                                    {#                                        <li>{{ value.name }}</li>#}
-                                    {#                                    </ul>#}
-                                    <div class="btn-wrap">
-{#                                        <a href="{% url 'pdfviewerpage' thepdf=value.url %}" class="btn-buy">Read</a>#}
-                                        <a href="{{ value.url }}" class="btn-buy">Read</a>
-                                    </div>
-                                </div>
-                            </div>
-                        {% endfor %}
-
-                        <div class="col-lg-3 col-md-6">
-                        </div>
-
-                    </div>
-
-                </div>
-            </section><!-- End Magazine Section -->
+            {#            <section id="pricing" class="pricing">#}
+            {#                <div class="container">#}
+            {##}
+            {#                    <div class="row">#}
+            {##}
+            {#                        <div class="col-lg-3 col-md-6">#}
+            {#                        </div>#}
+            {##}
+            {#                        {% for value in summary.loadmagazines.values %}#}
+            {##}
+            {#                            <div class="col-lg-3 col-md-6">#}
+            {#                                <div class="box">#}
+            {#                                    <h3 style="color:red;"><b><strong>{{ value.name }}</strong></b></h3>#}
+            {#                                    <img src="{{ value.image }}" height="200px">#}
+            {#                                    <br>#}
+            {#                                    <br>#}
+            {#                                    <br>#}
+            {#                                    <ul>#}
+            {#                                        <li>{{ value.name }}</li>#}
+            {#                                    </ul>#}
+            {#                                    <div class="btn-wrap">#}
+            {#                                        <a href="{% url 'pdfviewerpage' thepdf=value.url %}" class="btn-buy">Read</a>#}
+            {#                                        <a href="{{ value.url }}" class="btn-buy">Read</a>#}
+            {#                                    </div>#}
+            {#                                </div>#}
+            {#                            </div>#}
+            {#                        {% endfor %}#}
+            {##}
+            {#                        <div class="col-lg-3 col-md-6">#}
+            {#                        </div>#}
+            {##}
+            {#                    </div>#}
+            {##}
+            {#                </div>#}
+            {#            </section><!-- End Magazine Section -->#}
 
 
         </div>
@@ -662,7 +1122,10 @@
                     <p>Enter your email adress to sign up for our newsletter below</p>
                     <form action="#" method="post">
                         {% csrf_token %}
-                        <input type="email" name="email"><input type="submit" value="Subscribe">
+                        <input type="name" placeholder="Name" name="name" id="name">
+                        <input type="name" placeholder="Email" name="email" id="email">
+                        <br>
+                        <input type="submit" value="Subscribe">
                     </form>
 
                 </div>
@@ -697,3 +1160,7 @@
 
 </body>
 
+
+{#heroku apps:rename new_name --app old-app-name#}
+{##}
+{#heroku apps:rename cartoonskatakata --app katakatacartoons#}

@@ -147,35 +147,35 @@
 <!-- Tab News Start-->
 
 
-<!-- Category News Start-->
-<div class="cat-news">
-    <div class="container">
-        <div class="row">
-
-            {% for value in summary.loadnewslocations.values %}
-                <div class="col-md-6">
-                    <h2>{{ value.category }}</h2>
-                    <div class="row cn-slider">
-                        {% for value in value.videos.values %}
-                            <div class="col-md-6">
-                                <div class="cn-img">
-                                    <img height="250" src="{{ value.image }}"/>
-                                    <div class="cn-title">
-                                        <a href="{% url 'newsviewer' newsid=value.timestamp %}">{{ value.name }}</a>
-                                    </div>
-                                </div>
-                            </div>
-                        {% endfor %}
-                    </div>
-                </div>
-
-            {% endfor %}
-
-
-        </div>
-    </div>
-</div>
-<!-- Category News End-->
+<!-- Location News Start-->
+{#<div class="cat-news">#}
+{#    <div class="container">#}
+{#        <div class="row">#}
+{##}
+{#            {% for value in summary.loadnewslocations.values %}#}
+{#                <div class="col-md-6">#}
+{#                    <h2>{{ value.category }}</h2>#}
+{#                    <div class="row cn-slider">#}
+{#                        {% for value in value.videos.values %}#}
+{#                            <div class="col-md-6">#}
+{#                                <div class="cn-img">#}
+{#                                    <img height="250" src="{{ value.image }}"/>#}
+{#                                    <div class="cn-title">#}
+{#                                        <a href="{% url 'newsviewer' newsid=value.timestamp %}">{{ value.name }}</a>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        {% endfor %}#}
+{#                    </div>#}
+{#                </div>#}
+{##}
+{#            {% endfor %}#}
+{##}
+{##}
+{#        </div>#}
+{#    </div>#}
+{#</div>#}
+<!-- Location News End-->
 
 
 <!-- Footer Menu Start -->

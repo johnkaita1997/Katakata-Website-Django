@@ -2,11 +2,14 @@ import os
 
 # url = static('files/kaita.json')
 import random
+import collections
 
 import firebase_admin
 import pyrebase
+from django.conf import settings
 from firebase_admin import credentials
 from firebase_admin import db
+from django.core.mail import send_mail
 
 #
 # import firebase_admin
@@ -208,6 +211,9 @@ def loadconthumournames():
     return big_dict
 
 
+
+
+
 def loadconthumourcontent(conthumourname):
     big_dict = {}
     ref = dbs.reference('cartoons')
@@ -407,7 +413,7 @@ def humour():
 def latestnews():
     big_dict = {}
     ref = dbs.reference('news/news')
-    snapshot = ref.order_by_child("timestamp").limit_to_first(100).get()
+    snapshot = ref.order_by_child("timestamp").limit_to_first(2).get()
     if snapshot:
         for value in snapshot.values():
             smalldict = {}
@@ -449,7 +455,7 @@ def latestnewsone():
 def loadmoresinglecomics():
     big_dict = {}
     ref = dbs.reference('cartoons/humour')
-    snapshot = ref.order_by_child("timestamp").limit_to_last(1000).get()
+    snapshot = ref.order_by_child("timestamp").limit_to_last(50).get()
     if snapshot:
         for value in snapshot.values():
             smalldict = {}
@@ -457,3 +463,142 @@ def loadmoresinglecomics():
             smalldict['image'] = value['image']
             big_dict[value['timestamp']] = smalldict
     return big_dict
+
+
+
+def androidvideos(number):
+    big_dict = {}
+    ref = dbs.reference('videos/playlistnames')
+    snapshot = ref.order_by_child("timestamp").limit_to_last(number).get()
+    snapshot = collections.OrderedDict(reversed(list(snapshot.items())))
+    if snapshot:
+        for value in snapshot.values():
+            smalldict = {}
+            smalldict['name'] = value['name']
+            smalldict['image'] = value['image']
+            big_dict[value['timestamp']] = smalldict
+            print("")
+    return big_dict
+
+
+def androidloadspecificvideo(playlistname):
+    big_dict = {}
+    ref = dbs.reference(f'videos/playlists/{playlistname}')
+    snapshot = ref.order_by_child("timestamp").limit_to_last(1000).get()
+    # snapshot = collections.OrderedDict(reversed(list(snapshot.items())))
+    if snapshot:
+        for value in snapshot.values():
+            smalldict = {}
+            smalldict['name'] = value['name']
+            smalldict['image'] = value['image']
+            smalldict['video'] = value['video'].split("com/", 1)[1]
+            smalldict['headername'] = value['headername']
+            big_dict[value['timestamp']] = smalldict
+    print(big_dict)
+    return big_dict
+
+
+def androidloadspecificshortcomic(shortcomicname):
+    big_dict = {}
+    ref = dbs.reference(f'cartoons/conthumour/{shortcomicname}')
+    snapshot = ref.order_by_child("timestamp").limit_to_last(1000).get()
+    # snapshot = collections.OrderedDict(reversed(list(snapshot.items())))
+    if snapshot:
+        for value in snapshot.values():
+            smalldict = {}
+            smalldict['name'] = value['name']
+            smalldict['image'] = value['image']
+            big_dict[value['timestamp']] = smalldict
+    print(big_dict)
+    return big_dict
+
+
+
+def androidloadmagazines(number):
+    big_dict = {}
+    ref = dbs.reference('magazines')
+    snapshot = ref.order_by_child("timestamp").limit_to_first(number).get()
+    if snapshot:
+        for value in snapshot.values():
+            smalldict = {}
+            smalldict['name'] = value['name']
+            smalldict['image'] = value['image']
+            smalldict['url'] = value['url']
+            big_dict[value['timestamp']] = smalldict
+    return big_dict
+
+
+def loadconthumournamesnumber():
+    big_dict = {}
+    ref = dbs.reference('cartoons/conthumournames')
+    snapshot = ref.get()
+    return len(snapshot)
+
+def loadmoresinglecomicsnumber():
+    big_dict = {}
+    ref = dbs.reference('cartoons/humour')
+    snapshot = ref.get()
+    return len(snapshot)
+
+def loadlongcomicsnumber():
+    big_dict = {}
+    ref = dbs.reference('cartoons/longcomics')
+    snapshot = ref.get()
+    return len(snapshot)
+
+
+def longcomicsall(number):
+    big_dict = {}
+    ref = dbs.reference('cartoons/longcomics')
+    snapshot = ref.order_by_child("timestamp").limit_to_last(number).get()
+    if snapshot:
+        for value in snapshot.values():
+            smalldict = {}
+            smalldict['name'] = value['name']
+            smalldict['image'] = value['image']
+            smalldict['url'] = value['url']
+            big_dict[value['timestamp']] = smalldict
+    return big_dict
+
+
+def loadconthumournames_all():
+    big_dict = {}
+    ref = dbs.reference('cartoons/conthumournames')
+    snapshot = ref.get()
+    for value in snapshot.values():
+        smalldict = {}
+        smalldict['name'] = value['name']
+        smalldict['image'] = value['image']
+        smalldict['timestamp'] = value['timestamp']
+        big_dict[value['timestamp']] = smalldict
+    return big_dict
+
+
+# import smtplib
+# from email.message import EmailMessage #new
+#
+# code = 1234234
+# message = EmailMessage()
+# message['Subject'] = f'KATAKATA NEWSLETTERS'
+# message['From'] = "ngugi@katakata.org"
+# message['To'] = "kaitajohnn@gmail.com"
+# message.set_content('This email is sent using python.')
+# unformated_message = """\
+# <!DOCTYPE html>
+#     <html>
+#     <body>
+#
+#     <h1 style="color:black;text-align:center;font-family:verdana">Thank you for Joining Katakata</h1>
+#     <p style="color:black;text-align:center;font-family:courier;font-size:120%">Your confirmation code is : <br> <h2 align="center">{0}</h2></p>
+#
+#     </body>
+#     </html>
+# """
+# unformated_message = unformated_message.format(code)
+# message.add_alternative(unformated_message, subtype = 'html')
+#
+# server = smtplib.SMTP('mail.privateemail.com', 587)
+# server.starttls()
+# server.login('ngugi@katakata.org', 'Kenya@Uganda@2022')
+# server.send_message(message)
+#

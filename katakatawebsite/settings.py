@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-k#v6#m()i@#wgo+xd$-j(v+(ry1=@l!4kdxu_f6&!n^!%^_f6h
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['katakatacartoons.herokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -134,4 +134,10 @@ STATICFILES_DIRS = [
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
 
-
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = '587'
+EMAIL_HOST_USER = 'mail.katakata@gmail.com'
+EMAIL_HOST_PASSWORD = 'Kenya@Uganda@2022'
+EMAIL_USE_TLS = True
+# EMAIL_USE_SSL = False
