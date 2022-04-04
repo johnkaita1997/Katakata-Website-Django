@@ -35,5 +35,6 @@ urlpatterns = [
     path('newsletter/<str:namer>/<str:emailer>', mainviews.newsletter, name="newsletter"),
     path('unsubscribe/<str:email>', mainviews.unsubscribe, name="unsubscribe"),
     path('contactus', mainviews.contactus, name="contactus")
+    #path('contactus', mainviews.contactus, name="contactus")
 
 ]
