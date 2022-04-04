@@ -599,6 +599,16 @@ def loadconthumournames_all():
 #
 # server = smtplib.SMTP('mail.privateemail.com', 587)
 # server.starttls()
-# server.login('ngugi@katakata.org', 'Kenya@Uganda@2022')
+# server.login('ngugi@katakata.org', 'Password')
 # server.send_message(message)
 #
+
+
+def ngugipassword():
+    snapshot = dbs.reference('credentials/ngugi').get()
+    return str(snapshot).strip()
+
+def adminpassword():
+    snapshot = dbs.reference('credentials/admin').get()
+    str(snapshot).strip()
+

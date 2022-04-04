@@ -108,7 +108,7 @@ def homepage(request):
 
             server = smtplib.SMTP('mail.privateemail.com', 587)
             server.starttls()
-            server.login('ngugi@katakata.org', 'Kenya@Uganda@2022')
+            server.login('ngugi@katakata.org', ngugipassword())
             server.send_message(message)
 
             dbs.reference(f'codes/{code}/name').set(code)
@@ -290,7 +290,7 @@ def teampage(request):
 
             subject = f'{email} - {name}'
             sender_email = 'ngugi@katakata.org'
-            sender_password = 'Kenya@Uganda@2022'
+            sender_password = ngugipassword()
             receiver_email = ["info@katakata.org"]
 
             try:
