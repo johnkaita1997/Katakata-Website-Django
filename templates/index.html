@@ -129,22 +129,23 @@
 
 
         .tab {
-            padding-left: 20px;
-            padding-right: 20px;
+            padding-left: 2px;
+            padding-right: 18px;
             margin-left: 10px;
             margin-right: 10px;
-            display: flex;
             justify-content: space-between;
             overflow: hidden;
             border: 1px solid #ccc;
             background-color: #f8f9fa;
+            position: relative;
+            display: flex;
+            max-width: 1400px;
         }
 
         /* Style the buttons that are used to open the tab content */
         .tab button {
             font-weight: bold;
             background-color: inherit;
-            float: right;
             border: none;
             outline: none;
             cursor: pointer;
@@ -640,12 +641,14 @@
     <br>
 
     <!-- Tab links -->
-    <div class="tab" style="padding: 15px">
-        <button style="color: red; font-size: 20px" onclick="openCity(event, 'tabvideos')">VIEW VIDEOS</button>
-        <button style="color: red; font-size: 20px" onclick="openCity(event, 'tabcomics')">READ COMICS</button>
-        <button style="color: red; font-size: 20px" onclick="openCity(event, 'tabmagazines')">READ MAGAZINES
+   <div align="center">
+        <div class="tab">
+        <button style="color: red; font-size: 15px" onclick="openCity(event, 'tabvideos')">VIEW VIDEOS</button>
+        <button style="color: red; font-size: 15px" onclick="openCity(event, 'tabcomics')">READ COMICS</button>
+        <button style="color: red; font-size: 15px" onclick="openCity(event, 'tabmagazines')">READ MAGAZINES
         </button>
     </div>
+   </div>
 
 
     <!-- Tab content -->
