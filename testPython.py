@@ -1,15 +1,11 @@
-import os
-
-# url = static('files/kaita.json')
-import random
 import collections
+import os
+import random
 
 import firebase_admin
 import pyrebase
-from django.conf import settings
 from firebase_admin import credentials
 from firebase_admin import db
-from django.core.mail import send_mail
 
 #
 # import firebase_admin
@@ -602,7 +598,6 @@ def loadconthumournames_all():
 # server.login('ngugi@katakata.org', 'Password')
 # server.send_message(message)
 #
-
 
 def ngugipassword():
     snapshot = dbs.reference('credentials/ngugi').get()

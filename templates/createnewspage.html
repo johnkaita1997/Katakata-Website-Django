@@ -1,0 +1,167 @@
+{% extends 'sectionnewsmenu.html' %}
+{% load static %}
+
+{% block cartooncontent %}
+    <div class="container-fluid">
+        <main class="tm-main">
+            <p align="center" style="font-size: 20px; margin-left: 20px; color: black">CREATE NEWS</p>
+            <div class="">
+
+                <form style="margin-left: 20px; margin-right: 20px" action="{% url 'createnews' %}" method=post>
+
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-25">
+                            <label for="newstitle">Enter News Title</label>
+                        </div>
+                        <div class="col-75">
+                            <input type="text" id="newstitle" name="newstitle" placeholder="" required>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-25">
+                            <label for="dateonfews">Date Of News</label>
+                        </div>
+                        <div class="col-75">
+                            <input type="text" id="dateonfews" name="dateonfews" placeholder="" required>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-25">
+                            <label for="newslocation">News Location</label>
+                        </div>
+                        <div class="col-75">
+                            <select id="newslocation" name="newslocation">
+
+                                {% for value in summary.newslocations %}
+                                    <option value="{{ value }}">{{ value }}</option>
+                                {% endfor %}
+
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-25">
+                            <label for="newscategory">News Category</label>
+                        </div>
+                        <div class="col-75">
+                            <select id="newscategory" name="newscategory">
+
+                                {% for value in summary.newscategories %}
+                                    <option value="{{ value }}">{{ value }}</option>
+                                {% endfor %}
+
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-25">
+                            <label for="editor">Description</label>
+                        </div>
+                        <div class="col-75">
+                            <textarea id="editor" name="editor" required placeholder=""
+                                      style="height:200px"></textarea>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-25">
+                            <label for="file">Choose Image</label>
+                        </div>
+                        <div class="col-75">
+                            <input id="file" type="file" name="file" required>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-75">
+                            <input id="url" type="hidden" name="url" required>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-25">
+                            <label for="submit"></label>
+                        </div>
+                        <div class="col-75">
+                            <input id="saveimage" type="button" name="button" value="Save Image First"
+                                   onclick="saveImageToFirebase()" required>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-25">
+                            <label for="submit"></label>
+                        </div>
+                        <div class="col-75">
+                            <input style="width: 100%; margin-top: 20px; margin-bottom: 20px; background-color: #7a4d14"
+                                   id="submit" type="submit" value="Submit">
+                        </div>
+                    </div>
+
+
+                </form>
+
+
+                <script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js ">
+                </script>
+                <script>
+
+                    CKEDITOR.replace("editor");
+
+                    config = {
+                        'apiKey': "AIzaSyAt_1JL01Tzn6xjgAHnJmxAiBM69fxmoDU",
+                        'authDomain': "katakata-cb1db.firebaseapp.com",
+                        'databaseURL': "https://katakata-cb1db-default-rtdb.firebaseio.com",
+                        'projectId': "katakata-cb1db",
+                        'storageBucket': "katakata-cb1db.appspot.com",
+                        'messagingSenderId': "191079936554",
+                        'appId': "1:191079936554:web:7f31ad4fc226207400c953",
+                        'measurementId': "G-3TGTQXFX28"
+                    };
+                    firebase.initializeApp(config);
+
+                    function saveImageToFirebase() {
+                        var storage = firebase.storage();
+                        var file = document.getElementById("file").files[0];
+
+                        var storageReference = storage.ref();
+                        var currentTimeInMilliseconds = Date.now();
+                        var thisref = storageReference.child('images/news/' + currentTimeInMilliseconds + ".jpg").put(file);
+
+                        thisref.on('state_changed', function (snapshot) {
+                                console.log("uploading your image");
+                            },
+                            function (error) {
+                                alert("Image was not uploaded");
+                            },
+                            function () {
+                                var downloadURL = thisref.snapshot.downloadURL;
+                                document.getElementById("url").value = downloadURL;
+                                alert("Your image was saved successfully");
+                            }
+                        )
+                    }
+
+
+                </script>
+
+
+            </div>
+
+        </main>
+    </div>
+
+{% endblock %}

@@ -1,4 +1,6 @@
 import smtplib
+import time
+from datetime import datetime
 from email.message import EmailMessage
 
 from django.shortcuts import render
@@ -176,8 +178,7 @@ def proverbspage(request):
 @never_cache
 @cache_control(must_revalidate=True)
 def longcomicspage(request):
-    if not 'longcomics' in monthsummaryDict.keys():
-        monthsummaryDict['longcomics'] = loadlongcomics()
+    monthsummaryDict['longcomics'] = loadlongcomics()
     response = render(request, "longcomicspage.html", {"summary": monthsummaryDict})
     return response
 
@@ -469,4 +470,234 @@ def unsubscribe(request, email):
 def contactus(request):
     response = render(request, "contactus.html", {"summary": monthsummaryDict})
     return response
+
+
+
+@never_cache
+@cache_control(must_revalidate=True)
+def createnews(request):
+
+    def getnlocations():
+        bundle = []
+        ref = dbs.reference('news/newslocations')
+        snapshot = ref.order_by_child("timestamp").limit_to_last(10000000).get()
+        if snapshot:
+            for value in snapshot.values():
+                name = value['name']
+                bundle.append((name))
+        else:
+            return [""]
+
+        print(bundle)
+        return bundle
+
+    def getncategories():
+        bundle = []
+        ref = dbs.reference('news/newscategories')
+        snapshot = ref.order_by_child("timestamp").limit_to_last(10000000).get()
+        if snapshot:
+            for value in snapshot.values():
+                name = value['name']
+                bundle.append((name))
+        else:
+            return [""]
+        return bundle
+
+    if request.method == "POST":
+        try:
+            newsname = request.POST.get("newstitle")
+            newsdescription = request.POST.get("editor")
+            newslocation = request.POST.get("newslocation")
+            newscategory = request.POST.get("newscategory")
+            newsdate = request.POST.get("dateonfews")
+            imageUrl = request.POST.get("url")
+
+            if not imageUrl:
+                response = render(request, "createnewspage.html", {"message": "You did not upload or save your Image"})
+                return response
+
+            timestamp = int(time.time())
+
+            locationdict = {}
+            locationdict["timestamp"] = timestamp
+            locationdict["name"] = newslocation
+
+            categorydict = {}
+            categorydict["timestamp"] = timestamp
+            categorydict["name"] = newscategory
+            categorydict["image"] = imageUrl
+
+            if newslocation not in getncategories():
+                dbs.reference(f'news/newslocations/{newslocation}').set(locationdict)
+            if newscategory not in getncategories():
+                dbs.reference(f'news/newscategories/{newscategory}').set(categorydict)
+
+            year = datetime.today().strftime('%Y')
+            month = datetime.today().strftime('%b')
+            day = datetime.today().strftime('%d')
+            monthyear = f'{month}-{year}'
+
+            print("There")
+
+            bundle = {}
+            bundle["image"] = imageUrl
+            bundle["name"] = newsname
+            bundle["description"] = newsdescription
+            bundle["location_category"] = f'{newslocation}_{newscategory}'
+            bundle["timestamp"] = -timestamp
+            bundle["location"] = newslocation
+            bundle["category"] = newscategory
+            bundle["fulldate"] = newsdate
+            bundle["year"] = year
+            bundle["month"] = month
+            bundle["day"] = day
+            bundle["monthyear"] = monthyear
+
+            dbs.reference(f'news/news/{timestamp}').set(bundle)
+        except:
+            response = render(request, "createnewspage.html", {"message": "An error occured! News was not uploaded"})
+            return response
+        else:
+            response = render(request, "index.html", {"message": "News uploaded sucessfuly"})
+            return response
+
+    if not 'newslocations' in monthsummaryDict.keys():
+        monthsummaryDict['newslocations'] = getnlocations()
+    if not 'newscategories' in monthsummaryDict.keys():
+        monthsummaryDict['newscategories'] = getncategories()
+    response = render(request, "createnewspage.html", {"summary": monthsummaryDict})
+    return response
+
+
+
+@never_cache
+@cache_control(must_revalidate=True)
+def editnews(request, newsid):
+
+    def getnlocations():
+        bundle = []
+        ref = dbs.reference('news/newslocations')
+        snapshot = ref.order_by_child("timestamp").limit_to_last(10000000).get()
+        if snapshot:
+            for value in snapshot.values():
+                name = value['name']
+                bundle.append((name))
+        else:
+            return [""]
+
+        print(bundle)
+        return bundle
+
+    def getncategories():
+        bundle = []
+        ref = dbs.reference('news/newscategories')
+        snapshot = ref.order_by_child("timestamp").limit_to_last(10000000).get()
+        if snapshot:
+            for value in snapshot.values():
+                name = value['name']
+                bundle.append((name))
+        else:
+            return [""]
+        return bundle
+
+    thedict = {}
+
+    category = dbs.reference(f'news/news/{newsid}').child("category").get()
+    description = dbs.reference(f'news/news/{newsid}').child("description").get()
+    fulldate = dbs.reference(f'news/news/{newsid}').child("fulldate").get()
+    image = dbs.reference(f'news/news/{newsid}').child("image").get()
+    location = dbs.reference(f'news/news/{newsid}').child("location").get()
+    name = dbs.reference(f'news/news/{newsid}').child("name").get()
+    timestamp = newsid
+
+    thedict["category"] = category
+    thedict["description"] = description
+    thedict["fulldate"] = fulldate
+    thedict["image"] = image
+    thedict["location"] = location
+    thedict["name"] = name
+    thedict["timestamp"] = timestamp
+    thedict["newslocations"] = getnlocations()
+    thedict["newscategories"] = getncategories()
+
+    if request.method == "POST":
+
+            try:
+                newsname = request.POST.get("newstitle")
+                newsdescription = request.POST.get("editor")
+                newslocation = request.POST.get("newslocation")
+                newscategory = request.POST.get("newscategory")
+                newsdate = request.POST.get("dateonfews")
+                imageUrl = image
+
+                locationdict = {}
+                locationdict["timestamp"] = timestamp
+                locationdict["name"] = newslocation
+
+                categorydict = {}
+                categorydict["timestamp"] = timestamp
+                categorydict["name"] = newscategory
+                categorydict["image"] = imageUrl
+
+                if newslocation not in getnlocations():
+                    dbs.reference(f'news/newslocations/{newslocation}').set(locationdict)
+                if newscategory not in getncategories():
+                    dbs.reference(f'news/newscategories/{newscategory}').set(categorydict)
+
+                year = datetime.today().strftime('%Y')
+                month = datetime.today().strftime('%b')
+                day = datetime.today().strftime('%d')
+                monthyear = f'{month}-{year}'
+
+                print("There")
+
+                bundle = {}
+                bundle["image"] = imageUrl
+                bundle["name"] = newsname
+                bundle["description"] = newsdescription
+                bundle["location_category"] = f'{newslocation}_{newscategory}'
+                bundle["timestamp"] = -int(timestamp)
+                bundle["location"] = newslocation
+                bundle["category"] = newscategory
+                bundle["fulldate"] = newsdate
+                bundle["year"] = year
+                bundle["month"] = month
+                bundle["day"] = day
+                bundle["monthyear"] = monthyear
+
+                dbs.reference(f'news/news/{timestamp}').set(bundle)
+
+            except:
+                response = render(request, "editnewspage.html", {"message": "An error occured! News was not uploaded"})
+                return response
+            else:
+                response = render(request, "index.html", {"message": "News edited sucessfuly"})
+                return response
+
+
+    response = render(request, "editnewspage.html", {"summary": thedict})
+    return response
+
+
+
+
+@never_cache
+@cache_control(must_revalidate=True)
+def news(request, newsid):
+    identity = int(newsid) * -1
+
+    newsdict = {}
+    newsdict['category'] = dbs.reference(f'news/news/{identity}/category').get()
+    newsdict['description'] = dbs.reference(f'news/news/{identity}/description').get()
+    newsdict['date'] = dbs.reference(f'news/news/{identity}/fulldate').get()
+    newsdict['image'] = dbs.reference(f'news/news/{identity}/image').get()
+    newsdict['location'] = dbs.reference(f'news/news/{identity}/location').get()
+    newsdict['name'] = dbs.reference(f'news/news/{identity}/name').get()
+    newsdict['timestamp'] = dbs.reference(f'news/news/{identity}/timestamp').get()
+    newsdict['name'] = dbs.reference(f'news/news/{identity}/name').get()
+
+    response = render(request, "news.html", {"summary": newsdict})
+    # comment
+    return response
+
 

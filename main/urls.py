@@ -34,7 +34,13 @@ urlpatterns = [
     path('satlongcomics', mainviews .satlongcomics, name="satlongcomics"),
     path('newsletter/<str:namer>/<str:emailer>', mainviews.newsletter, name="newsletter"),
     path('unsubscribe/<str:email>', mainviews.unsubscribe, name="unsubscribe"),
-    path('contactus', mainviews.contactus, name="contactus")
+    path('contactus', mainviews.contactus, name="contactus"),
+
+    path('createnews', mainviews.createnews, name="createnews"),
+    path('editnews/<path:newsid>', mainviews.editnews, name="editnews"),
+
+    path('news/<str:newsid>', mainviews.news, name="news"),
+
     #path('contactus', mainviews.contactus, name="contactus")
 
 ]
