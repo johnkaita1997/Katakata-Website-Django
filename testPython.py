@@ -299,12 +299,19 @@ def loadnewslocations():
     ref = dbs.reference('news/newslocations')
     snapshotfirst = ref.get()
 
+    print("kaita a")
+
     if snapshotfirst:
+        print("kaita b")
+
         for value in snapshotfirst.values():
+            print("kaita c")
             smalldict = {}
             smalldict['category'] = value['name']
             smalldict['timestamp'] = value['timestamp']
             big_dict[value['timestamp']] = smalldict
+
+    print("kaita d")
 
     newsref = dbs.reference(f'news/news')
     newssnapshot = newsref.order_by_child("timestamp").limit_to_first(100000).get()

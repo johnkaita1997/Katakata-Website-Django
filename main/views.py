@@ -231,13 +231,8 @@ def pdfviewerpage(request, thepdf):
 @never_cache
 @cache_control(must_revalidate=True)
 def newspage(request):
-    if not 'latestnews' in monthsummaryDict.keys():
         monthsummaryDict['latestnews'] = latestnews()
-
-    if not 'loadnewslocations' in monthsummaryDict.keys():
         monthsummaryDict['loadnewslocations'] = loadnewslocations()
-
-    if not 'loadnewscategories' in monthsummaryDict.keys():
         monthsummaryDict['loadnewscategories'] = loadnewscategories()
 
         response = render(request, "newspage.html", {"summary": monthsummaryDict})
@@ -251,7 +246,7 @@ def newsviewer(request, newsid):
 
     newsdict = {}
     newsdict['category'] = dbs.reference(f'news/news/{identity}/category').get()
-    newsdict['description'] = dbs.reference(f'news/news/{identity}/description').get().replace('\n', '<br />')
+    newsdict['description'] = dbs.reference(f'news/news/{identity}/description')
     newsdict['date'] = dbs.reference(f'news/news/{identity}/fulldate').get()
     newsdict['image'] = dbs.reference(f'news/news/{identity}/image').get()
     newsdict['location'] = dbs.reference(f'news/news/{identity}/location').get()
@@ -506,7 +501,7 @@ def createnews(request):
     if request.method == "POST":
         try:
             newsname = request.POST.get("newstitle")
-            newsdescription = request.POST.get("editor")
+            newsdescription = request.POST.get("summernote")
             newslocation = request.POST.get("newslocation")
             newscategory = request.POST.get("newscategory")
             newsdate = request.POST.get("dateonfews")
@@ -624,7 +619,7 @@ def editnews(request, newsid):
 
             try:
                 newsname = request.POST.get("newstitle")
-                newsdescription = request.POST.get("editor")
+                newsdescription = request.POST.get("summernote")
                 newslocation = request.POST.get("newslocation")
                 newscategory = request.POST.get("newscategory")
                 newsdate = request.POST.get("dateonfews")
