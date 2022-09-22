@@ -47,7 +47,7 @@ def callMainData():
     if not 'loadlongcomics' in monthsummaryDict.keys():
         monthsummaryDict['loadlongcomics'] = longcomicsall(num_LongComics())
     if not 'allmagazines' in monthsummaryDict.keys():
-        monthsummaryDict['allmagazines'] = androidloadmagazines(num_Magazines())
+        monthsummaryDict['allmagazines'] = androidloadmagazines(3)
     if not 'latestnews' in monthsummaryDict.keys():
         monthsummaryDict['latestnews'] = latestnews()
     if not 'conthumournames' in monthsummaryDict.keys():
@@ -86,7 +86,7 @@ def homepage(request):
 
             message = EmailMessage()
             message['Subject'] = f'KATAKATA NEWSLETTERS'
-            message['From'] = "ngugi@katakata.org"
+            message['From'] = "katakata@katakata.org"
             message['To'] = email
             message.set_content('This email is sent using python.')
             unformated_message = """\
@@ -110,7 +110,7 @@ def homepage(request):
 
             server = smtplib.SMTP('mail.privateemail.com', 587)
             server.starttls()
-            server.login('ngugi@katakata.org', ngugipassword())
+            server.login('katakata@katakata.org', katakatasenderpassword())
             server.send_message(message)
 
             dbs.reference(f'codes/{code}/name').set(code)
@@ -127,6 +127,7 @@ def homepage(request):
 @cache_control(must_revalidate=True)
 def cartoonspage(request):
     if not 'latestcartoon' in monthsummaryDict.keys():
+        monthsummaryDict['loadlongcomics'] = longcomicsall(num_LongComics())
         monthsummaryDict['latestcartoon'] = latestcartoon()
     response = render(request, "longcomicspage.html", {"summary": monthsummaryDict})
     return response
@@ -179,6 +180,7 @@ def proverbspage(request):
 @cache_control(must_revalidate=True)
 def longcomicspage(request):
     monthsummaryDict['longcomics'] = loadlongcomics()
+    monthsummaryDict['loadlongcomics'] = longcomicsall(num_LongComics())
     response = render(request, "longcomicspage.html", {"summary": monthsummaryDict})
     return response
 
@@ -284,10 +286,10 @@ def teampage(request):
             # <h1>This is headline.</h1>
             # """
 
-            subject = f'{email} - {name}'
-            sender_email = 'ngugi@katakata.org'
-            sender_password = ngugipassword()
-            receiver_email = ["info@katakata.org"]
+            subject = f'{name} - {email}'
+            sender_email = 'katakata@katakata.org'
+            sender_password = katakatasenderpassword()
+            receiver_email = ["katakatacartoons@gmail.com"]
 
             try:
                 message = 'Subject: {}\n\n{}'.format(subject, usermessage)
@@ -386,7 +388,7 @@ def satvideos(request):
 @never_cache
 @cache_control(must_revalidate=True)
 def satmagazines(request):
-    monthsummaryDict['allmaCgazines'] = androidloadmagazines(10000000)
+    monthsummaryDict['allsatmagazines'] = androidloadmagazines(10000000)
     response = render(request, "satmagazines.html", {"summary": monthsummaryDict})
     return response
 
@@ -616,7 +618,6 @@ def editnews(request, newsid):
     thedict["newscategories"] = getncategories()
 
     if request.method == "POST":
-
             try:
                 newsname = request.POST.get("newstitle")
                 newsdescription = request.POST.get("summernote")

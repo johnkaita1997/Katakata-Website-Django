@@ -518,6 +518,7 @@ def androidloadspecificshortcomic(shortcomicname):
 
 
 def androidloadmagazines(number):
+    print("Clicked Clicked")
     big_dict = {}
     ref = dbs.reference('magazines')
     snapshot = ref.order_by_child("timestamp").limit_to_first(number).get()
@@ -612,5 +613,9 @@ def ngugipassword():
 
 def adminpassword():
     snapshot = dbs.reference('credentials/admin').get()
-    str(snapshot).strip()
+    return str(snapshot).strip()
+
+def katakatasenderpassword():
+    snapshot = dbs.reference('credentials/katakatasender').get()
+    return str(snapshot).strip()
 
