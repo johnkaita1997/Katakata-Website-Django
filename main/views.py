@@ -619,6 +619,15 @@ def editnews(request, newsid):
 
     if request.method == "POST":
             try:
+
+                imageUrl = request.POST.get("url")
+
+                if imageUrl:
+                    print("Image is there")
+                    image = imageUrl
+                else:
+                    print("image is not there")
+
                 newsname = request.POST.get("newstitle")
                 newsdescription = request.POST.get("summernote")
                 newslocation = request.POST.get("newslocation")
