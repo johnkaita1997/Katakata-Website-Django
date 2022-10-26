@@ -26,7 +26,8 @@ urlpatterns = [
     path('newsviewer/<str:newsid>', mainviews.newsviewer, name="newsviewer"),
     # path('androidpage', mainviews.androidpage, name="androidpage"),
 
-    path('videoviewer/<path:video>', mainviews.videoviewer,name="videoviewer"),
+    path('videoviewer/<path:video>/<path:position>', mainviews.videoviewer,name="videoviewer"),
+
     path('shortcomicsviewer/<str:shortcomic>', mainviews.shortcomicsviewer,name="shortcomicsviewer"),
     path('missionpage', mainviews.missionpage, name="missionpage"),
     path('satvideos', mainviews.satvideos, name="satvideos"),
@@ -40,7 +41,11 @@ urlpatterns = [
     path('editnews/<path:newsid>', mainviews.editnews, name="editnews"),
 
     path('news/<str:newsid>', mainviews.news, name="news"),
+    path('videos/<path:video>', mainviews.videos, name="videos"),
+
+    path('userlogin', mainviews.userlogin, name="userlogin"),
+    path('userReg', mainviews.userReg, name="userReg"),
+    path('logout', mainviews.logout, name="logout")
 
     #path('contactus', mainviews.contactus, name="contactus")
-
 ]

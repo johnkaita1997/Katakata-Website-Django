@@ -484,23 +484,6 @@ def androidvideos(number):
     return big_dict
 
 
-def androidloadspecificvideo(playlistname):
-    big_dict = {}
-    ref = dbs.reference(f'videos/playlists/{playlistname}')
-    snapshot = ref.order_by_child("timestamp").limit_to_last(1000).get()
-    # snapshot = collections.OrderedDict(reversed(list(snapshot.items())))
-    if snapshot:
-        for value in snapshot.values():
-            smalldict = {}
-            smalldict['name'] = value['name']
-            smalldict['image'] = value['image']
-            smalldict['video'] = value['video'].split("com/", 1)[1]
-            smalldict['headername'] = value['headername']
-            big_dict[value['timestamp']] = smalldict
-    print(big_dict)
-    return big_dict
-
-
 def androidloadspecificshortcomic(shortcomicname):
     big_dict = {}
     ref = dbs.reference(f'cartoons/conthumour/{shortcomicname}')
@@ -619,3 +602,52 @@ def katakatasenderpassword():
     snapshot = dbs.reference('credentials/katakatasender').get()
     return str(snapshot).strip()
 
+
+def signUp():
+    email = "first@gmail.com"
+    password = "asdfghjkl"
+    try:
+        auth.create_user_with_email_and_password(email, password)
+    except:
+        print("Email already exists")
+
+
+def login():
+    email = "first@gmail.com"
+    password = "asdfghjkl"
+    login = auth.sign_in_with_email_and_password(email, password)
+    print(login['localId'])
+
+
+def getUserName(userId):
+    big_dict = {}
+    big_dict['name'] = dbs.reference(f'users/{userId}/name').get()
+    big_dict['email'] = dbs.reference(f'users/{userId}/email').get()
+    big_dict['image'] = dbs.reference(f'users/{userId}/image').get()
+    return big_dict
+
+
+
+def androidloadspecificvideo(playlistname):
+    big_dict = {}
+    ref = dbs.reference(f'videos/playlists/{playlistname}')
+    snapshot = ref.order_by_child("timestamp").limit_to_last(1000).get()
+    # snapshot = collections.OrderedDict(reversed(list(snapshot.items())))
+    if snapshot:
+        count = 0
+        for value in snapshot.values():
+            smalldict = {}
+            smalldict['name'] = value['name']
+            smalldict['position'] = count
+            smalldict['description'] = value['description']
+            smalldict['image'] = value['image']
+            smalldict['video'] = value['video'].split("com/", 1)[1]
+            smalldict['headername'] = value['headername']
+            if 'comments' in value.keys():
+                smalldict['comments'] = value['comments']
+                smalldict['size'] = len(value['comments'])
+                print(value['comments'])
+            big_dict[value['timestamp']] = smalldict
+            count = count + 1
+    print(big_dict)
+    return big_dict

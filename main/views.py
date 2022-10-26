@@ -3,12 +3,16 @@ import time
 from datetime import datetime
 from email.message import EmailMessage
 
-from django.shortcuts import render
+from django.contrib import messages
+from django.shortcuts import render, redirect
+from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import never_cache, cache_control
 
 from testPython import *
 
 monthsummaryDict = {}
+
+
 # if not 'sliderimages' in monthsummaryDict.keys():
 #     monthsummaryDict['sliderimages'] = fetchsliderimages()
 # if not 'longcomics' in monthsummaryDict.keys():
@@ -19,22 +23,25 @@ def num_Videos():
     snapshot = dbs.reference('numbers/videos').get()
     return snapshot
 
+
 def num_Magazines():
     snapshot = dbs.reference('numbers/magazines').get()
     return snapshot
+
 
 def num_LongComics():
     snapshot = dbs.reference('numbers/longcomics').get()
     return snapshot
 
+
 def num_LongShortcomics():
     snapshot = dbs.reference('numbers/shortcomics').get()
     return snapshot
 
+
 def num_LongSinglecomics():
     snapshot = dbs.reference('numbers/singlecomics').get()
     return snapshot
-
 
 
 def callMainData():
@@ -59,23 +66,23 @@ def callMainData():
     if not 'singlecomicsnumber' in monthsummaryDict.keys():
         monthsummaryDict['singlecomicsnumber'] = loadmoresinglecomicsnumber()
 
+
 @never_cache
 @cache_control(must_revalidate=True)
 def homepage(request):
-
     callMainData()
-
     if request.method == 'POST':
         name = request.POST.get('name')
         email = request.POST.get('email')
 
         emaillist = []
         snapshot = dbs.reference('newsletter').get()
-        for value in  snapshot.values():
+        for value in snapshot.values():
             themail = value['email']
             emaillist.append(themail)
         if email in emaillist:
-            response = render(request, 'index.html', {"message": "You are already subscribed.", "summary": monthsummaryDict})
+            response = render(request, 'index.html',
+                              {"message": "You are already subscribed.", "summary": monthsummaryDict})
             return response
         else:
             monthsummaryDict['sirname'] = name
@@ -103,8 +110,6 @@ def homepage(request):
             unformated_message = unformated_message.format(code)
             message.add_alternative(unformated_message, subtype='html')
 
-
-
             unformated_message = unformated_message.format(code)
             message.add_alternative(unformated_message, subtype='html')
 
@@ -117,7 +122,6 @@ def homepage(request):
 
             response = render(request, 'newsletter.html', {'summary': monthsummaryDict})
             return response
-
 
     response = render(request, "index.html", {"summary": monthsummaryDict})
     return response
@@ -233,12 +237,12 @@ def pdfviewerpage(request, thepdf):
 @never_cache
 @cache_control(must_revalidate=True)
 def newspage(request):
-        monthsummaryDict['latestnews'] = latestnews()
-        monthsummaryDict['loadnewslocations'] = loadnewslocations()
-        monthsummaryDict['loadnewscategories'] = loadnewscategories()
+    monthsummaryDict['latestnews'] = latestnews()
+    monthsummaryDict['loadnewslocations'] = loadnewslocations()
+    monthsummaryDict['loadnewscategories'] = loadnewscategories()
 
-        response = render(request, "newspage.html", {"summary": monthsummaryDict})
-        return response
+    response = render(request, "newspage.html", {"summary": monthsummaryDict})
+    return response
 
 
 @never_cache
@@ -300,7 +304,7 @@ def teampage(request):
                 server.sendmail(sender_email, receiver_email, message)
                 print('Email has been sent')
                 monthsummaryDict['usermessage'] = usermessage
-                response = render(request, 'thankyou.html', {'summary': monthsummaryDict })
+                response = render(request, 'thankyou.html', {'summary': monthsummaryDict})
                 return response
 
             except Exception as ex:
@@ -346,13 +350,8 @@ def humourpage(request):
 
 @never_cache
 @cache_control(must_revalidate=True)
-def videoviewer(request, video):
-    if not 'videos' in monthsummaryDict.keys():
-        monthsummaryDict['videos'] = androidloadspecificvideo(video)
-
-    if not 'name' in monthsummaryDict.keys():
-        monthsummaryDict['name'] = video
-    response = render(request, "videoviewer.html", {"summary": monthsummaryDict})
+def videos(request, video):
+    response = render(request, "videos.html", {"summary": monthsummaryDict})
     return response
 
 
@@ -375,14 +374,12 @@ def missionpage(request):
     return response
 
 
-
 @never_cache
 @cache_control(must_revalidate=True)
 def satvideos(request):
     monthsummaryDict['satvideos'] = androidvideos(100000000)
     response = render(request, "satvideos.html", {"summary": monthsummaryDict})
     return response
-
 
 
 @never_cache
@@ -393,14 +390,12 @@ def satmagazines(request):
     return response
 
 
-
 @never_cache
 @cache_control(must_revalidate=True)
 def satlongcomics(request):
     monthsummaryDict['longcomics'] = longcomicsall(100000)
     response = render(request, "satlongcomics.html", {"summary": monthsummaryDict})
     return response
-
 
 
 @never_cache
@@ -420,12 +415,12 @@ def newsletter(request, namer, emailer):
 
             dbs.reference(f'codes/{code}').delete()
 
-            name =  monthsummaryDict['namer']
+            name = monthsummaryDict['namer']
             email = monthsummaryDict['emailer']
             data = {
                 "name": name,
                 "email": email,
-                "removelink" : f'katakata.org/unsubscribe/{email}'
+                "removelink": f'katakata.org/unsubscribe/{email}'
             }
             dbs.reference(f'newsletter').push().set(data)
 
@@ -439,11 +434,9 @@ def newsletter(request, namer, emailer):
     return response
 
 
-
 @never_cache
 @cache_control(must_revalidate=True)
 def unsubscribe(request, email):
-
     snapshot = dbs.reference(f'newsletter').get()
     for value in snapshot.keys():
         theemail = dbs.reference(f'newsletter/{value}/email').get()
@@ -454,12 +447,12 @@ def unsubscribe(request, email):
                 response = render(request, "unsubscribed.html")
                 return response
             except:
-                response = render(request, 'index.html', {"message": "Unsubscription failed. An error occured.", "summary": monthsummaryDict})
+                response = render(request, 'index.html',
+                                  {"message": "Unsubscription failed. An error occured.", "summary": monthsummaryDict})
                 return response
 
     response = render(request, "index.html", {"summary": monthsummaryDict})
     return response
-
 
 
 @never_cache
@@ -469,11 +462,9 @@ def contactus(request):
     return response
 
 
-
 @never_cache
 @cache_control(must_revalidate=True)
 def createnews(request):
-
     def getnlocations():
         bundle = []
         ref = dbs.reference('news/newslocations')
@@ -566,11 +557,9 @@ def createnews(request):
     return response
 
 
-
 @never_cache
 @cache_control(must_revalidate=True)
 def editnews(request, newsid):
-
     def getnlocations():
         bundle = []
         ref = dbs.reference('news/newslocations')
@@ -618,72 +607,69 @@ def editnews(request, newsid):
     thedict["newscategories"] = getncategories()
 
     if request.method == "POST":
-            try:
+        try:
 
-                imageUrl = request.POST.get("url")
+            imageUrl = request.POST.get("url")
 
-                if imageUrl:
-                    print("Image is there")
-                    image = imageUrl
-                else:
-                    print("image is not there")
-
-                newsname = request.POST.get("newstitle")
-                newsdescription = request.POST.get("summernote")
-                newslocation = request.POST.get("newslocation")
-                newscategory = request.POST.get("newscategory")
-                newsdate = request.POST.get("dateonfews")
-                imageUrl = image
-
-                locationdict = {}
-                locationdict["timestamp"] = timestamp
-                locationdict["name"] = newslocation
-
-                categorydict = {}
-                categorydict["timestamp"] = timestamp
-                categorydict["name"] = newscategory
-                categorydict["image"] = imageUrl
-
-                if newslocation not in getnlocations():
-                    dbs.reference(f'news/newslocations/{newslocation}').set(locationdict)
-                if newscategory not in getncategories():
-                    dbs.reference(f'news/newscategories/{newscategory}').set(categorydict)
-
-                year = datetime.today().strftime('%Y')
-                month = datetime.today().strftime('%b')
-                day = datetime.today().strftime('%d')
-                monthyear = f'{month}-{year}'
-
-                print("There")
-
-                bundle = {}
-                bundle["image"] = imageUrl
-                bundle["name"] = newsname
-                bundle["description"] = newsdescription
-                bundle["location_category"] = f'{newslocation}_{newscategory}'
-                bundle["timestamp"] = -int(timestamp)
-                bundle["location"] = newslocation
-                bundle["category"] = newscategory
-                bundle["fulldate"] = newsdate
-                bundle["year"] = year
-                bundle["month"] = month
-                bundle["day"] = day
-                bundle["monthyear"] = monthyear
-
-                dbs.reference(f'news/news/{timestamp}').set(bundle)
-
-            except:
-                response = render(request, "editnewspage.html", {"message": "An error occured! News was not uploaded"})
-                return response
+            if imageUrl:
+                print("Image is there")
+                image = imageUrl
             else:
-                response = render(request, "index.html", {"message": "News edited sucessfuly"})
-                return response
+                print("image is not there")
 
+            newsname = request.POST.get("newstitle")
+            newsdescription = request.POST.get("summernote")
+            newslocation = request.POST.get("newslocation")
+            newscategory = request.POST.get("newscategory")
+            newsdate = request.POST.get("dateonfews")
+            imageUrl = image
+
+            locationdict = {}
+            locationdict["timestamp"] = timestamp
+            locationdict["name"] = newslocation
+
+            categorydict = {}
+            categorydict["timestamp"] = timestamp
+            categorydict["name"] = newscategory
+            categorydict["image"] = imageUrl
+
+            if newslocation not in getnlocations():
+                dbs.reference(f'news/newslocations/{newslocation}').set(locationdict)
+            if newscategory not in getncategories():
+                dbs.reference(f'news/newscategories/{newscategory}').set(categorydict)
+
+            year = datetime.today().strftime('%Y')
+            month = datetime.today().strftime('%b')
+            day = datetime.today().strftime('%d')
+            monthyear = f'{month}-{year}'
+
+            print("There")
+
+            bundle = {}
+            bundle["image"] = imageUrl
+            bundle["name"] = newsname
+            bundle["description"] = newsdescription
+            bundle["location_category"] = f'{newslocation}_{newscategory}'
+            bundle["timestamp"] = -int(timestamp)
+            bundle["location"] = newslocation
+            bundle["category"] = newscategory
+            bundle["fulldate"] = newsdate
+            bundle["year"] = year
+            bundle["month"] = month
+            bundle["day"] = day
+            bundle["monthyear"] = monthyear
+
+            dbs.reference(f'news/news/{timestamp}').set(bundle)
+
+        except:
+            response = render(request, "editnewspage.html", {"message": "An error occured! News was not uploaded"})
+            return response
+        else:
+            response = render(request, "index.html", {"message": "News edited sucessfuly"})
+            return response
 
     response = render(request, "editnewspage.html", {"summary": thedict})
     return response
-
-
 
 
 @never_cache
@@ -706,3 +692,152 @@ def news(request, newsid):
     return response
 
 
+@never_cache
+@cache_control(must_revalidate=True)
+def userlogin(request):
+    if request.method == "POST":
+        try:
+            email = request.POST.get("email").strip()
+            password = request.POST.get("password").strip()
+
+            try:
+                login = auth.sign_in_with_email_and_password(email, password)
+                userid = login['localId']
+                if not "uid" in request.COOKIES.keys():
+                    response = redirect('homepage')
+                    response.set_cookie('uid', userid)
+                    messages.error(request, _("Login was successful"))
+                    return response
+                else:
+                    messages.error(request, _("You are already logged in!"))
+                    return redirect('homepage')
+
+            except Exception as exception:
+                messages.error(request, _(f"An error occured!\n{exception}"))
+                return redirect('userlogin')
+
+        except Exception as exception:
+            messages.error(request, _(f"An error occured!\n{exception}"))
+            return redirect('userlogin')
+
+    response = render(request, "login.html", {"summary": monthsummaryDict})
+    return response
+
+
+@never_cache
+@cache_control(must_revalidate=True)
+def userReg(request):
+    if request.method == "POST":
+        try:
+            email = request.POST.get("email").strip()
+            name = request.POST.get("name").strip()
+            password = request.POST.get("password").strip()
+
+            imageUrl = request.POST.get("url")
+
+            if not imageUrl:
+                print("Image is not there")
+            else:
+                try:
+                    auth.create_user_with_email_and_password(email, password)
+                    login = auth.sign_in_with_email_and_password(email, password)
+                    userid = login['localId']
+
+                    userDict = {}
+                    userDict['image'] = imageUrl
+                    userDict['name'] = name
+                    userDict['uid'] = userid
+                    userDict['email'] = email
+                    dbs.reference(f'users/{userid}').set(userDict)
+                except Exception as exception:
+                    messages.error(request, _(f"An error occured!\n{exception}"))
+                else:
+                    if not "uid" in request.COOKIES.keys():
+                        response = redirect('homepage')
+                        response.set_cookie('uid', userid)
+                        messages.error(request, _(f"You are already logged in"))
+                        return redirect('homepage')
+                    else:
+                        messages.error(request, _(f"You are already logged in"))
+                        return redirect('homepage')
+
+        except Exception as exception:
+            messages.error(request, _(f"An error occured!\n{exception}"))
+            response = redirect('userReg')
+
+            return response
+
+    response = render(request, "register.html", {"summary": monthsummaryDict})
+    return response
+
+
+@never_cache
+@cache_control(must_revalidate=True)
+def videoviewer(request, video, position):
+
+    try:
+        loggedin = "uid" in request.COOKIES.keys()
+        theposition = int(position)
+        defaultTimestamp = list(androidloadspecificvideo(video).keys())[int(theposition)]
+        defaultVideo = androidloadspecificvideo(video)[f'{defaultTimestamp}']
+        monthsummaryDict['videos'] = androidloadspecificvideo(video)
+        monthsummaryDict['name'] = video
+        monthsummaryDict['default'] = monthsummaryDict['name'][theposition]
+        monthsummaryDict['default'] = defaultVideo
+        monthsummaryDict['loggedin'] = loggedin
+
+        if request.method == "POST":
+            try:
+                comment = request.POST.get("comment")
+                if not comment:
+                    messages.error(request, _("You have entered no message."))
+                    return redirect('videoviewer', video=defaultVideo['name'], position=theposition)
+                else:
+                    if not "uid" in request.COOKIES.keys():
+                        messages.error(request, _("Login is required to post comments."))
+                        return redirect('userlogin')
+                    else:
+                        theposition = int(position)
+                        defaultTimestamp = list(androidloadspecificvideo(video).keys())[int(theposition)]
+                        defaultVideo = androidloadspecificvideo(video)[f'{defaultTimestamp}']
+                        defaultVideoName = defaultVideo['name']
+                        defaultVideoTimeStamp = int(defaultTimestamp) * -1
+
+                        print(defaultVideoTimeStamp)
+
+                        timestamp = int(time.time())
+                        commentObject = {}
+                        userid = request.COOKIES.get('uid')
+
+                        print(timestamp)
+                        name = getUserName(userid)['name']
+                        email = getUserName(userid)['email']
+                        image = getUserName(userid)['image']
+                        print(f"user is ${userid}\n{name}\n{email}\n{image}")
+
+                        commentObject["timestamp"] = timestamp
+                        commentObject['comment'] = comment
+                        commentObject['name'] = name
+                        commentObject['email'] = email
+                        commentObject['image'] = image
+
+                        dbs.reference(
+                            f'videos/playlists/{defaultVideoName}/{defaultVideoTimeStamp}/comments/{timestamp}').set(
+                            commentObject)
+                        return redirect('videoviewer', video=defaultVideo['name'], position=theposition)
+
+            except Exception as exception:
+                messages.error(request, _(f'Error ${exception}'))
+                return redirect('videoviewer', video=defaultVideo['name'], position=theposition)
+    except Exception as exception:
+        response = render(request, "videoviewer.html", {"summary": monthsummaryDict, 'alert': False})
+        return response
+
+    response = render(request, "videoviewer.html", {"summary": monthsummaryDict, 'alert': False})
+    return response
+
+
+def logout(request):
+    response = redirect('userlogin')
+    response.delete_cookie('uid')
+    return response
