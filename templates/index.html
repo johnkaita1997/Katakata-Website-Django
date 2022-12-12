@@ -383,7 +383,22 @@
                 {#                <li><a href="#cartoontarget">Cartoons</a></li>#}
                 <li><a href="{% url 'cartoonspage' %}">Cartoons</a></li>
 
+
                 <li><a href="{% url 'teampage' %}">Contact</a></li>
+
+                {% if summary.isloggedIn %}
+                    <li><a style="color: red" href="{% url 'logout' %}">Logout</a></li>
+                {% else %}
+                    <li><a style="color: red" href="{% url 'userlogin' %}">Login</a></li>
+                {% endif %}
+
+                <li><a style="color: red" href="{% url 'mySubscription' %}">Subscription</a></li>
+
+                {% if summary.showadmin %}
+                    <li><a style="color: red" href="{% url 'adminpage' %}">Admin</a></li>
+                {% endif %}
+
+
                 {#                <li><a href="{% url 'shoppage' %}">Shop</a></li>#}
                 <li class="dropdown"><a
                         class="getstarted">Download Kata Kata App</a>

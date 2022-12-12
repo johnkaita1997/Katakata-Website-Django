@@ -1,13 +1,15 @@
+
 import collections
 import os
 import random
+import time
+from datetime import datetime
 
 import firebase_admin
 import pyrebase
 from firebase_admin import credentials
 from firebase_admin import db
 
-#
 # import firebase_admin
 # import pyrebase
 # from firebase_admin import credentials
@@ -38,6 +40,7 @@ from firebase_admin import db
 # tmLrZ#54opLklSGJ
 #
 # git push heroku master
+
 
 data = os.path.abspath(os.path.dirname(__file__)) + f"/main/kaita.json"
 cred = credentials.Certificate(data)
@@ -637,6 +640,10 @@ def androidloadspecificvideo(playlistname):
         count = 0
         for value in snapshot.values():
             smalldict = {}
+            timestamp = int(value['timestamp']) * -1
+            thestamp = datetime.fromtimestamp(timestamp)
+            formatted = thestamp.strftime("%d-%b-%Y")
+            smalldict['formatted'] = str(formatted)
             smalldict['name'] = value['name']
             smalldict['position'] = count
             smalldict['description'] = value['description']
@@ -651,3 +658,302 @@ def androidloadspecificvideo(playlistname):
             count = count + 1
     print(big_dict)
     return big_dict
+
+
+def fetchUserData(userid):
+    snapshot = dbs.reference(f'users/{userid}').get()
+    print(snapshot)
+    return snapshot
+
+
+def isUserSubscribed(transactionid):
+    print(f"The transaction Id is {transactionid}")
+    url = f'http://52.206.231.182/routesms/bill_v2/check/?username=katakata&password=CMqN2Yt6&transactionID={transactionid}&network=mtn'
+    print(f"The url is {url}")
+
+    import requests
+    r = requests.get(url=url)
+    data = r.json()
+    if not data:
+        print("Data is not there, so user is not subscribed")
+        return False
+    else:
+        userSub = data['issubscribed']
+        print("Data is there, so user is  subscribed")
+        if userSub:
+            print("User is subscribed")
+            return True
+        else:
+            print("User is not subscribed")
+            return False
+
+
+# def subscribeUser(request, mobile, userid):
+#     mobile = mobile.replace(" ", "")
+#     print(f"Mobile is {mobile}")
+#     myurl = f"http://52.206.231.182/routesms/bill_v2/?username=katakata&password=CMqN2Yt6&phoneNo={mobile}&productID=23410220000023272&network=mtn"
+#     try:
+#         import requests
+#         r = requests.get(url=myurl)
+#         data = r.json()
+#
+#         import time
+#         timestamp = int(time.time())
+#         subRequest = {}
+#         subRequest['code'] = data['code']
+#         subRequest['result'] = data['result']
+#         subRequest['transaction_id'] = data['transaction_id']
+#         subRequest['msisdn'] = data['msisdn']
+#         subRequest['transaction_time'] = data['transaction_time']
+#         subRequest['mobile'] = mobile
+#         subRequest['uid'] = userid
+#         subRequest['timestamp'] = timestamp
+#         thestamp = datetime.fromtimestamp(timestamp)
+#         formatted = thestamp.strftime("%d-%b-%Y")
+#         subRequest['date'] = formatted
+#         subRequest['month'] = getDates()['month']
+#         subRequest['year'] = getDates()['year']
+#         subRequest['combined'] = getDates()['combined']
+#
+#         print(f'JSON DATA is {data}')
+#
+#         subscriptionDict = {}
+#         subscriptionDict['transid'] = data['transaction_id']
+#         subscriptionDict['transtamp'] = timestamp
+#         subscriptionDict['transamount'] = 10
+#         subscriptionDict['status'] = "pending"
+#
+#         dbs.reference(f'subscriptions/{userid}/subscription').set(subscriptionDict)
+#         dbs.reference(f'subscriptions/{userid}/history').set(subRequest)
+#         dbs.reference(f'transactions/{timestamp}').set(subRequest)
+#
+#         messages.error(request, _(f"You will receive a subscription request on your mobile shortly"))
+#         return redirect('homepage')
+#
+#     except Exception as exception:
+#         messages.error(request, _(f"An error occured!\n{exception}"))
+#         return redirect('subscriptionpage')
+
+
+
+def getDates():
+    mydate = datetime.now()
+    month = mydate.strftime("%b")
+    year = mydate.year
+    combined = f'{month}-{year}'
+    timeDict = {}
+    timeDict['date'] = mydate
+    timeDict['month'] = month
+    timeDict['year'] = year
+    timeDict['combined'] = combined
+    return timeDict
+
+def getCredentials():
+    snapshot = dbs.reference(f'credentials').get()
+    return snapshot
+
+
+
+
+
+
+def universalAmount():
+    snapshot = dbs.reference(f'payments/successful').get()
+    universalAmount = 0.00
+    for value in snapshot.values():
+        universalAmount = universalAmount + float(value['amount'])
+    return universalAmount
+
+def numbertotalSuccessfulPayments():
+    mydict = dbs.reference(f'payments/successful').get()
+    return len(mydict)
+
+def universalTransactions():
+    big_dict = {}
+    snapshot = dbs.reference(f'payments/successful').order_by_child("timestamp").limit_to_last(100).get()
+    if snapshot:
+        # for value in snapshot.values():
+        #     smalldict = {}
+        #     smalldict['amount'] = value['amount']
+        #     smalldict['combined'] = value['combined']
+        #     smalldict['date'] = value['date']
+        #     smalldict['mobile'] = value['mobile']
+        #     smalldict['month'] = value['month']
+        #     smalldict['network'] = value['network']
+        #     smalldict['productid'] = value['productid']
+        #     smalldict['shortcode'] = value['shortcode']
+        #     smalldict['status'] = value['status']
+        #     smalldict['time'] = value['time']
+        #     smalldict['timestamp'] = value['timestamp']
+        #     smalldict['transactionid'] = value['transactionid']
+        #     smalldict['renewaltype'] = value['renewaltype']
+        #     smalldict['year'] = value['year']
+        #     big_dict[value['timestamp']] = smalldict
+        reverseSnapshot = collections.OrderedDict(sorted(snapshot.items(), reverse=True))  # Set reverse=True
+        return reverseSnapshot
+
+
+def paymentsNumberForToday():
+    timestamp = int(time.time())
+    thestamp = datetime.fromtimestamp(timestamp)
+    todayDate = thestamp.strftime("%d-%b-%Y")
+    mydict = dbs.reference(f'payments/successful').order_by_child("date").equal_to(todayDate).get()
+    return len(mydict)
+
+def paymentsAmountForToday():
+    timestamp = int(time.time())
+    thestamp = datetime.fromtimestamp(timestamp)
+    todayDate = thestamp.strftime("%d-%b-%Y")
+    snapshot = dbs.reference(f'payments/successful').order_by_child("date").equal_to(todayDate).get()
+    if snapshot:
+        universalAmount = 0.00
+        for value in snapshot.values():
+            universalAmount = universalAmount + float(value['amount'])
+        return  universalAmount
+
+def todayTransactions():
+    big_dict = {}
+    timestamp = int(time.time())
+    thestamp = datetime.fromtimestamp(timestamp)
+    todayDate = thestamp.strftime("%d-%b-%Y")
+    snapshot = dbs.reference(f'payments/successful').order_by_child("date").equal_to(todayDate).get()
+    if snapshot:
+        for value in snapshot.values():
+            smalldict = {}
+            smalldict['amount'] = value['amount']
+            smalldict['combined'] = value['combined']
+            smalldict['date'] = value['date']
+            smalldict['mobile'] = value['mobile']
+            smalldict['month'] = value['month']
+            smalldict['network'] = value['network']
+            smalldict['productid'] = value['productid']
+            smalldict['shortcode'] = value['shortcode']
+            smalldict['status'] = value['status']
+            smalldict['time'] = value['time']
+            smalldict['timestamp'] = value['timestamp']
+            smalldict['transactionid'] = value['transactionid']
+            smalldict['year'] = value['year']
+            big_dict[value['timestamp']] = smalldict
+        return  big_dict
+
+
+
+
+
+
+
+def paymentNumberForSpecificDay(startdate, enddate):
+    snapshot = dbs.reference(f'payments/successful').order_by_child('date').start_at(startdate).end_at(enddate + "\uf8ff").get()
+    return len(snapshot)
+
+def paymentsAmountForSpecificDay(startdate, enddate):
+    snapshot = dbs.reference(f'payments/successful').order_by_child('date').start_at(startdate).end_at(enddate + "\uf8ff").get()
+    if snapshot:
+        universalAmount = 0.00
+        for value in snapshot.values():
+            universalAmount = universalAmount + float(value['amount'])
+        return  universalAmount
+
+
+def transactionsForSpecificDay(startdate, enddate):
+    big_dict = {}
+    snapshot = dbs.reference(f'payments/successful').order_by_child('date').start_at(startdate).end_at(enddate + "\uf8ff").get()
+    if snapshot:
+        for value in snapshot.values():
+            smalldict = {}
+            smalldict['amount'] = value['amount']
+            smalldict['combined'] = value['combined']
+            smalldict['date'] = value['date']
+            smalldict['mobile'] = value['mobile']
+            smalldict['month'] = value['month']
+            smalldict['network'] = value['network']
+            smalldict['productid'] = value['productid']
+            smalldict['shortcode'] = value['shortcode']
+            smalldict['status'] = value['status']
+            smalldict['time'] = value['time']
+            smalldict['timestamp'] = value['timestamp']
+            smalldict['transactionid'] = value['transactionid']
+            smalldict['year'] = value['year']
+            big_dict[value['timestamp']] = smalldict
+        return  big_dict
+
+
+
+def unsubscriptions():
+    snapshot = dbs.reference(f'unsubscriptions').get()
+    return len(snapshot)
+
+def universalUnsubscriptionsTransactions():
+    snapshot = dbs.reference(f'unsubscriptions').get()
+    snapshot = collections.OrderedDict(reversed(list(snapshot.items())))
+    return snapshot
+
+def unsubscriptionTransactionsSpecificDay(startdate, enddate):
+    snapshot = dbs.reference(f'unsubscriptions').order_by_child('date').start_at(startdate).end_at(enddate + "\uf8ff").get()
+    snapshot = collections.OrderedDict(reversed(list(snapshot.items())))
+    return snapshot
+
+def totalAmountSpecificDay(startdate, enddate):
+    big_dict = {}
+    snapshot = dbs.reference(f'payments/successful').order_by_child('date').start_at(startdate).end_at(enddate + "\uf8ff").get()
+    if snapshot:
+        total = 0.00
+        for value in snapshot.values():
+            smalldict = {}
+            smalldict['amount'] = value['amount']
+            smalldict['combined'] = value['combined']
+            smalldict['date'] = value['date']
+            smalldict['mobile'] = value['mobile']
+            smalldict['month'] = value['month']
+            smalldict['network'] = value['network']
+            smalldict['productid'] = value['productid']
+            smalldict['shortcode'] = value['shortcode']
+            smalldict['status'] = value['status']
+            smalldict['time'] = value['time']
+            smalldict['timestamp'] = value['timestamp']
+            smalldict['transactionid'] = value['transactionid']
+            smalldict['year'] = value['year']
+            big_dict[value['timestamp']] = smalldict
+            total = total + float(value['amount'])
+        return total
+
+
+
+def sendPornWords():
+    pornWords = ['porn','antipornography','cyberporn','pornographer','scud','porno','smut','fap','pornographic','hardcore','core','coprology','pornie',
+    'trade','cybercrime','hard','lubricity',
+    'crime','porny','skin','bukkake','minded','soft','vice',
+    'pornographer','pornification','pornograph','girl','breeding',
+    'shop','girlie','pornophobe','offender','mope','erotica',
+    'fuck','pussy','naked','twerk','ass', 'hot pics', 'erotic', 'sex', 'slave', 'motherfucker', 'fucked', 'obess', 'hot', 'lover', 'doggy',
+    'missionary', 'daddy', 'sugardaddy', 'fuck', 'naked', 'buy', 'free offer', 'cucumber', 'cunningulus', 'pussy', 'dick', 'ass', 'squirt' ,'cum', 'cumshot''orgie', 'orgasm', 'sted-dad', 'stepdad', 'step-mom', 'stopmom', 'step-mum', 'stepmum']
+
+    for index,word in enumerate(pornWords):
+        dbs.reference(f'control/porn').push().set({"word": word})
+        print(index)
+
+
+def fetchPornWords():
+    big_dict = []
+    snapshot = dbs.reference(f'control/porn').get()
+    for value in snapshot.values():
+        big_dict.append(value['word'])
+    print(big_dict)
+    return big_dict
+
+
+def pushToFirebase(transactionid, mobile):
+    dbs.reference(f'monitor/{mobile}/identity').set(transactionid)
+def fetchFromFirebase(mobile):
+    snapshot = dbs.reference(f'monitor/{mobile}/identity').get()
+    return snapshot
+def isFirebaseAvailable(mobile):
+    print(f"Am checking for {mobile}")
+    snapshot = dbs.reference(f'monitor/{mobile}/identity').get()
+    if not snapshot:
+        print("poooool")
+        return False
+    else:
+        print("doooool")
+        print("doooool")
+        return True

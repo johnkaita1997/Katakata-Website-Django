@@ -3,7 +3,6 @@ from django.urls import path
 from main import views as mainviews
 
 urlpatterns = [
-
     path('', mainviews.homepage, name="homepage"),
     path('newspage', mainviews.newspage, name="newspage"),
     path('shoppage', mainviews.shoppage, name="shoppage"),
@@ -24,28 +23,25 @@ urlpatterns = [
     path('conthumournamespage', mainviews.conthumournamespage, name="conthumournamespage"),
     path('conthumourcontentpage/<str:conthumourname>', mainviews.conthumourcontentpage, name="conthumourcontentpage"),
     path('newsviewer/<str:newsid>', mainviews.newsviewer, name="newsviewer"),
-    # path('androidpage', mainviews.androidpage, name="androidpage"),
-
-    path('videoviewer/<path:video>/<path:position>', mainviews.videoviewer,name="videoviewer"),
-
-    path('shortcomicsviewer/<str:shortcomic>', mainviews.shortcomicsviewer,name="shortcomicsviewer"),
+    path('videoviewer/<str:video>/<str:position>', mainviews.videoviewer, name="videoviewer"),
+    path('shortcomicsviewer/<str:shortcomic>', mainviews.shortcomicsviewer, name="shortcomicsviewer"),
     path('missionpage', mainviews.missionpage, name="missionpage"),
     path('satvideos', mainviews.satvideos, name="satvideos"),
     path('satmagazines', mainviews.satmagazines, name="satmagazines"),
-    path('satlongcomics', mainviews .satlongcomics, name="satlongcomics"),
+    path('satlongcomics', mainviews.satlongcomics, name="satlongcomics"),
     path('newsletter/<str:namer>/<str:emailer>', mainviews.newsletter, name="newsletter"),
     path('unsubscribe/<str:email>', mainviews.unsubscribe, name="unsubscribe"),
     path('contactus', mainviews.contactus, name="contactus"),
-
     path('createnews', mainviews.createnews, name="createnews"),
     path('editnews/<path:newsid>', mainviews.editnews, name="editnews"),
-
     path('news/<str:newsid>', mainviews.news, name="news"),
     path('videos/<path:video>', mainviews.videos, name="videos"),
-
     path('userlogin', mainviews.userlogin, name="userlogin"),
     path('userReg', mainviews.userReg, name="userReg"),
-    path('logout', mainviews.logout, name="logout")
-
-    #path('contactus', mainviews.contactus, name="contactus")
+    path('logout', mainviews.logout, name="logout"),
+    path('subscription', mainviews.Subscription.as_view(), name="subscription"),
+    path('callback', mainviews.callback, name="callback"),
+    path('mySubscription', mainviews.mySubscription, name="mySubscription"),
+    path('subscriptionpage', mainviews.subscriptionpage, name="subscriptionpage"),
+    path('adminpage', mainviews.adminPage, name="adminpage"),
 ]

@@ -1,23 +1,27 @@
+import json
 import smtplib
 import time
-from datetime import datetime
 from email.message import EmailMessage
 
-from django.contrib import messages
-from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from django.shortcuts import render
 from django.utils.translation import gettext_lazy as _
+from django.views import View
 from django.views.decorators.cache import never_cache, cache_control
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib import messages
+from django.shortcuts import redirect
+
 
 from testPython import *
-
 monthsummaryDict = {}
 
+# @cache_control(must_revalidate=True)
 
-# if not 'sliderimages' in monthsummaryDict.keys():
-#     monthsummaryDict['sliderimages'] = fetchsliderimages()
-# if not 'longcomics' in monthsummaryDict.keys():
-#     monthsummaryDict['longcomics'] = loadlongcomics(long)
-
+mtnUsername = getCredentials()['mtnusername']
+mtnpassword = getCredentials()['mtnpassword']
+mtnproductid = getCredentials()['mtnproductid']
+mtnnetwork = getCredentials()['mtnnetwork']
 
 def num_Videos():
     snapshot = dbs.reference('numbers/videos').get()
@@ -27,7 +31,6 @@ def num_Videos():
 def num_Magazines():
     snapshot = dbs.reference('numbers/magazines').get()
     return snapshot
-
 
 def num_LongComics():
     snapshot = dbs.reference('numbers/longcomics').get()
@@ -68,12 +71,35 @@ def callMainData():
 
 
 @never_cache
-@cache_control(must_revalidate=True)
 def homepage(request):
+
     callMainData()
+    if not "login" in request.COOKIES.keys():
+        monthsummaryDict['isloggedIn'] = False
+    else:
+        monthsummaryDict['isloggedIn'] = True
+
+    if "login" in request.COOKIES.keys():
+        userid = request.COOKIES.get('login')
+        useremail = fetchUserData(userid)['email']
+        if 'kat' in useremail:
+            monthsummaryDict['showadmin'] = True
+
     if request.method == 'POST':
         name = request.POST.get('name')
         email = request.POST.get('email')
+
+        pornlanguage = any(word in name for word in fetchPornWords())
+        emailpornlanguage = any(word in email for word in fetchPornWords())
+        if not name or not email or not name:
+            messages.error(request, _(f"Ensure all fields are entered"))
+            return redirect('homepage')
+        elif pornlanguage:
+            messages.error(request, _(f"Your inputs were filtered"))
+            return redirect('homepage')
+        elif emailpornlanguage:
+            messages.error(request, _(f"Your inputs were filtered"))
+            return redirect('homepage')
 
         emaillist = []
         snapshot = dbs.reference('newsletter').get()
@@ -128,7 +154,6 @@ def homepage(request):
 
 
 @never_cache
-@cache_control(must_revalidate=True)
 def cartoonspage(request):
     if not 'latestcartoon' in monthsummaryDict.keys():
         monthsummaryDict['loadlongcomics'] = longcomicsall(num_LongComics())
@@ -138,14 +163,12 @@ def cartoonspage(request):
 
 
 @never_cache
-@cache_control(must_revalidate=True)
 def imageviewer(request, theimage):
     response = render(request, "imageviewer.html", {"theimage": theimage})
     return response
 
 
 @never_cache
-@cache_control(must_revalidate=True)
 def jabspage(request):
     if not 'loadjabs' in monthsummaryDict.keys():
         monthsummaryDict['loadjabs'] = loadjabs()
@@ -154,25 +177,22 @@ def jabspage(request):
 
 
 @never_cache
-@cache_control(must_revalidate=True)
 def quotespage(request):
     if not 'loadquotes' in monthsummaryDict.keys():
         monthsummaryDict['loadquotes'] = loadquotes()
-        response = render(request, "quotespage.html", {"summary": monthsummaryDict})
-        return response
+    response = render(request, "quotespage.html", {"summary": monthsummaryDict})
+    return response
 
 
 @never_cache
-@cache_control(must_revalidate=True)
 def socialproblemspage(request):
     if not 'loadsocialproblems' in monthsummaryDict.keys():
         monthsummaryDict['loadsocialproblems'] = loadsocialproblems()
-        response = render(request, "socialproblemspage.html", {"summary": monthsummaryDict})
-        return response
+    response = render(request, "socialproblemspage.html", {"summary": monthsummaryDict})
+    return response
 
 
 @never_cache
-@cache_control(must_revalidate=True)
 def proverbspage(request):
     if not 'loadproverbs' in monthsummaryDict.keys():
         monthsummaryDict['loadproverbs'] = loadproverbs()
@@ -181,7 +201,6 @@ def proverbspage(request):
 
 
 @never_cache
-@cache_control(must_revalidate=True)
 def longcomicspage(request):
     monthsummaryDict['longcomics'] = loadlongcomics()
     monthsummaryDict['loadlongcomics'] = longcomicsall(num_LongComics())
@@ -190,7 +209,6 @@ def longcomicspage(request):
 
 
 @never_cache
-@cache_control(must_revalidate=True)
 def illustrationnamespage(request):
     if not 'illustrationnames' in monthsummaryDict.keys():
         monthsummaryDict['illustrationnames'] = loadillustrationnames()
@@ -199,7 +217,6 @@ def illustrationnamespage(request):
 
 
 @never_cache
-@cache_control(must_revalidate=True)
 def illustrationcontentpage(request, illustrationname):
     if not 'illustrationcontent' in monthsummaryDict.keys():
         monthsummaryDict['illustrationcontent'] = loadillustrationcontent(illustrationname)
@@ -208,7 +225,6 @@ def illustrationcontentpage(request, illustrationname):
 
 
 @never_cache
-@cache_control(must_revalidate=True)
 def conthumournamespage(request):
     if not 'conthumournames' in monthsummaryDict.keys():
         monthsummaryDict['conthumournames'] = loadconthumournames()
@@ -217,7 +233,6 @@ def conthumournamespage(request):
 
 
 @never_cache
-@cache_control(must_revalidate=True)
 def conthumourcontentpage(request, conthumourname):
     if not 'conthumourcontent' in monthsummaryDict.keys():
         monthsummaryDict['conthumourcontent'] = loadconthumourcontent(conthumourname)
@@ -226,7 +241,6 @@ def conthumourcontentpage(request, conthumourname):
 
 
 @never_cache
-@cache_control(must_revalidate=True)
 def pdfviewerpage(request, thepdf):
     if not 'thepdf' in monthsummaryDict.keys():
         monthsummaryDict['thepdf'] = thepdf
@@ -235,7 +249,6 @@ def pdfviewerpage(request, thepdf):
 
 
 @never_cache
-@cache_control(must_revalidate=True)
 def newspage(request):
     monthsummaryDict['latestnews'] = latestnews()
     monthsummaryDict['loadnewslocations'] = loadnewslocations()
@@ -246,7 +259,6 @@ def newspage(request):
 
 
 @never_cache
-@cache_control(must_revalidate=True)
 def newsviewer(request, newsid):
     identity = int(newsid) * -1
 
@@ -266,15 +278,19 @@ def newsviewer(request, newsid):
 
 
 @never_cache
-@cache_control(must_revalidate=True)
 def teampage(request):
     if request.method == 'POST':
         name = request.POST.get('name')
         email = request.POST.get('email')
         usermessage = request.POST.get('message')
 
+        pornlanguage = any(word in usermessage for word in fetchPornWords())
+
         if not name or not email or not usermessage:
             response = render(request, 'team.html', {"message": "Ensure all fields are filled"})
+            return response
+        elif pornlanguage:
+            response = render(request, 'team.html', {"message": ""})
             return response
         else:
             # formattedmessage = "From "
@@ -316,28 +332,24 @@ def teampage(request):
 
 
 @never_cache
-@cache_control(must_revalidate=True)
 def shoppage(request):
     response = render(request, "shoppage.html", {"summary": monthsummaryDict})
     return response
 
 
 @never_cache
-@cache_control(must_revalidate=True)
 def productdetails(request):
     response = render(request, "productdetails.html", {"summary": monthsummaryDict})
     return response
 
 
 @never_cache
-@cache_control(must_revalidate=True)
 def cartpage(request):
     response = render(request, "cartpage.html", {"summary": monthsummaryDict})
     return response
 
 
 @never_cache
-@cache_control(must_revalidate=True)
 def humourpage(request):
     if not 'loadhumour' in monthsummaryDict.keys():
         monthsummaryDict['loadhumour'] = loadhumour()
@@ -349,14 +361,12 @@ def humourpage(request):
 
 
 @never_cache
-@cache_control(must_revalidate=True)
 def videos(request, video):
     response = render(request, "videos.html", {"summary": monthsummaryDict})
     return response
 
 
 @never_cache
-@cache_control(must_revalidate=True)
 def shortcomicsviewer(request, shortcomic):
     if not 'shortcomics' in monthsummaryDict.keys():
         monthsummaryDict['shortcomics'] = androidloadspecificshortcomic(shortcomic)
@@ -368,14 +378,12 @@ def shortcomicsviewer(request, shortcomic):
 
 
 @never_cache
-@cache_control(must_revalidate=True)
 def missionpage(request):
     response = render(request, "mission.html", {"summary": monthsummaryDict})
     return response
 
 
 @never_cache
-@cache_control(must_revalidate=True)
 def satvideos(request):
     monthsummaryDict['satvideos'] = androidvideos(100000000)
     response = render(request, "satvideos.html", {"summary": monthsummaryDict})
@@ -383,7 +391,6 @@ def satvideos(request):
 
 
 @never_cache
-@cache_control(must_revalidate=True)
 def satmagazines(request):
     monthsummaryDict['allsatmagazines'] = androidloadmagazines(10000000)
     response = render(request, "satmagazines.html", {"summary": monthsummaryDict})
@@ -391,7 +398,6 @@ def satmagazines(request):
 
 
 @never_cache
-@cache_control(must_revalidate=True)
 def satlongcomics(request):
     monthsummaryDict['longcomics'] = longcomicsall(100000)
     response = render(request, "satlongcomics.html", {"summary": monthsummaryDict})
@@ -399,7 +405,6 @@ def satlongcomics(request):
 
 
 @never_cache
-@cache_control(must_revalidate=True)
 def newsletter(request, namer, emailer):
     if not 'namer' in monthsummaryDict.keys():
         monthsummaryDict['namer'] = namer
@@ -435,7 +440,6 @@ def newsletter(request, namer, emailer):
 
 
 @never_cache
-@cache_control(must_revalidate=True)
 def unsubscribe(request, email):
     snapshot = dbs.reference(f'newsletter').get()
     for value in snapshot.keys():
@@ -456,14 +460,12 @@ def unsubscribe(request, email):
 
 
 @never_cache
-@cache_control(must_revalidate=True)
 def contactus(request):
     response = render(request, "contactus.html", {"summary": monthsummaryDict})
     return response
 
 
 @never_cache
-@cache_control(must_revalidate=True)
 def createnews(request):
     def getnlocations():
         bundle = []
@@ -558,7 +560,6 @@ def createnews(request):
 
 
 @never_cache
-@cache_control(must_revalidate=True)
 def editnews(request, newsid):
     def getnlocations():
         bundle = []
@@ -673,7 +674,6 @@ def editnews(request, newsid):
 
 
 @never_cache
-@cache_control(must_revalidate=True)
 def news(request, newsid):
     identity = int(newsid) * -1
 
@@ -693,7 +693,6 @@ def news(request, newsid):
 
 
 @never_cache
-@cache_control(must_revalidate=True)
 def userlogin(request):
     if request.method == "POST":
         try:
@@ -703,9 +702,9 @@ def userlogin(request):
             try:
                 login = auth.sign_in_with_email_and_password(email, password)
                 userid = login['localId']
-                if not "uid" in request.COOKIES.keys():
+                if not "login" in request.COOKIES.keys():
                     response = redirect('homepage')
-                    response.set_cookie('uid', userid)
+                    response.set_cookie('login', userid, max_age=31536000)
                     messages.error(request, _("Login was successful"))
                     return response
                 else:
@@ -725,13 +724,13 @@ def userlogin(request):
 
 
 @never_cache
-@cache_control(must_revalidate=True)
 def userReg(request):
     if request.method == "POST":
         try:
             email = request.POST.get("email").strip()
             name = request.POST.get("name").strip()
             password = request.POST.get("password").strip()
+            mobile = "00000"
 
             imageUrl = request.POST.get("url")
 
@@ -748,14 +747,15 @@ def userReg(request):
                     userDict['name'] = name
                     userDict['uid'] = userid
                     userDict['email'] = email
+                    userDict['mobile'] = mobile
                     dbs.reference(f'users/{userid}').set(userDict)
                 except Exception as exception:
                     messages.error(request, _(f"An error occured!\n{exception}"))
                 else:
-                    if not "uid" in request.COOKIES.keys():
+                    if not "login" in request.COOKIES.keys():
                         response = redirect('homepage')
-                        response.set_cookie('uid', userid)
-                        messages.error(request, _(f"You are already logged in"))
+                        response.set_cookie('login', userid, max_age=31536000)
+                        messages.error(request, _(f"Account Created Successfully"))
                         return redirect('homepage')
                     else:
                         messages.error(request, _(f"You are already logged in"))
@@ -767,77 +767,397 @@ def userReg(request):
 
             return response
 
-    response = render(request, "register.html", {"summary": monthsummaryDict})
-    return response
+    return render(request, "register.html", {"summary": monthsummaryDict})
 
 
 @never_cache
-@cache_control(must_revalidate=True)
 def videoviewer(request, video, position):
-
     try:
-        loggedin = "uid" in request.COOKIES.keys()
-        theposition = int(position)
-        defaultTimestamp = list(androidloadspecificvideo(video).keys())[int(theposition)]
-        defaultVideo = androidloadspecificvideo(video)[f'{defaultTimestamp}']
-        monthsummaryDict['videos'] = androidloadspecificvideo(video)
-        monthsummaryDict['name'] = video
-        monthsummaryDict['default'] = monthsummaryDict['name'][theposition]
-        monthsummaryDict['default'] = defaultVideo
-        monthsummaryDict['loggedin'] = loggedin
+        response = redirect('subscriptionpage')
+        response.set_cookie('video', video, max_age=31536000)
 
-        if request.method == "POST":
-            try:
-                comment = request.POST.get("comment")
-                if not comment:
-                    messages.error(request, _("You have entered no message."))
-                    return redirect('videoviewer', video=defaultVideo['name'], position=theposition)
-                else:
-                    if not "uid" in request.COOKIES.keys():
-                        messages.error(request, _("Login is required to post comments."))
-                        return redirect('userlogin')
-                    else:
-                        theposition = int(position)
-                        defaultTimestamp = list(androidloadspecificvideo(video).keys())[int(theposition)]
-                        defaultVideo = androidloadspecificvideo(video)[f'{defaultTimestamp}']
-                        defaultVideoName = defaultVideo['name']
-                        defaultVideoTimeStamp = int(defaultTimestamp) * -1
+        print("Try")
+        mobile = request.COOKIES.get('mobile')
+        if not mobile:
+            print("Try harder")
+            return response
 
-                        print(defaultVideoTimeStamp)
+        subscribed = isFirebaseAvailable(mobile)
+        if not subscribed:
+            messages.error(request, _("Subscription is required to view videos."))
+            return response
+        else:
+            transactionId = fetchFromFirebase(mobile)
 
-                        timestamp = int(time.time())
-                        commentObject = {}
-                        userid = request.COOKIES.get('uid')
+            if not isUserSubscribed(transactionId):
+                print("You are not subscribed")
+                return response
+            else:
+                print("You are subscribed")
+                print("You are subscribed")
+                theposition = int(position)
+                defaultTimestamp = list(androidloadspecificvideo(video).keys())[int(theposition)]
+                defaultVideo = androidloadspecificvideo(video)[f'{defaultTimestamp}']
+                monthsummaryDict['videos'] = androidloadspecificvideo(video)
+                monthsummaryDict['name'] = video
+                monthsummaryDict['default'] = monthsummaryDict['name'][theposition]
+                monthsummaryDict['default'] = defaultVideo
+                monthsummaryDict['loggedin'] = subscribed
+                defaultVideoName = defaultVideo['name']
+                defaultVideoTimeStamp = int(defaultTimestamp) * -1
 
-                        print(timestamp)
-                        name = getUserName(userid)['name']
-                        email = getUserName(userid)['email']
-                        image = getUserName(userid)['image']
-                        print(f"user is ${userid}\n{name}\n{email}\n{image}")
+                viewsDictionary = {}
+                viewsDictionary['view'] = "One"
+                dbs.reference(f'videos/playlists/{defaultVideoName}/{defaultVideoTimeStamp}/views').push().set(viewsDictionary)
+                numberofViews = len(dbs.reference(f'videos/playlists/{defaultVideoName}/{defaultVideoTimeStamp}/views').get())
+                print(f'{numberofViews} is number of views')
+                monthsummaryDict['numberofviews'] = numberofViews
 
-                        commentObject["timestamp"] = timestamp
-                        commentObject['comment'] = comment
-                        commentObject['name'] = name
-                        commentObject['email'] = email
-                        commentObject['image'] = image
+                if request.method == "POST":
+                    try:
+                        comment = request.POST.get("comment")
+                        if not comment:
+                            messages.error(request, _("You have entered no message."))
+                            return redirect('videoviewer', video=defaultVideo['name'], position=theposition)
+                        else:
+                            if not "login" in request.COOKIES.keys():
+                                messages.error(request, _("Login is required to post comments."))
+                                return redirect('userlogin')
+                            else:
+                                theposition = int(position)
+                                defaultTimestamp = list( androidloadspecificvideo(video).keys() )[int(theposition)]
+                                defaultVideo = androidloadspecificvideo(video)[f'{defaultTimestamp}']
+                                defaultVideoName = defaultVideo['name']
+                                defaultVideoTimeStamp = int(defaultTimestamp) * -1
 
-                        dbs.reference(
-                            f'videos/playlists/{defaultVideoName}/{defaultVideoTimeStamp}/comments/{timestamp}').set(
-                            commentObject)
+                                print(defaultVideoTimeStamp)
+
+                                timestamp = int(time.time())
+                                commentObject = {}
+                                userid = request.COOKIES.get('login')
+
+                                name = getUserName(userid)['login']
+                                email = getUserName(userid)['email']
+                                image = getUserName(userid)['image']
+                                print(f"user is ${userid}\n{name}\n{email}\n{image}")
+
+                                commentObject["timestamp"] = timestamp
+                                commentObject['comment'] = comment
+                                commentObject['name'] = name
+                                commentObject['email'] = email
+                                commentObject['image'] = image
+
+                                dbs.reference(f'videos/playlists/{defaultVideoName}/{defaultVideoTimeStamp}/comments/{timestamp}').set(
+                                    commentObject)
+                                return redirect('videoviewer', video=defaultVideo['name'], position=theposition)
+
+                    except Exception as exception:
+                        messages.error(request, _(f'Error ${exception}'))
                         return redirect('videoviewer', video=defaultVideo['name'], position=theposition)
-
-            except Exception as exception:
-                messages.error(request, _(f'Error ${exception}'))
-                return redirect('videoviewer', video=defaultVideo['name'], position=theposition)
     except Exception as exception:
-        response = render(request, "videoviewer.html", {"summary": monthsummaryDict, 'alert': False})
-        return response
+        print(f'Exception is {exception}')
+        return redirect('videoviewer', video=video, position=0)
 
-    response = render(request, "videoviewer.html", {"summary": monthsummaryDict, 'alert': False})
-    return response
+    return render(request, "videoviewer.html", {"summary": monthsummaryDict})
+
 
 
 def logout(request):
     response = redirect('userlogin')
-    response.delete_cookie('uid')
+    messages.error(request, _(f"You have been logged out"))
+    response.delete_cookie('login')
     return response
+
+
+class Subscription(View):
+    def get(self, request):
+        msisdn = request.GET.get("msisdn", None)
+        network = request.GET.get("network")
+        username = request.GET.get("username")
+        password = request.GET.get("password")
+        print(msisdn, network, username, password)
+        response = render(request, "subscribe.html", {"summary": monthsummaryDict})
+        return response
+
+
+@csrf_exempt
+def callback(request):
+    mydict = {}
+    data = json.loads(request.body.decode('utf-8'))
+    if not data:
+        mydict['success'] = False
+        print("Data is not available")
+    else:
+        mydict['success'] = True
+        subscriptionType = data["type"]
+        network = data["mno"]
+        mobile = data["msisdn"]
+        shortcode = data["shortcode"]
+        productid = data["productid"]
+        transactionid = data["transactionid"]
+        amount = data["amount"]
+        renewaltype = data["renewaltype"]
+        subscribetext = data["subscribetext"]
+        time = data["requesttime"]
+        status = data["status"]
+
+        import time as thetime
+        timestamp = int(thetime.time())
+        thestamp = datetime.fromtimestamp(timestamp)
+        formatted = thestamp.strftime("%d-%b-%Y")
+        date = formatted
+        month = getDates()['month']
+        year = getDates()['year']
+        combined = getDates()['combined']
+
+        paymentDict = {}
+        paymentDict['date'] = date
+        paymentDict['month'] = month
+        paymentDict['year'] = year
+        paymentDict['combined'] = combined
+        paymentDict['network'] = network
+        paymentDict['mobile'] = mobile
+        paymentDict['shortcode'] = shortcode
+        paymentDict['productid'] = productid
+        paymentDict['transactionid'] = transactionid
+        paymentDict['amount'] = amount
+        paymentDict['renewaltype'] = renewaltype
+        paymentDict['subscribetext'] = subscribetext
+        paymentDict['time'] = time
+        paymentDict['status'] = status
+        paymentDict['timestamp'] = timestamp
+
+        if subscriptionType == "SUB":
+            if status == "SUCCESS":
+                dbs.reference(f'payments/successful/{timestamp}').set(paymentDict)
+                dbs.reference(f'transactions/{timestamp}').set(paymentDict)
+                dbs.reference(f'subscriptions/{transactionid}').set(paymentDict)
+
+            else:
+                dbs.reference(f'payments/failed/{timestamp}').set(paymentDict)
+                dbs.reference(f'transactions/{timestamp}').set(paymentDict)
+
+        elif subscriptionType == "UNSUB":
+            dbs.reference(f'transactions/{timestamp}').set(data)
+            dbs.reference(f'unsubscriptions/{transactionid}').set(paymentDict)
+
+    result = json.dumps(mydict)
+    return HttpResponse(result, content_type="application/json")
+
+
+
+
+
+
+def mySubscription(request):
+    if request.method == 'POST':
+        try:
+            mobile = request.POST.get("mobile").replace(" ", "")
+            transactionid = fetchFromFirebase(mobile)
+            if not transactionid:
+                messages.error(request, _("You are not subscribed"))
+                return redirect('subscriptionpage')
+            dbs.reference(f'subscriptions/{transactionid}').delete()
+            myurl = f"http://52.206.231.182/routesms/bill_v2/unsub/?username={mtnUsername}&password={mtnpassword}&phoneNo={mobile}&productID={mtnproductid}&network={mtnnetwork}"
+            import requests
+            r = requests.get(url=myurl)
+            data = r.json()
+            timestamp = int(time.time())
+            messages.error(request, _(f"You have been unsubscribed"))
+            dbs.reference(f'transactions/{timestamp}').set(data)
+            return redirect('homepage')
+        except Exception as exception:
+            messages.error(request, _(f"An error occured.\n\n{exception}"))
+            return redirect('mySubscription')
+
+    if not "mobile" in request.COOKIES.keys():
+        messages.error(request, _("Please enter your mobile for access control."))
+        return redirect('subscriptionpage')
+    else:
+        mobile = request.COOKIES.get('mobile')
+        transactionid = fetchFromFirebase(mobile)
+        if not transactionid:
+            messages.error(request, _("You are not subscribed here"))
+            return redirect('subscriptionpage')
+        if not isUserSubscribed(transactionid):
+            return redirect('subscriptionpage')
+        else:
+            response = render(request, "mysubscription.html", {"username": "User"})
+            return response
+
+
+@never_cache
+def subscriptionpage(request):
+    userDict = {}
+    userDict['name'] = "User"
+
+    video = request.COOKIES.get('video')
+    if video is None:
+        print("Video Not There")
+    else:
+        print("Video There")
+
+    if request.method == "POST":
+        print("Arrived")
+        mobile = request.POST.get("mobile")
+        mobile = mobile.replace(" ", "")
+
+        if isFirebaseAvailable(mobile):
+            transactionid = fetchFromFirebase(mobile)
+            if isUserSubscribed(transactionid):
+                if "video" in request.COOKIES.keys():
+                    video = request.COOKIES.get('video')
+                    bigResponse = redirect('videoviewer', video=video, position=0)
+                    bigResponse.set_cookie('uid', transactionid, max_age=31536000)
+                    if not "mobile" in request.COOKIES.keys():
+                        bigResponse.set_cookie('mobile', mobile, max_age=31536000)
+                    else:
+                        bigResponse.delete_cookie('mobile')
+                        bigResponse.set_cookie('mobile', mobile, max_age=31536000)
+                    return bigResponse
+                else:
+                    theResponse = redirect('videoviewer', video=video, position=0)
+                    theResponse.set_cookie('uid', transactionid, max_age=31536000)
+                    if not "mobile" in request.COOKIES.keys():
+                        theResponse.set_cookie('mobile', mobile, max_age=31536000)
+                        print("Done 3")
+                    else:
+                        theResponse.delete_cookie('mobile')
+                        theResponse.set_cookie('mobile', mobile, max_age=31536000)
+                        print("Done 4")
+                    print("mop")
+                    return theResponse
+
+        myurl = f"http://52.206.231.182/routesms/bill_v2/?username={mtnUsername}&password={mtnpassword}&phoneNo={mobile}&productID={mtnproductid}&network={mtnnetwork}"
+        import requests
+        r = requests.get(url=myurl)
+        try:
+            data = r.json()
+
+            userid = data['transaction_id']
+
+            subRequest = {}
+            subRequest['code'] = data['code']
+            subRequest['result'] = data['result']
+            subRequest['transaction_id'] = data['transaction_id']
+            subRequest['msisdn'] = data['msisdn']
+            subRequest['transaction_time'] = data['transaction_time']
+            subRequest['mobile'] = mobile
+            subRequest['uid'] = userid
+            timestamp = int(time.time())
+            subRequest['timestamp'] = timestamp
+            thestamp = datetime.fromtimestamp(timestamp)
+            formatted = thestamp.strftime("%d-%b-%Y")
+            subRequest['date'] = formatted
+            subRequest['month'] = getDates()['month']
+            subRequest['year'] = getDates()['year']
+            subRequest['combined'] = getDates()['combined']
+
+            print(f'JSON DATA is {data}')
+
+            subscriptionDict = {}
+            subscriptionDict['transid'] = data['transaction_id']
+            subscriptionDict['transtamp'] = timestamp
+            subscriptionDict['transamount'] = 50
+
+            dbs.reference(f'transactions/{timestamp}').set(subRequest)
+
+            transactionid = data['transaction_id']
+            response = redirect('homepage')
+
+            pushToFirebase(transactionid, mobile)
+            if not "mobile" in request.COOKIES.keys():
+                response.set_cookie('mobile', mobile, max_age=31536000)
+            else:
+                response.delete_cookie('mobile')
+                response.set_cookie('mobile', mobile, max_age=31536000)
+
+            while isUserSubscribed(transactionid) == False:
+                pass
+            else:
+                print("pop")
+                if "video" in request.COOKIES.keys():
+                    print("sop")
+                    video = request.COOKIES.get('video')
+                    bigResponse = redirect('videoviewer', video=video, position=0)
+                    bigResponse.set_cookie('uid', transactionid, max_age=31536000)
+                    if not "mobile" in request.COOKIES.keys():
+                        bigResponse.set_cookie('mobile', mobile, max_age=31536000)
+                        print("Done 1")
+                    else:
+                        bigResponse.delete_cookie('mobile')
+                        bigResponse.set_cookie('mobile', mobile, max_age=31536000)
+                        print("Done 2")
+                    return bigResponse
+                else:
+                    theResponse = redirect('videoviewer', video=video, position=0)
+                    theResponse.set_cookie('uid', transactionid, max_age=31536000)
+                    if not "mobile" in request.COOKIES.keys():
+                        theResponse.set_cookie('mobile', mobile, max_age=31536000)
+                        print("Done 3")
+                    else:
+                        theResponse.delete_cookie('mobile')
+                        theResponse.set_cookie('mobile', mobile, max_age=31536000)
+                        print("Done 4")
+                    print("mop")
+                    return theResponse
+
+        except Exception as exception:
+            print("jop0")
+            ourResponse = redirect('subscriptionpage')
+            if not "mobile" in request.COOKIES.keys():
+                ourResponse.set_cookie('mobile', mobile, max_age=31536000)
+                print("Done 5")
+            else:
+                ourResponse.delete_cookie('mobile')
+                ourResponse.set_cookie('mobile', mobile, max_age=31536000)
+                print("Done 6")
+
+            messages.error(request, _(f"An error occured {exception}"))
+            return ourResponse
+
+    return render(request, "subscriptionpage.html", {"summary": monthsummaryDict})
+
+
+@never_cache
+def adminPage(request):
+    if not "login" in request.COOKIES.keys():
+        messages.error(request, _("Admin Login is required to visit admin page."))
+        return redirect(userlogin)
+    else:
+        userid = request.COOKIES.get('login')
+        useremail = fetchUserData(userid)['email']
+
+        if 'kat' in useremail:
+            summaryDict = {}
+            summaryDict['universalAmount'] = universalAmount()
+            summaryDict['numbertotalSuccessfulPayments'] = numbertotalSuccessfulPayments()
+            summaryDict['universalTransactions'] = universalTransactions()
+
+            summaryDict['paymentsNumberForToday'] = paymentsNumberForToday()
+            summaryDict['paymentsAmountForToday'] = paymentsAmountForToday()
+            summaryDict['todayTransactions'] = todayTransactions()
+
+            summaryDict['unsubscriptions'] = unsubscriptions()
+            summaryDict['unsubscriptionTransactions'] = universalUnsubscriptionsTransactions()
+
+            summaryDict['between'] = ""
+
+            if request.method == "POST":
+                startdate = datetime.strptime(request.POST.get("startdate"), '%Y-%m-%d').strftime("%d-%b-%Y")
+                enddate = datetime.strptime(request.POST.get("enddate"), '%Y-%m-%d').strftime("%d-%b-%Y")
+                summaryDict['universalTransactions'] = transactionsForSpecificDay(startdate, enddate)
+                summaryDict['unsubscriptionTransactions'] = unsubscriptionTransactionsSpecificDay(startdate, enddate)
+                summaryDict['between'] = f"btn {startdate} - {enddate}"
+                summaryDict['total'] = totalAmountSpecificDay(startdate, enddate)
+
+            response = render(request, "adminindex.html", {"summary": summaryDict})
+            return response
+
+        else:
+            messages.error(request, _("You are not authorized to visit this page"))
+            return redirect(homepage)
+
+
+
+
