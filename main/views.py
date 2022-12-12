@@ -1061,49 +1061,22 @@ def subscriptionpage(request):
             subscriptionDict['transamount'] = 50
 
             dbs.reference(f'transactions/{timestamp}').set(subRequest)
-
             transactionid = data['transaction_id']
-            response = redirect('homepage')
 
             pushToFirebase(transactionid, mobile)
-            if not "mobile" in request.COOKIES.keys():
-                response.set_cookie('mobile', mobile, max_age=31536000)
-            else:
-                response.delete_cookie('mobile')
-                response.set_cookie('mobile', mobile, max_age=31536000)
 
-            while isUserSubscribed(transactionid) == False:
-                pass
+            bigResponse = redirect('homepage')
+            bigResponse.set_cookie('uid', transactionid, max_age=31536000)
+            if not "mobile" in request.COOKIES.keys():
+                bigResponse.set_cookie('mobile', mobile, max_age=31536000)
+                print("Done 1")
             else:
-                print("pop")
-                if "video" in request.COOKIES.keys():
-                    print("sop")
-                    video = request.COOKIES.get('video')
-                    bigResponse = redirect('videoviewer', video=video, position=0)
-                    bigResponse.set_cookie('uid', transactionid, max_age=31536000)
-                    if not "mobile" in request.COOKIES.keys():
-                        bigResponse.set_cookie('mobile', mobile, max_age=31536000)
-                        print("Done 1")
-                    else:
-                        bigResponse.delete_cookie('mobile')
-                        bigResponse.set_cookie('mobile', mobile, max_age=31536000)
-                        print("Done 2")
-                    return bigResponse
-                else:
-                    theResponse = redirect('videoviewer', video=video, position=0)
-                    theResponse.set_cookie('uid', transactionid, max_age=31536000)
-                    if not "mobile" in request.COOKIES.keys():
-                        theResponse.set_cookie('mobile', mobile, max_age=31536000)
-                        print("Done 3")
-                    else:
-                        theResponse.delete_cookie('mobile')
-                        theResponse.set_cookie('mobile', mobile, max_age=31536000)
-                        print("Done 4")
-                    print("mop")
-                    return theResponse
+                bigResponse.delete_cookie('mobile')
+                bigResponse.set_cookie('mobile', mobile, max_age=31536000)
+                print("Done 2")
+            return bigResponse
 
         except Exception as exception:
-            print("jop0")
             ourResponse = redirect('subscriptionpage')
             if not "mobile" in request.COOKIES.keys():
                 ourResponse.set_cookie('mobile', mobile, max_age=31536000)
