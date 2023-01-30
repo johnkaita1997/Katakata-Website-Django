@@ -1,3 +1,4 @@
+
 import json
 import smtplib
 import time
@@ -882,6 +883,7 @@ class Subscription(View):
 
 @csrf_exempt
 def callback(request):
+    print("Am hit")
     mydict = {}
     data = json.loads(request.body.decode('utf-8'))
     if not data:
@@ -928,11 +930,11 @@ def callback(request):
         paymentDict['timestamp'] = timestamp
 
         if subscriptionType == "SUB":
+            pushToFirebase(transactionid, mobile)
             if status == "SUCCESS":
                 dbs.reference(f'payments/successful/{timestamp}').set(paymentDict)
                 dbs.reference(f'transactions/{timestamp}').set(paymentDict)
                 dbs.reference(f'subscriptions/{transactionid}').set(paymentDict)
-
             else:
                 dbs.reference(f'payments/failed/{timestamp}').set(paymentDict)
                 dbs.reference(f'transactions/{timestamp}').set(paymentDict)

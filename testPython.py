@@ -678,13 +678,14 @@ def isUserSubscribed(transactionid):
         print("Data is not there, so user is not subscribed")
         return False
     else:
+        print(data)
         userSub = data['issubscribed']
-        print("Data is there, so user is  subscribed")
+        print("Data is there")
         if userSub:
-            print("User is subscribed")
+            print("And User is subscribed")
             return True
         else:
-            print("User is not subscribed")
+            print("But User is not subscribed")
             return False
 
 
@@ -957,3 +958,12 @@ def isFirebaseAvailable(mobile):
         print("doooool")
         print("doooool")
         return True
+
+
+
+def unsubscribeUser():
+    pass
+    # myurl = f"http://52.206.231.182/routesms/bill_v2/unsub/?username={mtnUsername}&password={mtnpassword}&phoneNo={mobile}&productID={mtnproductid}&network={mtnnetwork}"
+
+
+isUserSubscribed("93afc5a1-508c-4cf0-bf51-8830bb65deff")
