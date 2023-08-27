@@ -476,15 +476,18 @@ def androidvideos(number):
     big_dict = {}
     ref = dbs.reference('videos/playlistnames')
     snapshot = ref.order_by_child("timestamp").limit_to_last(number).get()
-    snapshot = collections.OrderedDict(reversed(list(snapshot.items())))
-    if snapshot:
-        for value in snapshot.values():
-            smalldict = {}
-            smalldict['name'] = value['name']
-            smalldict['image'] = value['image']
-            big_dict[value['timestamp']] = smalldict
-            print("")
-    return big_dict
+    try:
+        snapshot = collections.OrderedDict(reversed(list(snapshot.items())))
+        if snapshot:
+            for value in snapshot.values():
+                smalldict = {}
+                smalldict['name'] = value['name']
+                smalldict['image'] = value['image']
+                big_dict[value['timestamp']] = smalldict
+                print("")
+        return big_dict
+    except:
+        return big_dict
 
 
 def androidloadspecificshortcomic(shortcomicname):

@@ -2,6 +2,10 @@ from django.urls import path
 
 from main import views as mainviews
 
+
+
+
+
 urlpatterns = [
     path('', mainviews.homepage, name="homepage"),
     path('newspage', mainviews.newspage, name="newspage"),
@@ -44,4 +48,6 @@ urlpatterns = [
     path('mySubscription', mainviews.mySubscription, name="mySubscription"),
     path('subscriptionpage', mainviews.subscriptionpage, name="subscriptionpage"),
     path('adminpage', mainviews.adminPage, name="adminpage"),
+    path('createsocialproblem', mainviews.createsocialproblems, name="createsocialproblems"),
+    path('editsocialproblem/<path:socialproblemid>', mainviews.editsocialproblems, name="editsocialproblems"),
 ]

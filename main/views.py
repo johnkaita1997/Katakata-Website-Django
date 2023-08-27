@@ -1135,4 +1135,87 @@ def adminPage(request):
 
 
 
+@never_cache
+def createsocialproblems(request):
 
+    if request.method == "POST":
+        try:
+            socialproblemname = request.POST.get("socialproblemtitle")
+            socialproblemdescription = request.POST.get("summernote")
+            imageUrl = request.POST.get("url")
+
+            if not imageUrl:
+                response = render(request, "index.html", {"message": "Social problem not posted! You did not upload image"})
+                return response
+            else:
+                print(f"Found imageurl as {imageUrl}")
+
+            timestamp = int(time.time())
+
+            bundle = {}
+            bundle["image"] = imageUrl
+            bundle["name"] = socialproblemname
+            bundle["description"] = socialproblemdescription
+            bundle["timestamp"] = -timestamp
+
+            dbs.reference(f'view/socialproblems/image').set(bundle)
+            dbs.reference(f'cartoons/socialproblems/{timestamp}').set(bundle)
+
+        except:
+            response = render(request, "createsocialproblems.html", {"message": "An error occured! Social Problem was not uploaded"})
+            return response
+        else:
+            response = render(request, "index.html", {"message": "Social Problem uploaded sucessfuly"})
+            return response
+
+    response = render(request, "createsocialproblems.html", {"summary": monthsummaryDict})
+    return response
+
+
+
+@never_cache
+def editsocialproblems(request, socialproblemid):
+
+    thedict = {}
+
+    description = dbs.reference(f'cartoons/socialproblems/{socialproblemid}').child("description").get()
+    image = dbs.reference(f'cartoons/socialproblems/{socialproblemid}').child("image").get()
+    name = dbs.reference(f'cartoons/socialproblems/{socialproblemid}').child("name").get()
+    timestamp = socialproblemid
+
+    thedict["description"] = description
+    thedict["image"] = image
+    thedict["name"] = name
+    thedict["timestamp"] = timestamp
+
+    if request.method == "POST":
+        try:
+            imageUrl = request.POST.get("url")
+            if imageUrl:
+                print("Image is there")
+                image = imageUrl
+            else:
+                print("image is not there")
+
+            socialproblemsname = request.POST.get("socialproblemtitle")
+            socialproblemsdescription = request.POST.get("summernote")
+            imageUrl = image
+
+            bundle = {}
+            bundle["image"] = imageUrl
+            bundle["name"] = socialproblemsname
+            bundle["description"] = socialproblemsdescription
+            bundle["timestamp"] = -int(timestamp)
+
+            dbs.reference(f'cartoons/socialproblems/{timestamp}').set(bundle)
+
+        except:
+            response = render(request, "editsocialproblemspage.html", {"message": "An error occured! Social Problem was not uploaded"})
+            return response
+        else:
+            response = render(request, "index.html", {"message": "Social Problem edited sucessfuly"})
+            monthsummaryDict['loadsocialproblems'] = loadsocialproblems()
+            return response
+
+    response = render(request, "editsocialproblemspage.html", {"summary": thedict})
+    return response
