@@ -64,116 +64,33 @@
         <br>
         <br>
     </div>
+
     <div class="container">
-        <div align="center" class="col-md-4 col-sm-6">
-            <div class="service-item">
-                <div align="center" class="icon">
-                    <img src="{% static 'assets/img/person.png' %}" alt="">
-                </div>
-                <div class="text">
-                    <h4>Editor-in-chief
-                    </h4>
-                    <p>Drs. Ogo Ubabukoh</p>
-                </div>
-            </div>
-        </div>
-        <div align="center" class="col-md-4 col-sm-6">
-            <div class="service-item">
-                <div align="center" class="icon">
-                    <img src="{% static 'assets/img/person.png' %}" alt="">
-                </div>
-                <div class="text">
-                    <h4>Art/Graphics Producer in – chief</h4>
-                    <p>Deogratius Okudi</p>
-                </div>
-            </div>
-        </div>
-        <div align="center" class="col-md-4 col-sm-6">
-            <div class="service-item">
-                <div align="center" class="icon">
-                    <img src="{% static 'assets/img/person.png' %}" alt="">
-                </div>
-                <div class="text">
-                    <h4>Art/Graphics Assistant</h4>
-                    <p>Perminus Ngugi Kiira</p>
-                </div>
-            </div>
-        </div>
-        <div align="center" class="col-md-4 col-sm-6">
-            <div class="service-item">
-                <div align="center" class="icon">
-                    <img src="{% static 'assets/img/person.png' %}" alt="">
-                </div>
-                <div class="text">
-                    <h4>Art/Graphics Manager (Website)</h4>
-                    <p>Perminus Ngugi Kiira</p>
-                    <p>Cocab Tech Solutions (Web Design)</p>
-                </div>
-            </div>
-        </div>
-        <div align="center" class="col-md-4 col-sm-6">
-            <div class="service-item">
-                <div align="center" class="icon">
-                    <img src="{% static 'assets/img/person.png' %}" alt="">
-                </div>
-                <div class="text">
-                    <h4>Editorial Advisory Board</h4>
-                    <p>Drs. Pieternel Drijvers, Drs. Ogu Okany,<br>
-                        Drs. Buchi Njere</p>
-                </div>
-            </div>
-        </div>
-        <div align="center" class="col-md-4 col-sm-6">
-            <div class="service-item">
-                <div align="center" class="icon">
-                    <img src="{% static 'assets/img/person.png' %}" alt="">
-                </div>
-                <div class="text">
-                    <h4>Legal Consultants</h4>
-                    <p>Geoffrey Ntambirweki Kandeebe<br>
-                        Vivian Iro – Uchime (LLB, LLM)<br>
-                        Ebele Topman<br>
-                        Lyka Mtambo.</p>
-                </div>
-            </div>
-        </div>
 
-        <div class="col-md-4 col-sm-6">
+        {% for value in summary.positions %}
 
-        </div>
+            <div align="center" class="col-md-4 col-sm-6">
+                <div class="service-item">
+                    <div align="center" class="icon">
+                        <img src="{% static 'assets/img/person.png' %}" alt="">
+                    </div>
+                    <div class="text">
+                        <h4>{{ value.title }}</h4>
 
+                        {% for value in value.employee.values %}
+                            <p>{{ value.name }}</p>
+                        {% endfor %}
 
-        <div align="center" class="col-md-4 col-sm-6">
-            <div class="service-item">
-                <div align="center" class="icon">
-                    <img src="{% static 'assets/img/person.png' %}" alt="">
-                </div>
-                <div class="text">
-                    <h4>Marketing</h4>
-                    <p>Drs. Romolo Pusceddu – Senior Business Development Consultant<br>
-                        Diana Namasani – Country Manager (Malawi)<br>
-                        Lydia Namuswa – Country Manager (Uganda)<br>
-                        Perminus Ngugi Kiira – Country Manager (Uganda)<br>
-                        <br>
+                    </div>
                 </div>
             </div>
-        </div>
-        <BR>
 
-
-        <div align="center" class="col-md-4 col-sm-6">
-            <div class="service-item">
-                <div align="center" class="icon">
-                    <img src="{% static 'assets/img/person.png' %}" alt="">
-                </div>
-                <div class="text">
-                    <h4>System Developer</h4>
-                    <p>John Kaita<br>
-                </div>
-            </div>
-        </div>
+        {% endfor %}
 
     </div>
+    <br>
+    <br>
+    <br>
 </div>
 
 
@@ -199,135 +116,51 @@
     <h3 align="center" style="color: black">Our Columnists</h3>
 
     <div class="container">
-        <div class="" style="margin-left: 15px; margin-right: 15px">
-            <div style="padding: 30px" class="table-item">
-                <h4>Liam Katabira</h4>
-                <br>
-                <br>
-                <img width="290px"
+
+
+        {% for value in summary.columnists %}
+
+            {% if "Liam Katabira" in value.name %}
+
+                <div class="" style="margin-left: 15px; margin-right: 15px">
+
+                    <div style="padding: 30px" class="table-item">
+                        <br>
+                        <h4>{{ value.name }}</h4>
+                        {% comment %}<img width="290px"
                      height="220px"
                      src="https://katakata.org/wp-content/uploads/2019/09/WhatsApp-Image-2019-08-29-at-20.43.26.jpeg"
-                     alt="">
-                <span></span>
-                <ul>
-                    <li>Liam Katabira is 7 years old. He was born on December 4, 2011, in Kampala, Uganda. He started
-                        school when he was 3 years old and he is presently a Primary Two Orange student at Sir Apollo
-                        Kaggwa Nakasero.
-                        At 5 years, he recently won the Bumble Bee Championship for Kindergartens and Nursery Schools,
-                        organized by Lotte Kindergarten and Pepea Africa initiative in early 2017. The competition was
-                        centred on the spelling of some unique words. He walked away with a tab for kids with stories
-                        and games. The victory has become a huge inspiration for him. Since winning the award, he has
-                        never looked back in his desire to become a creative writer.
-                        According to Liam’s mother, he has a unique skill for creative writing and he imagines a lot
-                        when writing.<br>Some of the thoughts are abstract ideas, but well contextualized. While
-                        Katabira
-                        Liam is unquestionably gifted, with so many written stories to his credit, his talent no doubts,
-                        reminds one of the importance of harnessing the creativity in children and encouraging other
-                        kids to develop their creative writing potentials.<br>
-                        Apart from writing, Liam likes reading.<br>He hopes one day his stories will be published.
-                    </li>
+                     alt="">{% endcomment %}
+                        <span></span>
+                        <ul>
+                            <li>{{ value.description }}</li>
+                        </ul>
+                    </div>
+                </div>
 
-                </ul>
-            </div>
-        </div>
-        <div class="col-md-4 col-sm-6">
-            <div style="padding: 30px" class="table-item">
-                <h4> Samuel Ouma</h4>
-                <br>
-                <br>
-                <img width="290px"
+            {% else %}
+
+                <div class="col-md-4 col-sm-6">
+                    <div style="padding: 30px" class="table-item">
+                        <br>
+                        <h4>{{ value.name }}</h4>
+                        {% comment %}<img width="290px"
                      height="220px"
                      src="https://katakata.org/wp-content/uploads/2019/09/WhatsApp-Image-2019-08-29-at-20.42.44.jpeg"
-                     alt="">
-                <span></span>
-                <ul>
-                    <li>Samuel is a 25 year old graduate of Communication and Media studies from Kenya.<br><br>
-                        Areas of interest: Research, news writing, news reporting, editing.<br><br>
-                        Hobbies: Travelling, singing, reading novels, playing football.<br><br>
-                    </li>
+                     alt="">{% endcomment %}
+                        <span></span>
+                        <ul>
+                            <li>{{ value.description }}<br><br>
+                            </li>
 
-                </ul>
-            </div>
-        </div>
+                        </ul>
+                    </div>
+                </div>
 
-        {# Lined#}
-
-        <div class="col-md-4 col-sm-6">
-            <div style="padding: 30px" class="table-item">
-                <h4>Tumwine Edward</h4>
-                <br>
-                <br>
-                <img width="290px"
-                     height="220px"
-                     src="https://katakata.org/wp-content/uploads/2019/10/DSC_1258-1020x680.jpg"
-                     alt="">
-                <span></span>
-                <ul>
-                    <li>Tumwine Edward is a multi-media journalist and digital media trainer
-                        in communications.
-                        He is a keen follower of music around the world. His area of interest
-                        is music.
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        {#        End Linet#}
-
-        <div class="col-md-4 col-sm-6">
-            <div style="padding: 30px" class="table-item">
-                <h4> Arthur Adil. N</h4>
-                <br>
-                <br>
-                <img width="290px"
-                     height="220px"
-                     src="https://katakata.org/wp-content/uploads/2019/09/arthur-3.jpg"
-                     alt="">
-                <span></span>
-                <ul>
-                    <li>Arthur Adil is an online enthusiast and a
-                        writer, who studied Mass Communication
-                        and Marketing at Uganda Christian
-                        University. Once upon a time, he was a
-                        marketing intern at VCL studios. After
-                        University, he worked for online sales at
-                        iNotice Media Ltd before he joined Kata
-                        Kata Cartoon magazine.
-                        At Kata Kata cartoon magazine, he focuses
-                        on advertising and marketing.
-                    </li>
-                </ul>
-            </div>
-        </div>
+            {% endif %}
 
 
-
-         <div class="col-md-4 col-sm-6">
-            <div style="padding: 30px;" class="table-item">
-                <h4>Linet Wanjiku</h4>
-                <br>
-                <br>
-                <img width="290px"
-                     height="220px"
-                     src="https://katakata.org/wp-content/uploads/2019/09/IMG_20190722_103407-975x1300.jpg"
-                     alt="">
-                <ul>
-                    <li>Linet Wanjiku is a tourism professional with a Bachelor’s degree in Tourism Management. She is
-                        based in Kenya and enjoys travelling, socializing, reading novels and cooking. Her areas of
-                        interest are in entertainment, culture, fashion, music and food. She loves creative
-                        writing<br><br>
-                        Favourite quote:<br>
-                        “The are two important days,the day a man is born and the day he discovers why“<br>
-                        -Mark Twain
-                    </li>
-                </ul>
-            </div>
-        </div>
+        {% endfor %}
 
 
     </div>

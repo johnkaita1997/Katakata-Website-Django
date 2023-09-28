@@ -444,24 +444,10 @@
                 </div>
                 <div class="col-lg-6 pt-4 pt-lg-0">
                     <ul>
-                        <br>
-                        <li><i class="ri-check-double-line"></i> To discuss and disseminate typical African / global
-                            social problems.
-                        </li>
-                        <li><i class="ri-check-double-line"></i> Using our content (cartoons, illustrated stories,
-                            animated videos, magazine), we send important messages across in an educational, informative
-                            and yet, humorous manner.
-                        </li>
-                        <li><i class="ri-check-double-line"></i> We offer therapy for problems through comic content.
-                        </li>
-                        <br>
-                        <li><i class="ri-check-double-line"></i> To carefully create our content in a way that it is
-                            understood by both educated and non-educated readers so that it can reach the grass-root
-                            level..
-                        </li>
-                        <li><i class="ri-check-double-line"></i> To send our core messages across to the grass-roots; we
-                            achieve this by adding local language, slang and phrases, aimed at behavioural changes.
-                        </li>
+
+                        {% for value in summary.objectives %}
+                            <li><i class="ri-check-double-line"></i>{{ value.name }}</li>
+                        {% endfor %}
                     </ul>
                 </div>
             </div>
@@ -476,9 +462,7 @@
 
             <div class="row">
                 <h1 style="color: black">Mission!</h1>
-                <p class="animate__animated animate__fadeInUp">We use our humorous but educational content to
-                    sensitize social problems and harmful practices that hinder development in the society; by
-                    so doing, we create attitudinal changes amongst the target groups</p>
+                <p class="animate__animated animate__fadeInUp">{{ summary.mission }}</p>
             </div>
 
         </div>

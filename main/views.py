@@ -280,6 +280,17 @@ def newsviewer(request, newsid):
 
 @never_cache
 def teampage(request):
+
+    columnists = getColumnists()
+    positions = getPositions()
+    objectives = getObjectives()
+    mission = getMission()
+
+    monthsummaryDict['columnists'] = columnists
+    monthsummaryDict['positions'] = positions
+    monthsummaryDict['objectives'] = objectives
+    monthsummaryDict['mission'] = mission
+
     if request.method == 'POST':
         name = request.POST.get('name')
         email = request.POST.get('email')
@@ -380,6 +391,10 @@ def shortcomicsviewer(request, shortcomic):
 
 @never_cache
 def missionpage(request):
+    mission = getMission()
+    objectives = getObjectives()
+    monthsummaryDict['mission'] = mission
+    monthsummaryDict['objectives'] = objectives
     response = render(request, "mission.html", {"summary": monthsummaryDict})
     return response
 
@@ -1219,3 +1234,130 @@ def editsocialproblems(request, socialproblemid):
 
     response = render(request, "editsocialproblemspage.html", {"summary": thedict})
     return response
+
+
+
+@never_cache
+def consultancy(request):
+    response = render(request, "consultancy.html", {"summary": monthsummaryDict})
+    return response
+
+
+@never_cache
+def editteam(request):
+
+    columnists = getColumnists()
+    positions = getPositions()
+    objectives = getObjectives()
+    mission = getMission()
+    positiontitles = getPositionTitles()
+
+    monthsummaryDict['columnists'] = columnists
+    monthsummaryDict['positions'] = positions
+    monthsummaryDict['objectives'] = objectives
+    monthsummaryDict['mission'] = mission
+    monthsummaryDict['positiontitles'] = positiontitles
+
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        name = request.POST.get('name')
+        positionname = request.POST.get('positionname')
+        columnistname = request.POST.get('columnistname')
+        columnistdescription = request.POST.get('columnistdescription')
+        objective = request.POST.get('objective')
+        mission = request.POST.get('mission')
+
+        if name:
+            if not title or not name:
+                response = render(request, 'team-edit.html', {"message": "Ensure all fields are filled"})
+                return response
+            else:
+                timestamp = int(time.time())
+                thedict = {
+                    'title' : title,
+                    'name': name,
+                    'timestamp': timestamp
+                }
+                dbs.reference(f'positions/{title}/employee/{timestamp}').set(thedict)
+
+                messages.success(request, 'Field added succesfully')
+                return redirect('editteam')
+
+        if positionname:
+           timestamp = int(time.time())
+           thedict = {
+               'title': positionname,
+               'timestamp': timestamp,
+               'position': 9
+           }
+           dbs.reference(f'positions/{positionname}').set(thedict)
+           messages.success(request, 'Field added succesfully')
+           return redirect('editteam')
+
+        if columnistname:
+            timestamp = int(time.time())
+            thedict = {
+                'description': columnistdescription,
+                'timestamp': timestamp,
+                'name': columnistname
+            }
+            dbs.reference(f'columnists/{timestamp}').set(thedict)
+            messages.success(request, 'Field added succesfully')
+            return redirect('editteam')
+
+        if objective:
+            timestamp = int(time.time())
+            thedict = {
+                'timestamp': timestamp,
+                'name': objective
+            }
+            dbs.reference(f'objectives/{timestamp}').set(thedict)
+            messages.success(request, 'Field added succesfully')
+            return redirect('editteam')
+
+        if mission:
+            dbs.reference(f'profile/mission').set(mission)
+            messages.success(request, 'Field added succesfully')
+            return redirect('editteam')
+
+
+    response = render(request, "team-edit.html", {"summary": monthsummaryDict})
+    return response
+
+
+
+@never_cache
+def deleteEmployee(request, positionname, employeetimestamp):
+    if positionname:
+        print("Here")
+        dbs.reference(f'positions/{positionname}/employee/{employeetimestamp}').delete()
+        messages.success(request, 'Field deleted succesfully')
+        return redirect('editteam')
+
+
+
+@never_cache
+def deletePosition(request, positionName):
+    if positionName:
+        print("Here")
+        dbs.reference(f'positions/{positionName}').delete()
+        messages.success(request, 'Field deleted succesfully')
+        return redirect('editteam')
+
+
+@never_cache
+def deletecolumnist(request, columnisttimestamp):
+    if columnisttimestamp:
+        print("Here")
+        dbs.reference(f'columnists/{columnisttimestamp}').delete()
+        messages.success(request, 'Field deleted succesfully')
+        return redirect('editteam')
+
+
+@never_cache
+def deleteobjective(request, objectivetimestamp):
+    if objectivetimestamp:
+        dbs.reference(f'objectives/{objectivetimestamp}').delete()
+        messages.success(request, 'Field deleted succesfully')
+        return redirect('editteam')
+

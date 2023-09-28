@@ -969,4 +969,26 @@ def unsubscribeUser():
     # myurl = f"http://52.206.231.182/routesms/bill_v2/unsub/?username={mtnUsername}&password={mtnpassword}&phoneNo={mobile}&productID={mtnproductid}&network={mtnnetwork}"
 
 
-isUserSubscribed("93afc5a1-508c-4cf0-bf51-8830bb65deff")
+#isUserSubscribed("93afc5a1-508c-4cf0-bf51-8830bb65deff")
+
+
+def getColumnists():
+    data = dbs.reference(f'columnists').order_by_child("timestamp").get()
+    return data.values()
+def getPositions():
+    data = dbs.reference(f'positions').order_by_child("timestamp").get()
+    return data.values()
+def getObjectives():
+    data = dbs.reference(f'objectives').order_by_child("timestamp").get()
+    return data.values()
+def getMission():
+    data = dbs.reference(f'profile/mission').get()
+    return data
+
+def getPositionTitles():
+    data = dbs.reference('positions').get()
+    titlesList = []
+    for value in data.values():  # Use .values() to iterate through the values
+
+        titlesList.append(value['title'])
+    return titlesList

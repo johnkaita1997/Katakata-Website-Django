@@ -5,7 +5,6 @@ from main import views as mainviews
 
 
 
-
 urlpatterns = [
     path('', mainviews.homepage, name="homepage"),
     path('newspage', mainviews.newspage, name="newspage"),
@@ -50,4 +49,14 @@ urlpatterns = [
     path('adminpage', mainviews.adminPage, name="adminpage"),
     path('createsocialproblem', mainviews.createsocialproblems, name="createsocialproblems"),
     path('editsocialproblem/<path:socialproblemid>', mainviews.editsocialproblems, name="editsocialproblems"),
+    path('consultancy', mainviews.consultancy, name="consultancy"),
+
+    # Define a URL pattern for 'editteam' with optional parameters
+    path('editteam/', mainviews.editteam, name="editteam"),
+    path('deletePosition/<str:positionName>/', mainviews.deletePosition, name="deleteposition"),
+    path('deleteEmployee/<str:positionname>/<int:employeetimestamp>/', mainviews.deleteEmployee, name="deleteemployee"),
+    path('deletecolumnist/<int:columnisttimestamp>/', mainviews.deletecolumnist, name="deletecolumnist"),
+    path('deleteobjective/<int:objectivetimestamp>/', mainviews.deleteobjective, name="deleteobjective"),
+
 ]
+
