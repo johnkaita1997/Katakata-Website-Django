@@ -2,7 +2,7 @@
 {% load static %}
 
 
-{% block logincheck %}
+{% comment %}{% block logincheck %}
 
     {% if summary.loggedin %}
         <a href="{% url 'logout' %}">
@@ -18,7 +18,7 @@
         </a>
     {% endif %}
 
-{% endblock %}
+{% endblock %}{% endcomment %}
 
 {% block videocontent %}
 
@@ -41,24 +41,24 @@
         <div class="main__description">
             <b></b>
             <p style="color: black; font-weight: bold"><b> {{ summary.default.description }} </b></p><br>
-            <p>{{ summary.numberofviews }} Views</p>
+            {% comment %}<p>{{ summary.numberofviews }} Views</p>
             <p style="float: right; margin-top: 25px; margin-left: 70px; color: black"
                class="comments__name">{{ value.name }}
                 <a href="#">{{ summary.default.formatted }}</a>
-            </p>
+            </p>{% endcomment %}
         </div>
 
-        <div class="main__sub-description">
+        {% comment %}<div class="main__sub-description">
             <p><strong> {{ summary.default.size }} COMMENTS</strong></p>
-        </div>
+        </div>{% endcomment %}
 
-        <form action="{% url 'videoviewer' video=summary.default.name position=summary.default.position %}" method=post>
+        {% comment %}<form action="{% url 'videoviewer' video=summary.default.name position=summary.default.position %}" method=post>
             {% csrf_token %}
             <textarea style=" padding: 2px; height: 40px; margin-right: 0px; float: left; width: 99.5%" type="text"
                       name="comment" id="comment" placeholder="Add a public comment..." required></textarea>
             <input style="height: 26px; color: white; border-color: transparent; background: #D9232D; margin-top: 20px; float: right; width:20%"
                    type="submit" name="submit" id="submit" value="Submit">
-        </form>
+        </form>{% endcomment %}
 
     </div>
 

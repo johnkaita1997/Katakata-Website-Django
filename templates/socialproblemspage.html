@@ -36,9 +36,17 @@
                                 class="tm-pt-30 tm-color-primaryb tm-post-title">{{ value.name }}</h2>
                             <br>
 
-                            <a href="{% url 'imageviewer' theimage=value.image %}">
+                            <a target="_blank"
+                               onclick="openFullscreen('{{ value.image }}')">
                                 <img width="600" height="330" src="{{ value.image }}" alt="Avatar" style="width:100%">
                             </a>
+
+                            <script>
+                                function openFullscreen(imageUrl) {
+                                    window.open(imageUrl, '_blank', 'fullscreen=yes');
+                                }
+                            </script>
+
 
                             <div class="container">
                                 <br>

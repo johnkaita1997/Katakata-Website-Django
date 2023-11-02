@@ -788,91 +788,155 @@ def userReg(request):
 
 @never_cache
 def videoviewer(request, video, position):
-    try:
-        response = redirect('subscriptionpage')
-        response.set_cookie('video', video, max_age=31536000)
+    # try:
+    #     response = redirect('subscriptionpage')
+    #     response.set_cookie('video', video, max_age=31536000)
+    #
+    #     print("Try")
+    #     mobile = request.COOKIES.get('mobile')
+    #     if not mobile:
+    #         print("Try harder")
+    #         return response
+    #
+    #     subscribed = isFirebaseAvailable(mobile)
+    #     if not subscribed:
+    #         messages.error(request, _("Subscription is required to view videos."))
+    #         return response
+    #     else:
+    #         transactionId = fetchFromFirebase(mobile)
+    #
+    #         if not isUserSubscribed(transactionId):
+    #             print("You are not subscribed")
+    #             return response
+    #         else:
+    #             print("You are subscribed")
+    #             print("You are subscribed")
+    #             theposition = int(position)
+    #             defaultTimestamp = list(androidloadspecificvideo(video).keys())[int(theposition)]
+    #             defaultVideo = androidloadspecificvideo(video)[f'{defaultTimestamp}']
+    #             monthsummaryDict['videos'] = androidloadspecificvideo(video)
+    #             monthsummaryDict['name'] = video
+    #             monthsummaryDict['default'] = monthsummaryDict['name'][theposition]
+    #             monthsummaryDict['default'] = defaultVideo
+    #             monthsummaryDict['loggedin'] = subscribed
+    #             defaultVideoName = defaultVideo['name']
+    #             defaultVideoTimeStamp = int(defaultTimestamp) * -1
+    #
+    #             viewsDictionary = {}
+    #             viewsDictionary['view'] = "One"
+    #             dbs.reference(f'videos/playlists/{defaultVideoName}/{defaultVideoTimeStamp}/views').push().set(viewsDictionary)
+    #             numberofViews = len(dbs.reference(f'videos/playlists/{defaultVideoName}/{defaultVideoTimeStamp}/views').get())
+    #             print(f'{numberofViews} is number of views')
+    #             monthsummaryDict['numberofviews'] = numberofViews
+    #
+    #             if request.method == "POST":
+    #                 try:
+    #                     comment = request.POST.get("comment")
+    #                     if not comment:
+    #                         messages.error(request, _("You have entered no message."))
+    #                         return redirect('videoviewer', video=defaultVideo['name'], position=theposition)
+    #                     else:
+    #                         if not "login" in request.COOKIES.keys():
+    #                             messages.error(request, _("Login is required to post comments."))
+    #                             return redirect('userlogin')
+    #                         else:
+    #                             theposition = int(position)
+    #                             defaultTimestamp = list( androidloadspecificvideo(video).keys() )[int(theposition)]
+    #                             defaultVideo = androidloadspecificvideo(video)[f'{defaultTimestamp}']
+    #                             defaultVideoName = defaultVideo['name']
+    #                             defaultVideoTimeStamp = int(defaultTimestamp) * -1
+    #
+    #                             print(defaultVideoTimeStamp)
+    #
+    #                             timestamp = int(time.time())
+    #                             commentObject = {}
+    #                             userid = request.COOKIES.get('login')
+    #
+    #                             name = getUserName(userid)['login']
+    #                             email = getUserName(userid)['email']
+    #                             image = getUserName(userid)['image']
+    #                             print(f"user is ${userid}\n{name}\n{email}\n{image}")
+    #
+    #                             commentObject["timestamp"] = timestamp
+    #                             commentObject['comment'] = comment
+    #                             commentObject['name'] = name
+    #                             commentObject['email'] = email
+    #                             commentObject['image'] = image
+    #
+    #                             dbs.reference(f'videos/playlists/{defaultVideoName}/{defaultVideoTimeStamp}/comments/{timestamp}').set(
+    #                                 commentObject)
+    #                             return redirect('videoviewer', video=defaultVideo['name'], position=theposition)
+    #
+    #                 except Exception as exception:
+    #                     messages.error(request, _(f'Error ${exception}'))
+    #                     return redirect('videoviewer', video=defaultVideo['name'], position=theposition)
+    # except Exception as exception:
+    #     print(f'Exception is {exception}')
+    #     return redirect('videoviewer', video=video, position=0)
 
-        print("Try")
-        mobile = request.COOKIES.get('mobile')
-        if not mobile:
-            print("Try harder")
-            return response
+    print("You are subscribed")
+    print("You are subscribed")
+    theposition = int(position)
+    defaultTimestamp = list(androidloadspecificvideo(video).keys())[int(theposition)]
+    defaultVideo = androidloadspecificvideo(video)[f'{defaultTimestamp}']
+    monthsummaryDict['videos'] = androidloadspecificvideo(video)
+    monthsummaryDict['name'] = video
+    monthsummaryDict['default'] = monthsummaryDict['name'][theposition]
+    monthsummaryDict['default'] = defaultVideo
+    # monthsummaryDict['loggedin'] = subscribed
+    defaultVideoName = defaultVideo['name']
+    defaultVideoTimeStamp = int(defaultTimestamp) * -1
 
-        subscribed = isFirebaseAvailable(mobile)
-        if not subscribed:
-            messages.error(request, _("Subscription is required to view videos."))
-            return response
-        else:
-            transactionId = fetchFromFirebase(mobile)
+    viewsDictionary = {}
+    viewsDictionary['view'] = "One"
+    dbs.reference(f'videos/playlists/{defaultVideoName}/{defaultVideoTimeStamp}/views').push().set(viewsDictionary)
+    numberofViews = len(dbs.reference(f'videos/playlists/{defaultVideoName}/{defaultVideoTimeStamp}/views').get())
+    print(f'{numberofViews} is number of views')
+    monthsummaryDict['numberofviews'] = numberofViews
 
-            if not isUserSubscribed(transactionId):
-                print("You are not subscribed")
-                return response
+    if request.method == "POST":
+        try:
+            comment = request.POST.get("comment")
+            if not comment:
+                messages.error(request, _("You have entered no message."))
+                return redirect('videoviewer', video=defaultVideo['name'], position=theposition)
             else:
-                print("You are subscribed")
-                print("You are subscribed")
-                theposition = int(position)
-                defaultTimestamp = list(androidloadspecificvideo(video).keys())[int(theposition)]
-                defaultVideo = androidloadspecificvideo(video)[f'{defaultTimestamp}']
-                monthsummaryDict['videos'] = androidloadspecificvideo(video)
-                monthsummaryDict['name'] = video
-                monthsummaryDict['default'] = monthsummaryDict['name'][theposition]
-                monthsummaryDict['default'] = defaultVideo
-                monthsummaryDict['loggedin'] = subscribed
-                defaultVideoName = defaultVideo['name']
-                defaultVideoTimeStamp = int(defaultTimestamp) * -1
+                if not "login" in request.COOKIES.keys():
+                    messages.error(request, _("Login is required to post comments."))
+                    return redirect('userlogin')
+                else:
+                    theposition = int(position)
+                    defaultTimestamp = list(androidloadspecificvideo(video).keys())[int(theposition)]
+                    defaultVideo = androidloadspecificvideo(video)[f'{defaultTimestamp}']
+                    defaultVideoName = defaultVideo['name']
+                    defaultVideoTimeStamp = int(defaultTimestamp) * -1
 
-                viewsDictionary = {}
-                viewsDictionary['view'] = "One"
-                dbs.reference(f'videos/playlists/{defaultVideoName}/{defaultVideoTimeStamp}/views').push().set(viewsDictionary)
-                numberofViews = len(dbs.reference(f'videos/playlists/{defaultVideoName}/{defaultVideoTimeStamp}/views').get())
-                print(f'{numberofViews} is number of views')
-                monthsummaryDict['numberofviews'] = numberofViews
+                    print(defaultVideoTimeStamp)
 
-                if request.method == "POST":
-                    try:
-                        comment = request.POST.get("comment")
-                        if not comment:
-                            messages.error(request, _("You have entered no message."))
-                            return redirect('videoviewer', video=defaultVideo['name'], position=theposition)
-                        else:
-                            if not "login" in request.COOKIES.keys():
-                                messages.error(request, _("Login is required to post comments."))
-                                return redirect('userlogin')
-                            else:
-                                theposition = int(position)
-                                defaultTimestamp = list( androidloadspecificvideo(video).keys() )[int(theposition)]
-                                defaultVideo = androidloadspecificvideo(video)[f'{defaultTimestamp}']
-                                defaultVideoName = defaultVideo['name']
-                                defaultVideoTimeStamp = int(defaultTimestamp) * -1
+                    timestamp = int(time.time())
+                    commentObject = {}
+                    userid = request.COOKIES.get('login')
 
-                                print(defaultVideoTimeStamp)
+                    name = getUserName(userid)['login']
+                    email = getUserName(userid)['email']
+                    image = getUserName(userid)['image']
+                    print(f"user is ${userid}\n{name}\n{email}\n{image}")
 
-                                timestamp = int(time.time())
-                                commentObject = {}
-                                userid = request.COOKIES.get('login')
+                    commentObject["timestamp"] = timestamp
+                    commentObject['comment'] = comment
+                    commentObject['name'] = name
+                    commentObject['email'] = email
+                    commentObject['image'] = image
 
-                                name = getUserName(userid)['login']
-                                email = getUserName(userid)['email']
-                                image = getUserName(userid)['image']
-                                print(f"user is ${userid}\n{name}\n{email}\n{image}")
+                    dbs.reference(
+                        f'videos/playlists/{defaultVideoName}/{defaultVideoTimeStamp}/comments/{timestamp}').set(
+                        commentObject)
+                    return redirect('videoviewer', video=defaultVideo['name'], position=theposition)
 
-                                commentObject["timestamp"] = timestamp
-                                commentObject['comment'] = comment
-                                commentObject['name'] = name
-                                commentObject['email'] = email
-                                commentObject['image'] = image
+        except Exception as exception:
+            messages.error(request, _(f'Error ${exception}'))
+            return redirect('videoviewer', video=defaultVideo['name'], position=theposition)
 
-                                dbs.reference(f'videos/playlists/{defaultVideoName}/{defaultVideoTimeStamp}/comments/{timestamp}').set(
-                                    commentObject)
-                                return redirect('videoviewer', video=defaultVideo['name'], position=theposition)
-
-                    except Exception as exception:
-                        messages.error(request, _(f'Error ${exception}'))
-                        return redirect('videoviewer', video=defaultVideo['name'], position=theposition)
-    except Exception as exception:
-        print(f'Exception is {exception}')
-        return redirect('videoviewer', video=video, position=0)
 
     return render(request, "videoviewer.html", {"summary": monthsummaryDict})
 

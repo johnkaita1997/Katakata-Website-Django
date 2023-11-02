@@ -386,13 +386,13 @@
 
                 <li><a href="{% url 'teampage' %}">Contact</a></li>
 
-                {% if summary.isloggedIn %}
+                {% comment %}{% if summary.isloggedIn %}
                     <li><a style="color: red" href="{% url 'logout' %}">Logout</a></li>
                 {% else %}
                     <li><a style="color: red" href="{% url 'userlogin' %}">Login</a></li>
                 {% endif %}
 
-                <li><a style="color: red" href="{% url 'mySubscription' %}">Subscription</a></li>
+                <li><a style="color: red" href="{% url 'mySubscription' %}">Subscription</a></li>{% endcomment %}
 
                 {% if summary.showadmin %}
                     <li><a style="color: red" href="{% url 'adminpage' %}">Admin</a></li>
@@ -1135,7 +1135,7 @@
                     <ul>
                         <li><i class="bx bx-chevron-right"></i> <a href="{% url 'consultancy' %}">Consultancy</a></li>
                         <li><i class="bx bx-chevron-right"></i> <a href="{% url 'cartoonspage' %}">Cartoons</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="{% url 'teampage' %}">Product Management</a>
+                        <li><i class="bx bx-chevron-right"></i> <a href="{% url 'consultancy' %}">Product Management</a>
                         </li>
                         <li><i class="bx bx-chevron-right"></i> <a href="{% url 'teampage' %}">Marketing</a></li>
                         <li><i class="bx bx-chevron-right"></i> <a href="{% url 'teampage' %}">Graphic Design</a></li>
@@ -1152,7 +1152,6 @@
                         <br>
                         <input type="submit" value="Subscribe">
                     </form>
-
                 </div>
 
             </div>

@@ -2,6 +2,7 @@
 import collections
 import os
 import random
+import re
 import time
 from datetime import datetime
 
@@ -115,6 +116,23 @@ def loadquotes():
     return big_dict
 
 
+
+
+def convert_image_url(image_url):
+    # Check if the image URL matches the first format
+    if re.match(r"https://firebasestorage\.googleapis\.com/v0/b/.+/o/images%2Fsocialproblems%2F\d+\.jpg\?.+", image_url):
+        # Extract the timestamp from the first format URL
+        timestamp = re.search(r"socialproblems%2F(\d+)\.jpg", image_url).group(1)
+        # Extract the file extension from the provided URL
+        file_extension = re.search(r"\.(\w+)\?.+", image_url).group(1)
+        # Create the second format URL with dynamic file extension
+        new_image_url = f"https://firebasestorage.googleapis.com/v0/b/katakata-cb1db.appspot.com/o/images%2Fsocialproblems%2F{timestamp}.{file_extension}?alt=media"
+        return new_image_url
+    else:
+        return image_url
+
+
+
 def loadsocialproblems():
     big_dict = {}
     ref = dbs.reference('cartoons')
@@ -123,10 +141,13 @@ def loadsocialproblems():
         for value in snapshot.values():
             smalldict = {}
             smalldict['name'] = value['name']
-            smalldict['image'] = value['image']
+            # Convert the image URL to the desired format
+            smalldict['image'] = convert_image_url(value['image'])
+            print(smalldict['image'])
             smalldict['description'] = value['description'].replace('\n', '<br />')
             big_dict[value['timestamp']] = smalldict
     return big_dict
+
 
 
 def loadproverbs():
@@ -136,10 +157,11 @@ def loadproverbs():
     if snapshot:
         for value in snapshot.values():
             smalldict = {}
-            smalldict['name'] = value['name']
-            smalldict['image'] = value['image']
-            smalldict['description'] = value['description'].replace('\n', '<br />')
+            smalldict['name'] = value['name'].encode('utf-8')
+            smalldict['image'] = value['image'].encode('utf-8')
+            smalldict['description'] = value['description'].replace('\n', '<br />').encode('utf-8')
             big_dict[value['timestamp']] = smalldict
+    print(f"Big dictionary is {big_dict}")
     return big_dict
 
 
@@ -159,6 +181,7 @@ def loadlongcomics():
                 smalldict['url'] = value['url']
                 smalldict['description'] = ""
                 big_dict[name] = smalldict
+    print(f"Big dictionary is {big_dict}")
     return big_dict
 
 
