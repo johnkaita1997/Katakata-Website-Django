@@ -111,12 +111,13 @@
         <div class="">
 
 
-            <form style="margin-left: 20px; margin-right: 20px" action="{% url 'editsocialproblems' summary.timestamp %}"
+            <form style="margin-left: 20px; margin-right: 20px"
+                  action="{% url 'editsocialproblems' summary.timestamp %}"
                   method=post>
 
                 {% csrf_token %}
 
-            <div class="row">
+                <div class="row">
                     <div class="col-25">
                         <label for="file">Choose Image</label>
                     </div>
@@ -133,7 +134,7 @@
                 </div>
 
 
-              <div class="row">
+                <div class="row">
                     <div class="col-25">
                         <label for="submit"></label>
                     </div>
@@ -149,7 +150,8 @@
                         <label for="socialproblemtitle">Enter Social Problem Title</label>
                     </div>
                     <div class="col-75">
-                        <input type="text" id="socialproblemtitle" name="socialproblemtitle" value="{{ summary.name }}" required>
+                        <input type="text" id="socialproblemtitle" name="socialproblemtitle" value="{{ summary.name }}"
+                               required>
                     </div>
                 </div>
 
@@ -229,7 +231,15 @@
 
 <script>
     $(document).ready(function () {
-        $('#summernote').summernote();
+        $('#summernote').summernote({
+            toolbar: [
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['font', ['strikethrough', 'superscript', 'subscript']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['insert', ['picture', 'video']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ]
+        });
     });
 </script>
 </body>
