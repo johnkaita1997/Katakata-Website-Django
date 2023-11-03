@@ -147,7 +147,7 @@ def loadsocialproblems():
             smalldict['description'] = value['description'].replace('\n', '<br />')
             big_dict[value['timestamp']] = smalldict
     for value in big_dict.values():
-        print(f"My big dict is {big_dict['name']}")
+        print(f"My big dict is {value['name']}")
     return big_dict
 
 
