@@ -8,6 +8,8 @@ from datetime import datetime
 
 import firebase_admin
 import pyrebase
+from django.template.defaultfilters import safe
+from django.utils.safestring import mark_safe
 from firebase_admin import credentials
 from firebase_admin import db
 
@@ -141,13 +143,10 @@ def loadsocialproblems():
         for value in snapshot.values():
             smalldict = {}
             smalldict['name'] = value['name']
-            # Convert the image URL to the desired format
             smalldict['image'] = convert_image_url(value['image'])
             print(smalldict['image'])
             smalldict['description'] = value['description'].replace('\n', '<br />')
             big_dict[value['timestamp']] = smalldict
-    for value in big_dict.values():
-        print(f"My big dict is {value['name']}")
     return big_dict
 
 
@@ -159,11 +158,10 @@ def loadproverbs():
     if snapshot:
         for value in snapshot.values():
             smalldict = {}
-            smalldict['name'] = value['name'].encode('utf-8')
-            smalldict['image'] = value['image'].encode('utf-8')
-            smalldict['description'] = value['description'].replace('\n', '<br />').encode('utf-8')
+            smalldict['name'] = value['name']
+            smalldict['image'] = value['image']
+            smalldict['description'] = mark_safe(value['description'].replace('\n', '<br />'))
             big_dict[value['timestamp']] = smalldict
-    print(f"Big dictionary is {big_dict}")
     return big_dict
 
 
@@ -183,7 +181,6 @@ def loadlongcomics():
                 smalldict['url'] = value['url']
                 smalldict['description'] = ""
                 big_dict[name] = smalldict
-    print(f"Big dictionary is {big_dict}")
     return big_dict
 
 

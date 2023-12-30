@@ -1,20 +1,19 @@
 
 import json
 import smtplib
-import time
 from email.message import EmailMessage
 
+from django.contrib import messages
 from django.http import HttpResponse
+from django.shortcuts import redirect
 from django.shortcuts import render
 from django.utils.translation import gettext_lazy as _
 from django.views import View
-from django.views.decorators.cache import never_cache, cache_control
+from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_exempt
-from django.contrib import messages
-from django.shortcuts import redirect
-
 
 from testPython import *
+
 monthsummaryDict = {}
 
 # @cache_control(must_revalidate=True)
