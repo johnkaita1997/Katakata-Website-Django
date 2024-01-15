@@ -58,5 +58,8 @@ urlpatterns = [
     path('deletecolumnist/<int:columnisttimestamp>/', mainviews.deletecolumnist, name="deletecolumnist"),
     path('deleteobjective/<int:objectivetimestamp>/', mainviews.deleteobjective, name="deleteobjective"),
 
+    path('createproverb', mainviews.createproverbs, name="createproverbs"),
+    path('editproverb/<path:proverbid>', mainviews.editproverbs, name="editproverbs"),
+
 ]
 

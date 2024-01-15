@@ -109,7 +109,8 @@
 
                     <article style="padding: 40px" class="col-12 col-md-6 tm-post">
                         <div style="padding: 10px" class="card">
-                            <a href="{% url 'imageviewer' theimage=value.image %}">
+                            <a href="{% url 'imageviewer' theimage=value.image %}"
+                            title="Click To View Image Details">
 
                                 <img width='100%' height='315' src='{{ value.image }}'>
 

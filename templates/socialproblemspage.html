@@ -19,7 +19,8 @@
                             <br>
 
                             <a target="_blank"
-                               onclick="openFullscreen('{{ value.image }}')">
+                               onclick="openFullscreen('{{ value.image }}')"
+                               title="Click To View Image Details">
                                 <img width="600" height="330" src="{{ value.image }}" alt="Avatar" style="width:100%">
                             </a>
 
@@ -34,7 +35,7 @@
                                 <br>
                                 <h6 style="color: red"><b>{{ value.name }}</b></h6>
                                 <p style="font-size: 15px; color: black" class="tm-pt-30">
-                                    {{ value.description | safe }}
+                                    {{ value.description | safe | urlize }}
                                 </p>
                             </div>
 

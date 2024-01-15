@@ -1424,3 +1424,97 @@ def deleteobjective(request, objectivetimestamp):
         messages.success(request, 'Field deleted succesfully')
         return redirect('editteam')
 
+
+
+
+
+
+
+
+
+
+
+@never_cache
+def createproverbs(request):
+
+    if request.method == "POST":
+        try:
+            proverbname = request.POST.get("proverbtitle")
+            proverbdescription = request.POST.get("summernote")
+            imageUrl = request.POST.get("url")
+
+            if not imageUrl:
+                response = render(request, "index.html", {"message": "Proverb not posted! You did not upload image"})
+                return response
+            else:
+                print(f"Found imageurl as {imageUrl}")
+
+            timestamp = int(time.time())
+
+            bundle = {}
+            bundle["image"] = imageUrl
+            bundle["name"] = proverbname
+            bundle["description"] = proverbdescription
+            bundle["timestamp"] = -timestamp
+
+            dbs.reference(f'view/proverbs/image').set(bundle)
+            dbs.reference(f'cartoons/proverbs/{timestamp}').set(bundle)
+
+        except:
+            response = render(request, "createproverbs.html", {"message": "An error occured! Proverb was not uploaded"})
+            return response
+        else:
+            response = render(request, "index.html", {"message": "Proverb uploaded sucessfuly"})
+            return response
+
+    response = render(request, "createproverb.html", {"summary": monthsummaryDict})
+    return response
+
+
+
+@never_cache
+def editproverbs(request, proverbid):
+
+    thedict = {}
+
+    description = dbs.reference(f'cartoons/proverbs/{proverbid}').child("description").get()
+    image = dbs.reference(f'cartoons/proverbs/{proverbid}').child("image").get()
+    name = dbs.reference(f'cartoons/proverbs/{proverbid}').child("name").get()
+    timestamp = proverbid
+
+    thedict["description"] = description
+    thedict["image"] = image
+    thedict["name"] = name
+    thedict["timestamp"] = timestamp
+
+    if request.method == "POST":
+        try:
+            imageUrl = request.POST.get("url")
+            if imageUrl:
+                print("Image is there")
+                image = imageUrl
+            else:
+                print("image is not there")
+
+            proverbsname = request.POST.get("proverbtitle")
+            proverbsdescription = request.POST.get("summernote")
+            imageUrl = image
+
+            bundle = {}
+            bundle["image"] = imageUrl
+            bundle["name"] = proverbsname
+            bundle["description"] = proverbsdescription
+            bundle["timestamp"] = -int(timestamp)
+
+            dbs.reference(f'cartoons/proverbs/{timestamp}').set(bundle)
+
+        except:
+            response = render(request, "editproverb.html", {"message": "An error occured! Proverb was not uploaded"})
+            return response
+        else:
+            response = render(request, "index.html", {"message": "Proverb edited sucessfuly"})
+            monthsummaryDict['loadproverbs'] = loadproverbs()
+            return response
+
+    response = render(request, "editproverb.html", {"summary": thedict})
+    return response
