@@ -219,7 +219,7 @@ def loadconthumournames():
     for value in snapshot.values():
         name = value['name']
         ref = dbs.reference(f'names/{name}/cartoons/conthumour')
-        snapshot = ref.order_by_child("timestamp").limit_to_first(1).get()
+        snapshot = ref.order_by_child("timestamp").limit_to_first(10000).get()
         if snapshot:
             for value in snapshot.values():
                 smalldict = {}
@@ -238,7 +238,7 @@ def loadconthumournames():
 def loadconthumourcontent(conthumourname):
     big_dict = {}
     ref = dbs.reference('cartoons')
-    snapshot = ref.child("conthumour").child(conthumourname).order_by_child("timestamp").limit_to_first(100).get()
+    snapshot = ref.child("conthumour").child(conthumourname).order_by_child("timestamp").limit_to_first(1000).get()
     if snapshot:
         for value in snapshot.values():
             smalldict = {}

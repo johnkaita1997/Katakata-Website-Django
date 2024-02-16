@@ -77,14 +77,26 @@
                 {#                #}
 
                 {% for value in summary.latestnews.values %}
+                    {#                    <div class="col-md-6">#}
+                    {#                        <div class="cn-img">#}
+                    {#                            <img height="250" src="{{ value.image }}"/>#}
+                    {#                            <div class="cn-title">#}
+                    {#                                <a href="{% url 'news' newsid=value.timestamp %}">{{ value.name }}</a>#}
+                    {#                            </div>#}
+                    {#                        </div>#}
+                    {#                    </div>#}
+
                     <div class="col-md-6">
-                        <div class="cn-img">
-                            <img height="250" src="{{ value.image }}"/>
+                        <div class="cn-img" style="max-height: 250px; text-align: center;">
+                            <img style="height: auto; max-width: 100%; vertical-align: middle;"
+                                 src="{{ value.image }}"/>
                             <div class="cn-title">
                                 <a href="{% url 'news' newsid=value.timestamp %}">{{ value.name }}</a>
                             </div>
                         </div>
                     </div>
+
+
                 {% endfor %}
 
 
@@ -104,7 +116,7 @@
                         {% for value in value.videos.values %}
                             <div class="col-md-6">
                                 <div class="cn-img">
-                                    <img height="250" src="{{ value.image }}"/>
+                                    <img height="230" src="{{ value.image }}"/>
                                     <div class="cn-title">
                                         <a href="{% url 'news' newsid=value.timestamp %}">{{ value.name }}</a>
                                     </div>

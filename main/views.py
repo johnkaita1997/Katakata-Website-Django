@@ -226,16 +226,14 @@ def illustrationcontentpage(request, illustrationname):
 
 @never_cache
 def conthumournamespage(request):
-    if not 'conthumournames' in monthsummaryDict.keys():
-        monthsummaryDict['conthumournames'] = loadconthumournames()
+    monthsummaryDict['conthumournames'] = loadconthumournames()
     response = render(request, "conthumournamespage.html", {"summary": monthsummaryDict})
     return response
 
 
 @never_cache
 def conthumourcontentpage(request, conthumourname):
-    if not 'conthumourcontent' in monthsummaryDict.keys():
-        monthsummaryDict['conthumourcontent'] = loadconthumourcontent(conthumourname)
+    monthsummaryDict['conthumourcontent'] = loadconthumourcontent(conthumourname)
     response = render(request, "conthumourcontentpage.html", {"summary": monthsummaryDict})
     return response
 
