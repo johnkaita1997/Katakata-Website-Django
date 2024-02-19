@@ -87,12 +87,19 @@
                     {#                    </div>#}
 
                     <div class="col-md-6">
-                        <div class="cn-img" style="max-height: 250px; text-align: center;">
-                            <img style="height: auto; max-width: 100%; vertical-align: middle;"
-                                 src="{{ value.image }}"/>
-                            <div class="cn-title">
-                                <a href="{% url 'news' newsid=value.timestamp %}">{{ value.name }}</a>
+                        <div align="center" class="cn-img" style="max-height: 250px; text-align: center;">
+
+                            <div align="center">
+                                <img align="center"
+                                     style="height: auto; width: auto; max-height: 450px; max-width: 100%; vertical-align: middle;"
+                                     src="{{ value.image }}"/>
+                                <div class="cn-title">
+                                    <a href="{% url 'news' newsid=value.timestamp %}">{{ value.name }}</a>
+                                </div>
+
                             </div>
+
+
                         </div>
                     </div>
 
