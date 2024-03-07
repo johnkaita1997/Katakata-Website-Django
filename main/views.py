@@ -68,6 +68,7 @@ def callMainData():
         monthsummaryDict['shortcomicsnumber'] = loadconthumournamesnumber()
     if not 'singlecomicsnumber' in monthsummaryDict.keys():
         monthsummaryDict['singlecomicsnumber'] = loadmoresinglecomicsnumber()
+    monthsummaryDict['sliderimages'] = getSliderImages()
 
 
 @never_cache
@@ -392,6 +393,7 @@ def missionpage(request):
     objectives = getObjectives()
     monthsummaryDict['mission'] = mission
     monthsummaryDict['objectives'] = objectives
+    monthsummaryDict['sliderimages'] = getMissionSlerImages()
     response = render(request, "mission.html", {"summary": monthsummaryDict})
     return response
 

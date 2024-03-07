@@ -1014,3 +1014,12 @@ def getPositionTitles():
 
         titlesList.append(value['title'])
     return titlesList
+
+
+def getSliderImages():
+    snapshot = dbs.reference(f'cartoons/sliderimages').order_by_child("timestamp").get()
+    return snapshot
+
+def getMissionSlerImages():
+    snapshot = dbs.reference(f'cartoons/objectiveimages').order_by_child("timestamp").get()
+    return snapshot

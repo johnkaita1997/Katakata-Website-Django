@@ -444,7 +444,6 @@
                 </div>
                 <div class="col-lg-6 pt-4 pt-lg-0">
                     <ul>
-
                         {% for value in summary.objectives %}
                             <li><i class="ri-check-double-line"></i>{{ value.name }}</li>
                         {% endfor %}
@@ -453,8 +452,35 @@
             </div>
 
         </div>
-    </section><!-- End About Section -->
+        <br>
+        <div class="w3-content w3-section" style="height: auto; margin-left: 0px; margin-right: 0px">
+            <div class="mycontainer">
+                {% for value in summary.sliderimages.values %}
+                    <img class="mySlides" src="{{ value.image }}" style="width:100%; height: auto; max-height: 550px">
+                {% endfor %}
+            </div>
+        </div>
 
+        <script>
+            var myIndex = 0;
+            carousel();
+
+            function carousel() {
+                var i;
+                var x = document.getElementsByClassName("mySlides");
+                for (i = 0; i < x.length; i++) {
+                    x[i].style.display = "none";
+                }
+                myIndex++;
+                if (myIndex > x.length) {
+                    myIndex = 1
+                }
+                x[myIndex - 1].style.display = "block";
+                setTimeout(carousel, 19000); // Change image every 2 seconds
+            }
+        </script>
+
+    </section><!-- End About Section -->
 
     <!-- ======= Clients Section ======= -->
     <section id="clients" class="clients section-bg">

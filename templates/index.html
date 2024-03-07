@@ -424,6 +424,7 @@
 <br>
 <br>
 
+
 <div class="w3-content w3-section" style="height: auto; margin-left: 0px; margin-right: 0px">
 
     <div class="mycontainer">
@@ -439,23 +440,14 @@
             {#                Download Ios App</p></a>#}
         </div>
 
-        <img class="mySlides" src="{% static 'assets/img/nama.jpeg' %}"
-             style="width:100%; height: auto; max-height: 550px">
-    </div>
+        {% for value in summary.sliderimages.values %}
+            <img class="mySlides" src="{{ value.image }}" style="width:100%; height: auto; max-height: 550px">
+        {% endfor %}
 
-    <div class="mycontainer">
-        <img class="mySlides" src="{% static 'assets/img/nam.jpeg' %}"
-             style="width:100% ; height: auto; max-height: 550px">
     </div>
-    {##}
-    {#    <div class="mycontainer">#}
-    {#        <img class="mySlides" src="{% static 'assets/img/seven.jpeg' %}"#}
-    {#             style="width:100%;  height: auto; max-height: 550px">#}
-    {#    </div>#}
-    {##}
-
 
 </div>
+
 
 <script>
     var myIndex = 0;
