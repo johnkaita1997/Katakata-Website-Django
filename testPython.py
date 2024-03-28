@@ -594,7 +594,7 @@ def loadconthumournames_all():
 #
 # code = 1234234
 # message = EmailMessage()
-# message['Subject'] = f'KATAKATA NEWSLETTERS'
+# message['Subject'] = f'KATA KATA NEWSLETTERS'
 # message['From'] = "ngugi@katakata.org"
 # message['To'] = "kaitajohnn@gmail.com"
 # message.set_content('This email is sent using python.')
@@ -1011,7 +1011,6 @@ def getPositionTitles():
     data = dbs.reference('positions').get()
     titlesList = []
     for value in data.values():  # Use .values() to iterate through the values
-
         titlesList.append(value['title'])
     return titlesList
 
@@ -1023,3 +1022,28 @@ def getSliderImages():
 def getMissionSlerImages():
     snapshot = dbs.reference(f'cartoons/objectiveimages').order_by_child("timestamp").get()
     return snapshot
+
+
+
+def loadsamplevideos():
+    big_dict = {}
+    ref = dbs.reference('videos')
+    snapshot = ref.child("samplevideos").order_by_child("timestamp").limit_to_first(3).get()
+    if snapshot:
+        for value in snapshot.values():
+            smalldict = {}
+            smalldict['name'] = value['name']
+            smalldict['image'] = value['image']
+            smalldict['description'] = value['description']
+            smalldict['video'] = value['video']
+            smalldict['timestamp'] = -1 * value['timestamp']
+            big_dict[value['timestamp']] = smalldict
+    return big_dict
+
+
+
+
+def loadspecificsamplevideo(timestamp):
+    ref = dbs.reference(f'videos/samplevideos/{timestamp}')
+    print(f"{ref}")
+    return ref

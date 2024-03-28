@@ -50,6 +50,11 @@ urlpatterns = [
     path('createsocialproblem', mainviews.createsocialproblems, name="createsocialproblems"),
     path('editsocialproblem/<path:socialproblemid>', mainviews.editsocialproblems, name="editsocialproblems"),
     path('consultancy', mainviews.consultancy, name="consultancy"),
+    path('marketing', mainviews.marketing, name="marketing"),
+    path('graphicdesign', mainviews.graphicdesign, name="graphicdesign"),
+    path('uploadsamplevideo', mainviews.uploadSampleVideo, name="uploadsamplevideo"),
+    path('viewsamplevideos', mainviews.viewsamplevideos, name="viewsamplevideos"),
+    path('samplevideoviewer/<str:timestamp>/', mainviews.samplevideoviewer, name="samplevideoviewer"),
 
     # Define a URL pattern for 'editteam' with optional parameters
     path('editteam/', mainviews.editteam, name="editteam"),

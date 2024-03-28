@@ -56,9 +56,9 @@
     <br>
     <br>
     <div align="center">
-        <button id="modBtn" class="modal-btn" style="background-color: black; color: white; width: 260px">Contact
+        <button id="modBtn" class="modal-btn" style="background-color: black; color: white; height: 50px; width: 260px">Contact
             Us<em></em></button>
-        <button onclick="history.back()" class="modal-btn" style="background-color: black; color: white; width: 260px">
+        <button onclick="history.back()" class="modal-btn" style="background-color: black; color: white; height: 50px; width: 260px">
             Home<em></em></button>
         <br>
         <br>
@@ -172,9 +172,17 @@
 <footer>
     <div class="container-fluid">
         <div class="col-md-12">
-            <p>Kata Kata
-                | African Cartoons</p>
+            <br>
+            <br>
+            <div align="center" class="credits">
+                <a href="https://bootstrapmade.com/">Copyright <span id="currentYear"></span> @ Kata kata. All rights
+                    reserved</a>
+            </div>
+            <script>
+                document.getElementById("currentYear").textContent = new Date().getFullYear();
+            </script>
         </div>
+
     </div>
 </footer>
 

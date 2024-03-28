@@ -7,6 +7,7 @@ from django.contrib import messages
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.shortcuts import render
+from django.templatetags.static import static
 from django.utils.translation import gettext_lazy as _
 from django.views import View
 from django.views.decorators.cache import never_cache
@@ -71,8 +72,40 @@ def callMainData():
     monthsummaryDict['sliderimages'] = getSliderImages()
 
 
+
 @never_cache
 def homepage(request):
+    def download_videos(sample_videos):
+        for video_id, video_info in sample_videos.items():
+            video_name = video_info['name']
+            video_url = video_info['video']
+            download_path = f"static/assets/{video_name}.mp4"  # Define the download path on the server
+
+            # Check if the video file already exists
+            if os.path.exists(download_path):
+                print(f"Video '{video_name}' already exists. Skipping download.")
+                continue
+
+            # Download the video from Firebase Storage
+            try:
+                import requests
+                response = requests.get(video_url)
+                if response.status_code == 200:
+                    with open(download_path, 'wb') as f:
+                        f.write(response.content)
+                    print(f"Video '{video_name}' downloaded successfully.")
+                else:
+                    print(f"Failed to download video '{video_name}'. Status code: {response.status_code}")
+            except Exception as e:
+                print(f"Error downloading video '{video_name}': {str(e)}")
+
+    sample_videos = loadsamplevideos()
+    default_video = list(sample_videos.values())[0] if sample_videos else None
+    monthsummaryDict['samplevideos'] = sample_videos
+    monthsummaryDict['default'] = default_video
+
+    # Download videos to the server
+    download_videos(sample_videos)
 
     callMainData()
     if not "login" in request.COOKIES.keys():
@@ -119,7 +152,7 @@ def homepage(request):
             code = '{:05}'.format(random.randrange(100, 10 ** 3))
 
             message = EmailMessage()
-            message['Subject'] = f'KATAKATA NEWSLETTERS'
+            message['Subject'] = f'KATA KATA NEWSLETTERS'
             message['From'] = "katakata@katakata.org"
             message['To'] = email
             message.set_content('This email is sent using python.')
@@ -128,7 +161,7 @@ def homepage(request):
                 <html>
                 <body>
 
-                <h1 style="color:black;text-align:center;font-family:verdana">Thank you for Joining Katakata</h1>
+                <h1 style="color:black;text-align:center;font-family:verdana">Thank you for Joining Kata Kata</h1>
                 <p style="color:black;text-align:center;font-family:courier;font-size:120%">Your confirmation code is : <br> <h2 align="center">{0}</h2></p>
 
                 </body>
@@ -1518,3 +1551,91 @@ def editproverbs(request, proverbid):
 
     response = render(request, "editproverb.html", {"summary": thedict})
     return response
+
+
+
+
+@never_cache
+def marketing(request):
+    response = render(request, "marketing.html", {"summary": monthsummaryDict})
+    return response
+
+
+@never_cache
+def graphicdesign(request):
+    response = render(request, "graphicdesign.html", {"summary": monthsummaryDict})
+    return response
+
+
+
+
+
+
+@never_cache
+def uploadSampleVideo(request):
+    if request.method == "POST":
+        try:
+            videoname = request.POST.get("samplevideotitle")
+            samplevideodescription = request.POST.get("summernote")
+            image_url = request.POST.get("imageLink")
+            video_url = request.POST.get("videoLink")
+
+            if not image_url:
+                return render(request, "uploadsamplevideo.html", {"message": "Sample Video not posted! You did not upload image"})
+
+            if not video_url:
+                return render(request, "uploadsamplevideo.html", {"message": "Sample Video not posted! You did not upload video"})
+
+            if not videoname:
+                return render(request, "uploadsamplevideo.html", {"message": "You did not enter the title"})
+
+            timestamp = int(time.time())
+
+            bundle = {
+                "image": image_url,
+                "video": video_url,
+                "name": videoname,
+                "description": samplevideodescription,
+                "timestamp": -timestamp
+            }
+            dbs.reference(f'videos/samplevideos/{timestamp}').set(bundle)
+
+
+        except:
+            response = render(request, "uploadsamplevideo.html", {"message": "An error occured! Social Problem was not uploaded"})
+            return response
+        else:
+            response = render(request, "uploadsamplevideo.html", {"message": "Sample Video uploaded sucessfuly"})
+            return response
+
+    return render(request, "uploadsamplevideo.html", {"summary": monthsummaryDict})
+
+
+
+@never_cache
+def viewsamplevideos(request):
+    sample_videos = loadsamplevideos()
+    default_video = list(sample_videos.values())[0] if sample_videos else None
+    monthsummaryDict['samplevideos'] = sample_videos
+    monthsummaryDict['default'] = default_video
+    url = static(f"assets/{default_video['name']}.mp4")
+    monthsummaryDict['default']['video'] = url
+    response = render(request, "samplevideos.html", {"summary": monthsummaryDict})
+    return response
+
+
+
+
+@never_cache
+def samplevideoviewer(request, timestamp):
+    sample_videos = loadsamplevideos()
+    monthsummaryDict['samplevideos'] = sample_videos
+    defaultVideo = loadspecificsamplevideo(timestamp).get()
+    monthsummaryDict['default'] = defaultVideo
+    url = static(f"assets/{defaultVideo['name']}.mp4")
+    print(f"found the url as {url}")
+    monthsummaryDict['default']['video'] = url
+    print(f"{defaultVideo['name']}")
+    return render(request, "samplevideos.html", {"summary": monthsummaryDict})
+
+
