@@ -364,9 +364,10 @@
         <nav id="navbar" class="navbar">
             <ul>
                 <li><a href="{% url 'homepage' %}" class="active">Home</a></li>
-                <li class="dropdown"><a href="#"><span>About</span> <i class="bi bi-chevron-down"></i></a>
+                 <li class="dropdown"><a href="#"><span>About</span> <i class="bi bi-chevron-down"></i></a>
                     <ul>
                         <li><a href="{% url 'teampage' %}">Team</a></li>
+                        <li><a href="{% url 'missionpage' %}">Objectives and Mission</a></li>
                     </ul>
                 </li>
                 <li><a href={% url "newspage" %}>News</a></li>
@@ -377,7 +378,7 @@
 
                 <li><a href="{% url 'teampage' %}">Contact</a></li>
                 {#                <li><a href="{% url 'shoppage' %}">Shop</a></li>#}
-                <li class="dropdown"><a
+                {% comment %}<li class="dropdown"><a
                         class="getstarted">Download Kata Kata App</a>
                     <ul style="margin-left: 20px">
                         <li><a style="color: red" target="_blank"
@@ -387,7 +388,7 @@
                         {#                               href="https://play.google.com/store/apps/details?id=techkaita.katakata&hl=en&gl=US">IOS#}
                         {#                            App</a></li>#}
                     </ul>
-                </li>
+                </li>{% endcomment %}
             </ul>
             <i class="bi bi-list mobile-nav-toggle"></i>
         </nav><!-- .navbar -->

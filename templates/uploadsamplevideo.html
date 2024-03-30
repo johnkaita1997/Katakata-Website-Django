@@ -184,37 +184,10 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-25">
-                        <label for="videoFile">Choose Video</label>
-                    </div>
-                    <div class="col-75">
-                        <input id="videoFile" type="file" name="videoFile" required>
-                    </div>
-                </div>
 
-                <!-- Empty fields for image and video links -->
                 <div class="row">
                     <div class="col-25">
-                        <label for="imageLink">Image Link</label>
-                    </div>
-                    <div class="col-75">
-                        <input id="imageLink" type="text" name="imageLink" readonly>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-25">
-                        <label for="videoLink">Video Link</label>
-                    </div>
-                    <div class="col-75">
-                        <input id="videoLink" type="text" name="videoLink" readonly>
-                    </div>
-                </div>
-
-                <br>
-                <div class="row">
-                    <div class="col-25">
-                        <label for="uplaod">Upload Files First</label>
+                        <label for="uplaod">Upload Thumbnail First</label>
                     </div>
                     <div class="col-75">
                         <input id="uplaod" type="button" value="Upload" onclick="handleFormSubmission()">
@@ -223,8 +196,27 @@
                     <div id="progressDialog" class="progress-dialog">
                         <div class="spinner"></div>
                     </div>
-
                 </div>
+
+                <!-- Empty fields for image and video links -->
+                <div class="row">
+                    <div class="col-25">
+                        <label for="imageLink">Thumbnail Link</label>
+                    </div>
+                    <div class="col-75">
+                        <input id="imageLink" type="text" name="imageLink" readonly>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label for="videoLink">Youtube Video Link</label>
+                    </div>
+                    <div class="col-75">
+                        <input id="videoLink" type="text" name="videoLink" required>
+                    </div>
+                </div>
+
 
                 <div class="row">
                     <div class="col-25">
@@ -258,7 +250,7 @@
                 // Function to upload image to Firebase Storage
                 function handleFormSubmission() {
                     saveImageToFirebase();
-                    uploadVideoToFirebase();
+                    {% comment %}uploadVideoToFirebase();{% endcomment %}
                 }
 
 
@@ -300,6 +292,7 @@
                             document.getElementById("imageLink").value = url;
                             // Hide progress dialog
                             // Show notification
+                            hideProgressDialog();
                             alert("Image uploaded successfully!");
                         });
                     }).catch(function (error) {
@@ -310,7 +303,7 @@
                 }
 
                 // Function to upload video to Firebase storage
-                function uploadVideoToFirebase() {
+                {% comment %}function uploadVideoToFirebase() {
                     var videoFile = document.getElementById("videoFile").files[0];
 
                     // Check if video file is selected
@@ -339,7 +332,7 @@
                         // Hide progress dialog
                         hideProgressDialog();
                     });
-                }
+                }{% endcomment %}
 
 
             </script>

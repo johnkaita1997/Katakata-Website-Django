@@ -1618,8 +1618,10 @@ def viewsamplevideos(request):
     default_video = list(sample_videos.values())[0] if sample_videos else None
     monthsummaryDict['samplevideos'] = sample_videos
     monthsummaryDict['default'] = default_video
-    url = static(f"assets/{default_video['name']}.mp4")
-    monthsummaryDict['default']['video'] = url
+    default_video = default_video['video']
+    characters_after_last_equal_sign = default_video.split('=')[-1]
+    monthsummaryDict['default']['video'] = characters_after_last_equal_sign
+    monthsummaryDict['default']['video'] = characters_after_last_equal_sign
     response = render(request, "samplevideos.html", {"summary": monthsummaryDict})
     return response
 
@@ -1632,9 +1634,9 @@ def samplevideoviewer(request, timestamp):
     monthsummaryDict['samplevideos'] = sample_videos
     defaultVideo = loadspecificsamplevideo(timestamp).get()
     monthsummaryDict['default'] = defaultVideo
-    url = static(f"assets/{defaultVideo['name']}.mp4")
-    print(f"found the url as {url}")
-    monthsummaryDict['default']['video'] = url
+    default_video = defaultVideo['video']
+    characters_after_last_equal_sign = default_video.split('=')[-1]
+    monthsummaryDict['default']['video'] = characters_after_last_equal_sign
     print(f"{defaultVideo['name']}")
     return render(request, "samplevideos.html", {"summary": monthsummaryDict})
 

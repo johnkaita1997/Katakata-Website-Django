@@ -80,6 +80,7 @@ hr {
 
 .tm-row {
     max-width: 980px;
+    margin-left: 5px;
     justify-content: space-between;
 }
 

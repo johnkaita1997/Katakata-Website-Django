@@ -12,7 +12,7 @@
 
     <div class="mycontainer">
 
-        <div class="btn">
+       {% comment %} <div class="btn">
             <a target="_blank" href="https://play.google.com/store/apps/details?id=techkaita.katakata&hl=en&gl=US"><p
                     class="blink"
                     style="background-color: red; width: 260px; font-size: 20px; border-radius: 20px; color: white">
@@ -21,7 +21,7 @@
             {#                    class="blink"#}
             {#                    style="background-color: red; width: 260px; font-size: 20px; border-radius: 20px; color: white">#}
             {#                Download Ios App</p></a>#}
-        </div>
+        </div>{% endcomment %}
 
         {% for value in summary.sliderimages.values %}
             <img class="mySlides" src="{{ value.image }}" style="width:100%; height: auto; max-height: 550px">
@@ -287,7 +287,7 @@
                                  style="width:100%; max-width: 350px; margin-top: 20px">
                             <div class="container">
                                 <br>
-                                <h6 style="color: red"><b>VIEW ALL VIDEOS</b></h6>
+                                <h6 style="color: red"><b>WATCH OUR VIDEO SAMPLES</b></h6>
                                 {#                            <p>Architect & Engineer</p>#}
                                 {#                            <p>Architect & Engineer</p>#}
                             </div>
@@ -611,7 +611,7 @@
     <section id="cartoontarget" class="portfolio">
         <div class="container">
 
-            <a target="_blank" href="https://play.google.com/store/apps/details?id=techkaita.katakata&hl=en&gl=US">
+            {% comment %}<a target="_blank" href="https://play.google.com/store/apps/details?id=techkaita.katakata&hl=en&gl=US">
                 <div class="row">
                     <div class="col-lg-12 d-flex justify-content-center">
                         <ul id="portfolio-flters">
@@ -621,7 +621,7 @@
                         </ul>
                     </div>
                 </div>
-            </a>
+            </a>{% endcomment %}
 
             {#Magazines Section#}
             {#            <section id="pricing" class="pricing">#}

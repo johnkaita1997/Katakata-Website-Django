@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=0.6">
 </head>
 <body>
+
 <div class="wrapper">
     <header>
         <div class="header__logo">
@@ -54,12 +55,18 @@
         <main>
             {% block videocontent %}{% endblock videocontent %}
             <aside class="aside">
+                <br>
+                <br>
                 {% for value in summary.samplevideos.values %}
-                    <a href="{% url 'samplevideoviewer' timestamp=value.timestamp %}" class="first-img-aside">
-                        <p>{{ value.name }}</p><br>
-                        <img width=295px height=178px src="{{ value.image }}" alt="Next video">
-                    </a>
-                    <br>
+                    <div style="border-radius: 10px; overflow: hidden; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+                        <a href="{% url 'samplevideoviewer' timestamp=value.timestamp %}">
+                            <img src="{{ value.image }}" alt="Next video"
+                                 style="width: 100%; height: 178px; display: block;">
+                            <div style="padding: 10px;">
+                                <p>{{ value.name }}</p>
+                            </div>
+                        </a>
+                    </div>
                     <br>
                 {% endfor %}
             </aside>
