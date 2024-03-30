@@ -105,7 +105,7 @@ def homepage(request):
     monthsummaryDict['default'] = default_video
 
     # Download videos to the server
-    download_videos(sample_videos)
+    # download_videos(sample_videos)
 
     callMainData()
     if not "login" in request.COOKIES.keys():
