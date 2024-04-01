@@ -1615,6 +1615,9 @@ def uploadSampleVideo(request):
 @never_cache
 def viewsamplevideos(request):
     sample_videos = loadsamplevideos()
+    number = len(sample_videos)
+    if number <= 0:
+        return redirect('homepage')
     default_video = list(sample_videos.values())[0] if sample_videos else None
     monthsummaryDict['samplevideos'] = sample_videos
     monthsummaryDict['default'] = default_video
@@ -1631,6 +1634,9 @@ def viewsamplevideos(request):
 @never_cache
 def samplevideoviewer(request, timestamp):
     sample_videos = loadsamplevideos()
+    number = len(sample_videos)
+    if number <= 0:
+        return redirect('homepage')
     monthsummaryDict['samplevideos'] = sample_videos
     defaultVideo = loadspecificsamplevideo(timestamp).get()
     monthsummaryDict['default'] = defaultVideo

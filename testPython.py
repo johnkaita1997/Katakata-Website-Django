@@ -172,7 +172,7 @@ def loadlongcomics():
     for value in snapshot.values():
         name = value['name']
         ref = dbs.reference(f'names/{name}/cartoons/longcomics')
-        snapshot = ref.order_by_child("timestamp").limit_to_first(1).get()
+        snapshot = ref.order_by_child("timestamp").limit_to_last(1).get()
         if snapshot:
             for value in snapshot.values():
                 smalldict = {}
@@ -565,7 +565,8 @@ def loadlongcomicsnumber():
 def longcomicsall(number):
     big_dict = {}
     ref = dbs.reference('cartoons/longcomics')
-    snapshot = ref.order_by_child("timestamp").limit_to_last(number).get()
+    snapshot = ref.order_by_child("timestamp").limit_to_first(number).get()
+    print(f"Here")
     if snapshot:
         for value in snapshot.values():
             smalldict = {}
