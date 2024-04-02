@@ -1035,7 +1035,6 @@ def loadsamplevideos():
             smalldict = {}
             smalldict['name'] = value['name']
             smalldict['image'] = value['image']
-            smalldict['description'] = value['description']
             smalldict['video'] = value['video']
             smalldict['timestamp'] = -1 * value['timestamp']
             big_dict[value['timestamp']] = smalldict

@@ -1576,7 +1576,7 @@ def uploadSampleVideo(request):
     if request.method == "POST":
         try:
             videoname = request.POST.get("samplevideotitle")
-            samplevideodescription = request.POST.get("summernote")
+            samplevideodescription = "None"
             image_url = request.POST.get("imageLink")
             video_url = request.POST.get("videoLink")
 
