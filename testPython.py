@@ -1029,7 +1029,7 @@ def getMissionSlerImages():
 def loadsamplevideos():
     big_dict = {}
     ref = dbs.reference('videos')
-    snapshot = ref.child("samplevideos").order_by_child("timestamp").limit_to_first(3).get()
+    snapshot = ref.child("samplevideos").order_by_child("timestamp").limit_to_first(1000).get()
     if snapshot:
         for value in snapshot.values():
             smalldict = {}

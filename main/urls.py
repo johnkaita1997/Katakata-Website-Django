@@ -69,4 +69,3 @@ urlpatterns = [
     path('editproverb/<path:proverbid>', mainviews.editproverbs, name="editproverbs"),
 
 ]
-

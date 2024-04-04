@@ -8,6 +8,26 @@
     <link rel="stylesheet" type="text/css" href="{% static 'assets/mystyles/reset.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'assets/mystyles/main.css' %}">
     <meta name="viewport" content="width=device-width, initial-scale=0.6">
+    <style>
+        .video-iframe {
+            width: 100%;
+            height: 415px; /* Adjust this value as needed */
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio (9 / 16 * 100) */
+            height: 0;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
 </head>
 <body>
 
@@ -55,8 +75,6 @@
         <main>
             {% block videocontent %}{% endblock videocontent %}
             <aside class="aside">
-                <br>
-                <br>
                 {% for value in summary.samplevideos.values %}
                     <div style="border-radius: 10px; overflow: hidden; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
                         <a href="{% url 'samplevideoviewer' timestamp=value.timestamp %}">
