@@ -222,7 +222,7 @@
     </main>
 </div>
 
-<script>
+{% comment %}<script>
     $(document).ready(function () {
         $('#summernote').summernote({
             toolbar: [
@@ -233,6 +233,12 @@
                 ['view', ['fullscreen', 'codeview', 'help']]
             ]
         });
+    });
+</script>{% endcomment %}
+
+<script>
+    $(document).ready(function () {
+        $('#summernote').summernote();
     });
 </script>
 </body>
